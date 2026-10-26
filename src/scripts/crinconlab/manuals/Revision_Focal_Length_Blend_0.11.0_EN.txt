@@ -1,0 +1,47 @@
+NEW IN FOCAL LENGTH BLEND 0.11.0
+Download Sample Images is enabled. It displays copyright/usage conditions first.
+Agree and Download opens the published sample ZIP in the browser. Cancel starts
+no download. The sample license also covers blended and otherwise processed
+results. Samples are exclusively for personal testing without redistribution
+or publication unless Carlos Rincón gives prior permission.
+
+The sample ZIP is separate from this small script bundle and contains:
+- With_StarX: Short_Focal_Length.xisf and Long_Focal_Length.xisf.
+- Without_StarX: matching starless files with verified astrometry.
+- Image_Solver_Settings_EN.txt, README_EN.txt, LICENSE.txt and SHA256SUMS.txt.
+Both Desktop originals are unchanged. The with-stars copies retain the original
+pixel/data attachments. Starless copies intentionally remove the stars while
+preserving the image grid and astrometric solution. Authorship and conditions
+are included in the XISF metadata, without adding a visible watermark.
+
+Sample release:
+https://github.com/crinconlab/pixinsight-scripts/releases/tag/sample-images-v1.0
+
+IMAGE SOLVER
+Use the effective sampling values documented for the reduced sample files:
+Short focal length: 192.9183 mm; 8.623 micrometres; 9.219559 arcsec/pixel.
+Long focal length: 1244.9808 mm; 15.133 micrometres; 2.507191 arcsec/pixel.
+See manuals/Sample_Image_Solver_Settings_EN.txt for centre coordinates and
+recovery steps. Do not substitute the camera's physical sensor pixel pitch.
+
+CURRENT BLEND WORKFLOW
+Base = short focal length; Detail = long focal length. Output uses the base grid.
+Relative detail gain defaults to 0.50 (50%). Intensity remains 35%.
+Update Preview recalculates processing changes. Create Blended Image creates
+with one click when the whole image is visible, otherwise a zoom warning offers
+Fit Image, Create Anyway or Cancel. Optional stars recombination is retained.
+
+MASK EDITOR
+Wheel: synchronized pointer-centred zoom. Shift + left drag: pan both panels.
+Normal left drag: move a vertex. Fit Image, 100%, + and - control navigation.
+Navigation never resizes or changes mask pixels or transition strength.
+Session-created masks stay hidden and close on replacement or exit.
+Externally supplied masks remain untouched.
+
+VALIDATION
+55 automated checks passed. Native PixInsight 1.9.5 tests verified both starless
+sample generations and preserved astrometry, plus the consent dialog and
+cancel/agree download paths with an intercepted browser opener. Published asset
+digests match local files. Native dialogs rendered and inspected; physical mouse
+clicks and actual browser launch from PixInsight are not automated.
+Fusion and mask-pixel calculations are unchanged from 0.10.1.

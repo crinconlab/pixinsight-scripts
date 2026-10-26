@@ -1,8 +1,9 @@
 // Copyright © Carlos Rincón 2026
-#feature-id Utilities > Editor de cabeceras FITS-XISF
-#feature-info Editor de keywords FITS y metadatos XISF, con simulacion, seleccion recursiva y opciones de guardado.
+#feature-id CarlosRinconHeaderEditorEN : Crinconlab > FITS-XISF Header Editor
+#feature-icon icons/header_editor_orange_v2.svg
+#feature-info FITS keyword and XISF metadata editor, with simulation, recursive selection and save modes. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026.
 
-/* Editor_Cabeceras_FITS_XISF.js — PixInsight PJSR. Default: simulation, no disk writes.
+/* FITS_XISF_Header_Editor_EN.js — PixInsight PJSR. Default: save copies; simulation is optional.
  * Output: Sesion_1/Lights_Metadata (sibling of Lights_OK).
  * Single-image XISF/FITS. Existing outputs and symbolic links are skipped.
  */
@@ -18,36 +19,36 @@ function protectedKeyword( name )
 function validateChange( change, fits )
 {
    if (!/^[A-Z][A-Z0-9_-]{0,7}$/.test(change.name) || protectedKeyword(change.name))
-      throw new Error("Nombre no válido o keyword de estructura/solo lectura: " + change.name);
-   if (/^(FILTER|CREATOR|OBJECT)$/.test(change.name) && change.type != "Texto")
-      throw new Error(change.name + " debe ser de tipo Texto.");
-   if (/^(EXPTIME|EXPOSURE)$/.test(change.name) && change.type != "Número")
-      throw new Error(change.name + " debe ser de tipo Número.");
-   if (change.type == "Número")
+      throw new Error("Invalid name or structural/read-only keyword: " + change.name);
+   if (/^(FILTER|CREATOR|OBJECT)$/.test(change.name) && change.type != "Text")
+      throw new Error(change.name + " must be of type Text.");
+   if (/^(EXPTIME|EXPOSURE)$/.test(change.name) && change.type != "Number")
+      throw new Error(change.name + " must be of type Number.");
+   if (change.type == "Number")
    {
       if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[EeDd][+-]?\d+)?$/.test(change.value) ||
           !isFinite(Number(change.value.replace(/[dD]/,"e"))))
-         throw new Error("Número no válido: " + change.name + ". Usa punto decimal.");
+         throw new Error("Invalid number: " + change.name + ". Use a decimal point.");
    }
-   else if (change.type == "Lógico")
+   else if (change.type == "Boolean")
    {
-      if (change.value != "T" && change.value != "F") throw new Error("Valor lógico: escribe T o F.");
+      if (change.value != "T" && change.value != "F") throw new Error("Boolean value: enter T or F.");
    }
-   else if (change.type != "Texto") throw new Error("Tipo no admitido");
-   if (/[\r\n\x00-\x1f]/.test(change.value + change.comment)) throw new Error("No se admiten saltos de línea ni caracteres de control.");
+   else if (change.type != "Text") throw new Error("Unsupported type");
+   if (/[\r\n\x00-\x1f]/.test(change.value + change.comment)) throw new Error("Line breaks and control characters are not allowed.");
    if (fits) fitsChangeCard(change);
    return change;
 }
 function keywordLiteral( change )
 {
-   return change.type == "Texto" ? "'" + change.value.replace(/'/g,"''") + "'" : change.value;
+   return change.type == "Text" ? "'" + change.value.replace(/'/g,"''") + "'" : change.value;
 }
 function fitsChangeCard( change )
 {
    var line = change.name + new Array(9-change.name.length).join(" ") + "= " + keywordLiteral(change);
    if (change.comment.length) line += " / " + change.comment;
    if (/[^\x20-\x7e]/.test(line) || line.length > 80)
-      throw new Error("FITS: valor/comentario demasiado largo o con caracteres no ASCII en " + change.name);
+      throw new Error("FITS: value/comment too long or contains non-ASCII characters in " + change.name);
    return line + new Array(81-line.length).join(" ");
 }
 function metadataKeywords( keywords, changes )
@@ -63,10 +64,10 @@ function metadataKeywords( keywords, changes )
 // A small explicit mapping keeps frequently edited XISF metadata consistent.
 function mappedProperty( change )
 {
-   if (change.name == "FILTER" && change.type == "Texto") return ["Instrument:Filter:Name",change.value,PropertyType_String];
-   if (change.name == "CREATOR" && change.type == "Texto") return ["User:Creator",change.value,PropertyType_String];
-   if (change.name == "OBJECT" && change.type == "Texto") return ["Observation:Object:Name",change.value,PropertyType_String];
-   if ((change.name == "EXPTIME" || change.name == "EXPOSURE") && change.type == "Número")
+   if (change.name == "FILTER" && change.type == "Text") return ["Instrument:Filter:Name",change.value,PropertyType_String];
+   if (change.name == "CREATOR" && change.type == "Text") return ["User:Creator",change.value,PropertyType_String];
+   if (change.name == "OBJECT" && change.type == "Text") return ["Observation:Object:Name",change.value,PropertyType_String];
+   if ((change.name == "EXPTIME" || change.name == "EXPOSURE") && change.type == "Number")
       return ["Instrument:ExposureTime",Number(change.value.replace(/[dD]/,"e")),PropertyType_Float32];
    return null;
 }
@@ -80,16 +81,16 @@ function verifyMetadata( reader, config )
          if(keys[k].name.trim().toUpperCase()==c.name)
          {
             ++count;
-            var equal = c.type=="Número" ? Number(keys[k].strippedValue.replace(/[dD]/,"e"))==Number(c.value.replace(/[dD]/,"e")) : (c.type=="Texto"?keys[k].strippedValue.replace(/''/g,"'"):keys[k].strippedValue)==c.value;
-            if(!equal || keys[k].comment.trim()!=c.comment.trim()) throw new Error("No coincide valor/comentario: " + c.name);
+            var equal = c.type=="Number" ? Number(keys[k].strippedValue.replace(/[dD]/,"e"))==Number(c.value.replace(/[dD]/,"e")) : (c.type=="Text"?keys[k].strippedValue.replace(/''/g,"'"):keys[k].strippedValue)==c.value;
+            if(!equal || keys[k].comment.trim()!=c.comment.trim()) throw new Error("Value/comment mismatch: " + c.name);
          }
-      if(count!=1) throw new Error("Keyword ausente o duplicada: " + c.name);
+      if(count!=1) throw new Error("Missing or duplicate keyword: " + c.name);
       var m=mappedProperty(c);
       if(reader.format.canStoreImageProperties && m)
       {
          var value=reader.readImageProperty(m[0]);
          var equalProperty = typeof m[1]=="number" ? Math.abs(value-m[1])<=1e-6*Math.max(1,Math.abs(m[1])) : value==m[1];
-         if(!equalProperty)throw new Error("Propiedad XISF no coincide: " + m[0]);
+         if(!equalProperty)throw new Error("XISF property mismatch: " + m[0]);
       }
    }
 }
@@ -112,7 +113,7 @@ function writeFitsMetadataCopy( input, output, config )
       var cards = [], ended = false, skipContinuation = false;
       while ( !ended )
       {
-         if ( source.size-source.position < 2880 ) throw new Error("Cabecera FITS incompleta");
+         if ( source.size-source.position < 2880 ) throw new Error("Incomplete FITS header");
          var block = source.read(DataType_ByteArray, 2880);
          for ( var offset=0; offset<2880; offset+=80 )
          {
@@ -139,7 +140,7 @@ function writeFitsMetadataCopy( input, output, config )
    finally { if(source.isOpen)source.close(); if(target.isOpen)target.close(); }
 }
 
-function runMetadata( config )
+function runMetadata( config, progress, shouldStop )
 {
    function clean( p ) { return File.fullPath( p ).replace( /\\/g, "/" ).replace( /\/+$/, "" ); }
    function exists( p ) { return File.exists( p ) || File.directoryExists( p ); }
@@ -185,7 +186,7 @@ function runMetadata( config )
    var src = clean( config.inputDir ), dst = overwrite ? src : clean( config.outputDir );
    if ( !File.directoryExists( src ) ) throw new Error( "Input directory not found: " + src );
    if ( !overwrite && src.toLowerCase() == dst.toLowerCase() )
-      throw new Error( "Para usar la carpeta original, selecciona Sobrescribir originales." );
+      throw new Error( "To use the source folder, select Overwrite originals." );
    var check = dst;
    while ( check.length > 1 ) { noLink( check ); check = File.extractDirectory( check ); }
    check = src;
@@ -219,16 +220,19 @@ function runMetadata( config )
    var total = files.length;
    if ( config.maxFiles > 0 ) files = files.slice( 0, config.maxFiles );
    var stats = { found: total, selected: files.length, simulated: 0, saved: 0, skipped: 0, overwritten: 0, errors: 0 };
-   console.show();
+   if(progress)progress(stats,"");
+   console.hide();
    console.writeln( "Metadata | " + (config.dryRun ? "SIMULATION" : "WRITE") );
    console.writeln( "Mode: " + (overwrite ? (keepBackup ? "OVERWRITE WITH BACKUP" : "OVERWRITE WITHOUT BACKUP") : "COPIES") );
    console.writeln( "Input: " + src + "\nOutput: " + dst + "\nFound: " + total );
    for ( var i = 0; i < files.length; ++i )
    {
+      if(shouldStop && shouldStop())break;
       var input = src + "/" + files[i], output = dst + "/" + files[i];
       var reader = null, writer = null, verifier = null, image = null, temp = "", ownTemp = false;
       try
       {
+         if(progress)progress(stats,input);
          processEvents();
          if ( console.abortRequested ) throw new Error( "Aborted by user" );
          if ( !overwrite && exists( output ) )
@@ -263,7 +267,7 @@ function runMetadata( config )
          {
             var present=false;
             for(var kk=0;kk<currentKeys.length;++kk)if(currentKeys[kk].name.trim().toUpperCase()==config.changes[op].name)present=true;
-            console.writeln((present?"MODIFICAR ":"AÑADIR ")+config.changes[op].name+" => "+config.changes[op].value+" / "+config.changes[op].comment);
+            console.writeln((present?"UPDATE ":"ADD ")+config.changes[op].name+" => "+config.changes[op].value+" / "+config.changes[op].comment);
          }
          // Simulation reads pixels and properties but creates no directory or file.
          if ( config.dryRun )
@@ -352,11 +356,11 @@ function runMetadata( config )
                try
                {
                   if (!exists(input)) File.moveFile(input,backup);
-                  else throw new Error("La ruta original está ocupada");
+                  else throw new Error("The original path is occupied");
                }
                catch(restoreError)
                {
-                  throw new Error("No se pudo restaurar el original. Está conservado en: " + backup + ". " + String(restoreError));
+                  throw new Error("Could not restore the original. It has been preserved at: " + backup + ". " + String(restoreError));
                }
                throw publishError;
             }
@@ -365,7 +369,7 @@ function runMetadata( config )
             else
             {
                try { File.remove(backup); }
-               catch(cleanupError) { console.warningln("La sustitución se completó, pero no se pudo eliminar el original temporal: "+backup+". "+String(cleanupError)); }
+               catch(cleanupError) { console.warningln("Replacement completed, but the temporary original could not be removed: "+backup+". "+String(cleanupError)); }
             }
          }
          else
@@ -389,6 +393,7 @@ function runMetadata( config )
          if ( ownTemp && File.exists( temp ) )
             try { File.remove( temp ); }
             catch ( e ) { console.warningln( "Could not remove temporary file: " + temp ); }
+         if(progress)progress(stats,input);
       }
       if ( console.abortRequested ) break;
    }
@@ -406,11 +411,11 @@ function readHeaderSnapshot( path )
    try
    {
       var d=f.open(path, /\.xisf$/i.test(path) ? "properties fits-keywords no-import-fits-keywords no-auto-metadata" : "bottom-up");
-      if(!d || d.length!=1)throw new Error("Se admite una sola imagen por archivo: " + path);
+      if(!d || d.length!=1)throw new Error("Only one image per file is supported: " + path);
       var rows=[],keys=f.keywords;
       for(var k=0;k<keys.length;++k)
       {
-         var kw=keys[k],type=kw.isString?"Texto":kw.isBoolean?"Lógico":kw.isNumeric?"Número":"Solo consulta";
+         var kw=keys[k],type=kw.isString?"Text":kw.isBoolean?"Boolean":kw.isNumeric?"Number":"Read-only";
          rows.push({name:kw.name,value:kw.isString?String(kw.strippedValue).replace(/''/g,"'"):String(kw.strippedValue),comment:kw.comment,type:type});
       }
       function appendProperties(imageLevel)
@@ -420,7 +425,7 @@ function readHeaderSnapshot( path )
          {
             var id=("id" in list[n])?list[n].id:list[n][0];
             var value=imageLevel?f.readImageProperty(id):f.readProperty(id);
-            rows.push({name:id,value:String(value),comment:imageLevel?"Propiedad XISF de imagen; solo consulta":"Propiedad XISF de archivo; solo consulta",type:"Propiedad"});
+            rows.push({name:id,value:String(value),comment:imageLevel?"XISF image property; read-only":"XISF file property; read-only",type:"Property"});
          }
       }
       if(f.format.canStoreImageProperties)appendProperties(true);
@@ -434,23 +439,26 @@ function normalizedHeaderPath(path)
 {
    return File.fullPath(path).replace(/\\/g,"/").replace(/\/+$/,"");
 }
-function scanHeaderDirectory(root, outputDirectory)
+function scanHeaderDirectory(root, outputDirectory, progress, shouldStop)
 {
    root=normalizedHeaderPath(root);
-   if(!File.directoryExists(root))throw new Error("Carpeta no encontrada: " + root);
+   if(!File.directoryExists(root))throw new Error("Folder not found: " + root);
    var output=outputDirectory?normalizedHeaderPath(outputDirectory):"", files=[],errors=[];
    var probe=new FileFind;
-   if(probe.begin(root)){var link=probe.isSymbolicLink;probe.end();if(link)throw new Error("Selecciona una carpeta real, no un enlace simbólico.");}
-   var stack=[root];console.show();console.writeln("Buscando FITS/XISF en: "+root);
+   if(probe.begin(root)){var link=probe.isSymbolicLink;probe.end();if(link)throw new Error("Select an actual folder, not a symbolic link.");}
+   var stack=[root],visited=0,entries=0;console.hide();console.writeln("Searching for FITS/XISF in: "+root);
    while(stack.length)
    {
-      processEvents();if(console.abortRequested)throw new Error("Búsqueda cancelada");
-      var dir=stack.pop(),f=new FileFind;
+      processEvents();if(console.abortRequested || (shouldStop && shouldStop()))throw new Error("Search canceled");
+      var dir=stack.pop(),f=new FileFind;++visited;
+      if(progress)progress(files.length,visited,stack.length,dir);
       try
       {
          if(!f.begin(dir+"/*"))continue;
          do
          {
+            if(++entries%128===0){if(progress)progress(files.length,visited,stack.length,dir);processEvents();}
+            if(shouldStop && shouldStop())break;
             if(f.name=="." || f.name==".." || f.isSymbolicLink)continue;
             var path=dir+"/"+f.name;
             if(f.isDirectory)
@@ -462,23 +470,25 @@ function scanHeaderDirectory(root, outputDirectory)
             else if(f.isFile && !/^\.metadata_/.test(f.name) && /\.(fit|fits|fts|xisf)$/i.test(f.name))files.push(path);
          }while(f.next());
       }
-      catch(e){errors.push(dir+": "+String(e));console.warningln("Carpeta omitida: "+dir+": "+String(e));}
+      catch(e){errors.push(dir+": "+String(e));console.warningln("Skipped folder: "+dir+": "+String(e));}
       finally{f.end();}
+      if(shouldStop && shouldStop())throw new Error("Search canceled");
+      if(progress)progress(files.length,visited,stack.length,dir);
    }
-   files.sort();console.writeln("Encontrados: "+files.length);
+   files.sort();console.writeln("Found: "+files.length);
    return {files:files,errors:errors};
 }
 // The low-level writer handles one source folder. Preserve relative paths across groups.
-function runHeaderBatch(config)
+function runHeaderBatch(config,progress,shouldStop)
 {
-   if(!config.inputRoot)return runMetadata(config);
+   if(!config.inputRoot)return runMetadata(config,progress,shouldStop);
    var root=normalizedHeaderPath(config.inputRoot),dest=normalizedHeaderPath(config.outputDir);
-   if(!config.overwrite && root.toLowerCase()==dest.toLowerCase())throw new Error("El destino de las copias debe ser distinto de la carpeta de origen.");
+   if(!config.overwrite && root.toLowerCase()==dest.toLowerCase())throw new Error("The copies destination must differ from the source folder.");
    var groups=[],byFolder={};
    for(var i=0;i<config.files.length;++i)
    {
       var file=normalizedHeaderPath(config.files[i]);
-      if(file.indexOf(root+"/")!=0)throw new Error("Archivo fuera de la carpeta seleccionada: "+file);
+      if(file.indexOf(root+"/")!=0)throw new Error("File outside the selected folder: "+file);
       var folder=File.extractDirectory(file),relative=folder==root?"":folder.substring(root.length+1);
       if(!(folder in byFolder))
       {
@@ -491,15 +501,22 @@ function runHeaderBatch(config)
    var total={found:0,selected:0,simulated:0,saved:0,skipped:0,overwritten:0,errors:0};
    for(var g=0;g<groups.length;++g)
    {
-      processEvents();if(console.abortRequested)break;
+      processEvents();if(console.abortRequested || (shouldStop && shouldStop()))break;
       try
       {
-         var result=runMetadata(groups[g]);
+         var result=runMetadata(groups[g],progress?function(local,path)
+         {
+            var aggregate={selected:config.files.length};
+            var keys=["saved","simulated","skipped","errors","overwritten"];
+            for(var n=0;n<keys.length;++n){var key=keys[n];aggregate[key]=total[key]+local[key];}
+            progress(aggregate,path);
+         }:null,shouldStop);
          for(var k in total)total[k]+=result[k];
       }
-      catch(e){total.found+=groups[g].files.length;total.selected+=groups[g].files.length;total.errors+=groups[g].files.length;console.warningln("Error en carpeta: "+groups[g].inputDir+": "+String(e));}
+      catch(e){total.found+=groups[g].files.length;total.selected+=groups[g].files.length;total.errors+=groups[g].files.length;console.warningln("Folder error: "+groups[g].inputDir+": "+String(e));}
    }
-   console.writeln("TOTAL RECURSIVO "+JSON.stringify(total));return total;
+   if(progress){var finalStats={selected:config.files.length,saved:total.saved,simulated:total.simulated,skipped:total.skipped,errors:total.errors};progress(finalStats,"");}
+   console.writeln("RECURSIVE TOTAL "+JSON.stringify(total));return total;
 }
 
 function HeaderEditorDialog()
@@ -507,7 +524,7 @@ function HeaderEditorDialog()
    this.__base__=Dialog;this.__base__();
    var self=this;
    this.paths=[];this.inputRoot=null;this.snapshots=[];this.changes=[];this.visibleRows=[];this.config=null;
-   this.windowTitle="Editor de cabeceras FITS / XISF";
+   this.windowTitle="FITS / XISF Header Editor";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function button(text,callback){var b=new PushButton(self);b.text=text;b.onClick=callback;return b;}
    function row(controls){var r=new HorizontalSizer;r.spacing=6;for(var i=0;i<controls.length;++i)r.add(controls[i],controls[i] instanceof Edit?1:0);return r;}
@@ -517,115 +534,121 @@ function HeaderEditorDialog()
       for(var i=0;i<headings.length;++i)t.setHeaderText(i,headings[i]);
       t.setScaledMinWidth(800);t.setScaledFixedHeight(height);return t;
    }
-   this.intro=label("1. Selecciona archivos. 2. Elige una cabecera o escribe una nueva. 3. Añade los cambios a la lista y simula o guarda copias.");
-   this.select=button("Seleccionar FITS / XISF...",function()
+   this.intro=label("1. Select files. 2. Choose a keyword or enter a new one. 3. Add changes to the list, then simulate or save.");
+   this.select=button("Select FITS / XISF...",function()
    {
-      var p=new OpenFileDialog;p.multipleSelections=true;p.caption="Archivos de una misma carpeta";
-      p.filters=[["FITS y XISF",".fit",".fits",".fts",".xisf"]];
+      var p=new OpenFileDialog;p.multipleSelections=true;p.caption="Files from the same folder";
+      p.filters=[["FITS and XISF",".fit",".fits",".fts",".xisf"]];
       if(p.execute())
       {
-         self.select.enabled=false;
+         self.beginLoading();
          try{self.setFiles(p.fileNames);}
-         catch(e){new MessageBox(String(e),"No se pudo leer",StdIcon_Error,StdButton_Ok).execute();}
-         finally{self.select.enabled=true;}
+         catch(e){self.taskStatus.text="Loading stopped: "+String(e);new MessageBox(String(e),"Could not read",StdIcon_Error,StdButton_Ok).execute();}
+         finally{self.endLoading();}
       }
    });
-   this.selectDirectory=button("Seleccionar carpeta y subcarpetas...",function()
+   this.selectDirectory=button("Select folder and subfolders...",function()
    {
-      var picker=new GetDirectoryDialog;picker.caption="Carpeta donde buscar FITS y XISF, incluidas sus subcarpetas";
+      var picker=new GetDirectoryDialog;picker.caption="Folder to search for FITS and XISF, including subfolders";
       if(!picker.execute())return;
-      self.select.enabled=false;self.selectDirectory.enabled=false;
+      self.beginLoading();
       try
       {
          var excluded=/^(\/|[A-Za-z]:[\\/])/.test(self.folderEdit.text.trim())?self.folderEdit.text.trim():"";
-         var scan=scanHeaderDirectory(picker.directory,excluded);
+         var scan=scanHeaderDirectory(picker.directory,excluded,function(found,visited,pending,path){self.showSearchProgress(found,visited,pending,path);},function(){return self.stopRequested;});
          self.setFiles(scan.files,picker.directory,true);
          var skipped=self.readErrors.length+scan.errors.length;
-         new MessageBox("Archivos cargados: "+self.paths.length+"\nCarpetas/archivos con error: "+skipped+"\nSe han incluido las subcarpetas. Consulta la consola si hubo errores.","Búsqueda terminada",StdIcon_Information,StdButton_Ok).execute();
+         new MessageBox("Files loaded: "+self.paths.length+"\nFolders/files with errors: "+skipped+"\nSubfolders have been included. Check the console for any errors.","Search complete",StdIcon_Information,StdButton_Ok).execute();
       }
-      catch(e){new MessageBox(String(e),"No se pudo leer",StdIcon_Error,StdButton_Ok).execute();}
-      finally{self.select.enabled=true;self.selectDirectory.enabled=true;}
+      catch(e){self.taskStatus.text="Loading stopped: "+String(e);new MessageBox(String(e),"Could not read",StdIcon_Error,StdButton_Ok).execute();}
+      finally{self.endLoading();}
    });
    this.sourceButtons=row([this.select,this.selectDirectory]);
    this.fileCombo=new ComboBox(this);this.fileCombo.setScaledMaxWidth(800);
    this.fileCombo.onItemSelected=function(){self.renderHeaders();self.updateDestination();};
-   this.search=new Edit(this);this.search.toolTip="Filtra por nombre de keyword o identificador de propiedad";
+   this.search=new Edit(this);this.search.toolTip="Filter by keyword name or property identifier";
    this.search.onTextUpdated=function(){self.renderHeaders();};
-   this.headers=tree(["Cabecera / propiedad","Valor actual","Comentario","Tipo"],190);
+   this.headers=tree(["Keyword / property","Current value","Comment","Type"],190);
    this.headers.onCurrentNodeUpdated=function(node)
    {
       if(!node)return;
       var i=self.headers.childIndex(node),r=self.visibleRows[i];
       if(!r)return;
       self.detail.text=r.name+"\n"+r.value+"\n"+r.comment;
-      if(r.type=="Propiedad")return;
+      if(r.type=="Property")return;
       self.nameEdit.text=r.name;self.valueEdit.text=r.value;self.commentEdit.text=r.comment;
-      self.typeCombo.currentItem=r.type=="Número"?1:r.type=="Lógico"?2:0;
+      self.typeCombo.currentItem=r.type=="Number"?1:r.type=="Boolean"?2:0;
       self.markEditorClean();
    };
    this.detail=new TextBox(this);this.detail.readOnly=true;this.detail.setScaledFixedHeight(65);
    this.nameEdit=new Edit(this);this.nameEdit.setScaledMinWidth(110);
-   this.typeCombo=new ComboBox(this);this.typeCombo.addItem("Texto");this.typeCombo.addItem("Número");this.typeCombo.addItem("Lógico");
+   this.typeCombo=new ComboBox(this);this.typeCombo.addItem("Text");this.typeCombo.addItem("Number");this.typeCombo.addItem("Boolean");
    this.valueEdit=new Edit(this);this.commentEdit=new Edit(this);
-   this.editRow=row([label("Cabecera:"),this.nameEdit,label("Tipo:"),this.typeCombo,label("Valor:"),this.valueEdit]);
-   this.commentRow=row([label("Comentario:"),this.commentEdit]);
-   this.add=button("Añadir / actualizar cambio",function()
+   this.editRow=row([label("Keyword:"),this.nameEdit,label("Type:"),this.typeCombo,label("Value:"),this.valueEdit]);
+   this.commentRow=row([label("Comment:"),this.commentEdit]);
+   this.add=button("Add / update change",function()
    {
-      try{self.queueChange({name:self.nameEdit.text.trim().toUpperCase(),type:["Texto","Número","Lógico"][self.typeCombo.currentItem],
+      try{self.queueChange({name:self.nameEdit.text.trim().toUpperCase(),type:["Text","Number","Boolean"][self.typeCombo.currentItem],
                            value:self.typeCombo.currentItem==0?self.valueEdit.text:self.valueEdit.text.trim(),comment:self.commentEdit.text.trim()});self.markEditorClean();}
-      catch(e){new MessageBox(String(e),"Revisar cambio",StdIcon_Warning,StdButton_Ok).execute();}
+      catch(e){new MessageBox(String(e),"Review change",StdIcon_Warning,StdButton_Ok).execute();}
    });
-   this.newButton=button("Nueva cabecera",function(){self.resetEditor();});
+   this.newButton=button("New keyword",function(){self.resetEditor();});
    this.editButtons=row([this.newButton,this.add]);
-   this.pendingLabel=label("Cambios pendientes (se aplican solo los de esta lista):");
-   this.pending=tree(["Cabecera","Nuevo valor","Nuevo comentario","Tipo"],85);
+   this.pendingLabel=label("Pending changes (only the changes in this list are applied):");
+   this.pending=tree(["Keyword","New value","New comment","Type"],85);
    this.pending.onCurrentNodeUpdated=function(node)
    {
       if(!node)return;var c=self.changes[self.pending.childIndex(node)];if(!c)return;
       self.nameEdit.text=c.name;self.valueEdit.text=c.value;self.commentEdit.text=c.comment;
-      self.typeCombo.currentItem=c.type=="Número"?1:c.type=="Lógico"?2:0;
+      self.typeCombo.currentItem=c.type=="Number"?1:c.type=="Boolean"?2:0;
       self.markEditorClean();
    };
-   this.remove=button("Quitar cambio seleccionado",function()
+   this.remove=button("Remove selected change",function()
    {
       var n=self.pending.currentNode;if(!n)return;var i=self.pending.childIndex(n);self.changes.splice(i,1);self.renderChanges();
    });
-   this.scope=new ComboBox(this);this.scope.addItem("Todos los archivos seleccionados");this.scope.addItem("Solo el archivo mostrado");
+   this.scope=new ComboBox(this);this.scope.addItem("All selected files");this.scope.addItem("Only the displayed file");
    this.modeCombo=new ComboBox(this);
-   this.modeCombo.addItem("Guardar copias en otra carpeta");
-   this.modeCombo.addItem("Sobrescribir originales (con respaldo)");
-   this.modeCombo.addItem("Sobrescribir originales SIN respaldo");
+   this.modeCombo.addItem("Save copies to another folder");
+   this.modeCombo.addItem("Overwrite originals (with backup)");
+   this.modeCombo.addItem("Overwrite originals WITHOUT backup");
    this.folderEdit=new Edit(this);this.folderEdit.text="Headers_Metadata";this.folderEdit.readOnly=true;
-   this.browseButton=button("Elegir carpeta...",function()
+   this.browseButton=button("Choose folder...",function()
    {
-      var picker=new GetDirectoryDialog;picker.caption="Elige la carpeta para las copias";
+      var picker=new GetDirectoryDialog;picker.caption="Choose the destination folder for copies";
       if(self.paths.length)picker.initialPath=File.extractDirectory(self.paths[0]);
       if(picker.execute()){self.folderEdit.text=picker.directory;self.updateDestination();}
    });
    this.modeCombo.onItemSelected=function(){self.updateDestination();};
-   this.scopeRow=row([label("Aplicar a:"),this.scope,label("Guardado:"),this.modeCombo]);
-   this.outputRow=row([label("Carpeta de copias:"),this.folderEdit,this.browseButton]);
-   this.destination=label("Selecciona archivos para consultar las cabeceras.");
-   this.notice=label("Las keywords de estructura, COMMENT y HISTORY son de solo consulta. Las propiedades XISF se muestran para consulta; FILTER, CREATOR, OBJECT y EXPTIME/EXPOSURE sincronizan su propiedad equivalente.");
-   this.simulation=new CheckBox(this);this.simulation.text="Solo simulación (no escribir archivos)";this.simulation.checked=true;
-   this.runButton=button("Simular",function()
+   this.scopeRow=row([label("Apply to:"),this.scope,label("Save mode:"),this.modeCombo]);
+   this.outputRow=row([label("Copies folder:"),this.folderEdit,this.browseButton]);
+   this.destination=label("Select files to inspect their headers.");
+   this.notice=label("Structural keywords, COMMENT and HISTORY are read-only. XISF properties are displayed for reference; FILTER, CREATOR, OBJECT and EXPTIME/EXPOSURE synchronize their corresponding properties.");
+   this.simulation=new CheckBox(this);this.simulation.text="Simulation only (do not write files)";this.simulation.checked=false;
+   this.runButton=button("Save copies",function()
    {
       try
       {
          self.config=self.makeConfig();
          if(self.config.overwrite && !self.config.dryRun)
-            if(new MessageBox("Se sustituirán " + self.config.files.length + " archivos originales por las versiones modificadas.\n" + (self.config.keepBackup ? "Se conservará un respaldo de cada original en Metadata_Backups." : "SIN RESPALDO: no podrás recuperar la versión anterior mediante este script.") + "\n\n¿Continuar?", "Sobrescribir originales",StdIcon_Warning,StdButton_Yes,StdButton_No).execute()!=StdButton_Yes)return;
-         self.ok();
+            if(new MessageBox("This will replace " + self.config.files.length + " original files with their edited versions.\n" + (self.config.keepBackup ? "A backup of each original will be kept in Metadata_Backups." : "WITHOUT BACKUP: you cannot recover the previous version through this script.") + "\n\nContinue?", "Overwrite originals",StdIcon_Warning,StdButton_Yes,StdButton_No).execute()!=StdButton_Yes)return;
+         self.runVisibleBatch(self.config);
       }
-      catch(e){new MessageBox(String(e),"Revisar",StdIcon_Warning,StdButton_Ok).execute();}
+      catch(e){new MessageBox(String(e),"Review",StdIcon_Warning,StdButton_Ok).execute();}
    });
    this.simulation.onCheck=function(){self.updateDestination();};
-   this.cancelButton=button("Cancelar",function(){self.cancel();});
+   this.cancelButton=button("Close",function(){if(self.busy){self.stopRequested=true;self.taskStatus.text=self.loading?"Cancelling file loading…":"Stopping after the current file…";}else self.cancel();});
    this.bottom=new HorizontalSizer;this.bottom.spacing=8;this.bottom.add(this.simulation);this.bottom.addStretch();this.bottom.add(this.runButton);this.bottom.add(this.cancelButton);
+   this.taskStatus=label("Ready. Select files and prepare your changes.");
+   this.taskStatus.styleSheet="QLabel { color: #1670d2; font-weight: bold; }";
+   this.countStatus=label("Updated: 0 · Remaining: 0");
+   this.progressBar=new HeaderBatchProgress(this);
+   this.busy=false;this.stopRequested=false;this.onClose=function(){return !self.busy;};
+   this.batchControls=[this.select,this.selectDirectory,this.fileCombo,this.search,this.headers,this.nameEdit,this.typeCombo,this.valueEdit,this.commentEdit,this.add,this.newButton,this.pending,this.remove,this.scope,this.modeCombo,this.folderEdit,this.browseButton,this.simulation,this.runButton];
    this.copyrightLabel=label("Copyright © Carlos Rincón 2026");
    this.sizer=new VerticalSizer;this.sizer.margin=10;this.sizer.spacing=5;
-   var items=[this.intro,this.sourceButtons,this.fileCombo,row([label("Buscar:"),this.search]),this.headers,this.detail,this.editRow,this.commentRow,this.editButtons,
-              this.pendingLabel,this.pending,this.remove,this.scopeRow,this.outputRow,this.destination,this.notice,this.bottom,this.copyrightLabel];
+   var items=[this.intro,this.sourceButtons,this.fileCombo,row([label("Search:"),this.search]),this.headers,this.detail,this.editRow,this.commentRow,this.editButtons,
+              this.pendingLabel,this.pending,this.remove,this.scopeRow,this.outputRow,this.destination,this.notice,this.taskStatus,this.countStatus,this.progressBar,this.bottom,this.copyrightLabel];
    for(var i=0;i<items.length;++i)this.sizer.add(items[i]);
    this.nameEdit.onTextUpdated=this.valueEdit.onTextUpdated=this.commentEdit.onTextUpdated=function(){self.updateDraftStatus();};
    this.typeCombo.onItemSelected=function(){self.updateDraftStatus();};
@@ -647,41 +670,52 @@ HeaderEditorDialog.prototype.resetEditor=function()
 };
 HeaderEditorDialog.prototype.updateDraftStatus=function()
 {
-   this.pendingLabel.text="Cambios pendientes: "+this.changes.length+
-      (this.editorBaseline!=this.editorFingerprint()?" — El campo editado se añadirá al simular o guardar.":" — Puedes añadir varias cabeceras a esta lista.");
+   this.pendingLabel.text="Pending changes: "+this.changes.length+
+      (this.editorBaseline!=this.editorFingerprint()?" — The edited field will be added when you simulate or save.":" — You can add multiple keywords to this list.");
 };
 HeaderEditorDialog.prototype.commitEditorDraft=function()
 {
    if(this.editorBaseline==this.editorFingerprint())return;
-   this.queueChange({name:this.nameEdit.text.trim().toUpperCase(),type:["Texto","Número","Lógico"][this.typeCombo.currentItem],
+   this.queueChange({name:this.nameEdit.text.trim().toUpperCase(),type:["Text","Number","Boolean"][this.typeCombo.currentItem],
       value:this.typeCombo.currentItem==0?this.valueEdit.text:this.valueEdit.text.trim(),comment:this.commentEdit.text.trim()});
    this.markEditorClean();
 };
 HeaderEditorDialog.prototype.setFiles=function(paths,inputRoot,skipErrors)
 {
-   if(!paths.length)throw new Error("No se encontraron archivos FITS/XISF.");
+   if(!paths.length)throw new Error("No FITS/XISF files were found.");
    var parent=File.extractDirectory(File.fullPath(paths[0])),root=inputRoot?normalizedHeaderPath(inputRoot):null;
    var snapshots=[],accepted=[],errors=[];
+   this.showLoadingProgress(0,paths.length,"",0);
    for(var i=0;i<paths.length;++i)
    {
       var path=normalizedHeaderPath(paths[i]);
       if((root?path.indexOf(root+"/")!=0:File.extractDirectory(path)!=parent) || !/\.(fit|fits|fts|xisf)$/i.test(path))
-         throw new Error("Archivo fuera de la carpeta seleccionada: "+path);
-      processEvents();if(console.abortRequested)throw new Error("Lectura cancelada");
+         throw new Error("File outside the selected folder: "+path);
+      this.showLoadingProgress(i,paths.length,path,errors.length);
+      if(this.stopRequested || console.abortRequested)throw new Error("Reading canceled");
       try{snapshots.push(readHeaderSnapshot(path));accepted.push(path);}
       catch(e)
       {
          if(!skipErrors)throw e;
-         errors.push(path+": "+String(e));console.warningln("Archivo omitido: "+path+": "+String(e));
+         errors.push(path+": "+String(e));console.warningln("Skipped file: "+path+": "+String(e));
       }
-      if(skipErrors && (i+1)%25==0)console.writeln("Cabeceras leídas: "+(i+1)+"/"+paths.length);
+      this.showLoadingProgress(i+1,paths.length,path,errors.length);
+      if(this.stopRequested)throw new Error("Reading canceled");
+      if(skipErrors && (i+1)%25==0)console.writeln("Headers read: "+(i+1)+"/"+paths.length);
    }
-   if(!accepted.length)throw new Error("No se pudo leer ningún archivo; consulta la consola.");
+   if(!accepted.length)throw new Error("No files could be read; check the console.");
    this.paths=accepted;this.inputRoot=root;this.snapshots=snapshots;this.readErrors=errors;this.changes=[];
    this.fileCombo.clear();
    for(var i=0;i<accepted.length;++i)
       this.fileCombo.addItem((i+1)+"/"+accepted.length+" — "+(root?accepted[i].substring(root.length+1):File.extractNameAndExtension(accepted[i])));
-   this.fileCombo.currentItem=0;this.renderHeaders();this.renderChanges();this.resetEditor();this.updateDestination();
+   this.fileCombo.currentItem=0;this.renderHeaders();this.renderChanges();this.resetEditor();this.updateDestination();this.resetBatchStatus();
+};
+HeaderEditorDialog.prototype.resetBatchStatus=function()
+{
+   this.config=null;this.stopRequested=false;this.progressBar.indeterminate=false;this.progressBar.value=0;
+   this.taskStatus.text="Ready. "+this.paths.length+" files loaded for a new batch.";
+   this.countStatus.text="Updated: 0 · Remaining: "+this.paths.length+" · Simulated: 0 · Skipped: 0 · Errors: 0";
+   this.progressBar.repaint();this.taskStatus.repaint();this.countStatus.repaint();
 };
 HeaderEditorDialog.prototype.renderHeaders=function()
 {
@@ -706,7 +740,7 @@ HeaderEditorDialog.prototype.queueChange=function(change)
    {
       var other=mappedProperty(this.changes[i]);
       if(mapping && other && change.name!=this.changes[i].name && mapping[0]==other[0] && mapping[1]!=other[1])
-         throw new Error("EXPTIME y EXPOSURE deben tener el mismo valor.");
+         throw new Error("EXPTIME and EXPOSURE must have the same value.");
       if(this.changes[i].name==change.name){this.changes[i]=change;this.renderChanges();return;}
    }
    this.changes.push(change);this.renderChanges();
@@ -732,40 +766,108 @@ HeaderEditorDialog.prototype.updateDestination=function()
 {
    var overwrite=this.modeCombo.currentItem>0;
    this.folderEdit.enabled=!overwrite;this.browseButton.enabled=!overwrite;
-   this.runButton.text=this.simulation.checked?"Simular":overwrite?"Sobrescribir originales":"Guardar copias";
-   this.destination.text=!this.paths.length?"Selecciona archivos para consultar las cabeceras.":overwrite?
-      (this.modeCombo.currentItem==2?"Se sobrescribirán los originales SIN conservar respaldo.":"Se sustituirán los archivos seleccionados. Respaldo en Metadata_Backups dentro de cada carpeta de origen."):
-      "Destino: "+this.outputDirectory()+(this.inputRoot?" (conservando las subcarpetas)":"");
+   this.runButton.text=this.simulation.checked?"Simulate":overwrite?"Overwrite originals":"Save copies";
+   this.destination.text=!this.paths.length?"Select files to inspect their headers.":overwrite?
+      (this.modeCombo.currentItem==2?"Originals will be overwritten WITHOUT keeping a backup.":"Selected files will be replaced. Backups are stored in Metadata_Backups inside each source folder."):
+      "Destination: "+this.outputDirectory()+(this.inputRoot?" (preserving subfolders)":"");
 };
 HeaderEditorDialog.prototype.makeConfig=function()
 {
-   if(!this.paths.length)throw new Error("Selecciona archivos primero.");
+   if(!this.paths.length)throw new Error("Select files first.");
    this.commitEditorDraft();
-   if(!this.changes.length)throw new Error("Escribe una cabecera nueva o añade al menos un cambio a la lista.");
+   if(!this.changes.length)throw new Error("Enter a new keyword or add at least one change to the list.");
    var files=this.scope.currentItem==1?[this.paths[this.fileCombo.currentItem]]:this.paths.slice(0);
    var src=File.extractDirectory(File.fullPath(files[0])),overwrite=this.modeCombo.currentItem>0;
    var dst=overwrite?src:this.outputDirectory();
-   if(!overwrite && !this.folderEdit.text.trim())throw new Error("Elige una carpeta de destino.");
-   if(!overwrite && (this.inputRoot || src).toLowerCase()==dst.toLowerCase())throw new Error("Elige otra carpeta o selecciona Sobrescribir originales.");
+   if(!overwrite && !this.folderEdit.text.trim())throw new Error("Choose a destination folder.");
+   if(!overwrite && (this.inputRoot || src).toLowerCase()==dst.toLowerCase())throw new Error("Choose another folder or select Overwrite originals.");
    // A selected output tree must not also be treated as a source tree.
    if(this.inputRoot && !overwrite)
    {
       var outputPrefix=normalizedHeaderPath(dst).toLowerCase()+"/";
       files=files.filter(function(path){return path.toLowerCase().indexOf(outputPrefix)!=0;});
-      if(!files.length)throw new Error("La carpeta de destino contiene todos los archivos seleccionados; elige otra.");
+      if(!files.length)throw new Error("The destination folder contains all selected files; choose another one.");
    }
    return {inputDir:src,inputRoot:this.inputRoot,outputDir:dst,files:files,dryRun:this.simulation.checked,overwrite:overwrite,keepBackup:this.modeCombo.currentItem!=2,maxFiles:0,changes:this.changes.slice(0)};
 };
-#ifndef METADATA_LIBRARY
-try
+function HeaderBatchProgress(parent)
 {
-   var dialog=new HeaderEditorDialog;
-   if(dialog.execute())
+   this.__base__=Control;this.__base__(parent);this.value=0;this.indeterminate=false;this.phase=0;
+   this.setScaledMinSize(200,24);this.setScaledFixedHeight(24);
+   this.onPaint=function()
    {
-      var result=runHeaderBatch(dialog.config);
-      new MessageBox((dialog.config.dryRun?"Simulación terminada":"Guardado terminado")+"\nSimulados: "+result.simulated+"\nGuardados: "+result.saved+
-         "\nSobrescritos: "+result.overwritten+"\nOmitidos: "+result.skipped+"\nErrores: "+result.errors+"\nConsulta la consola para más detalles.","Editor de cabeceras",StdIcon_Information,StdButton_Ok).execute();
-   }
+      var g=new Graphics(this);
+      try{g.fillRect(0,0,this.width,this.height,new Brush(0xffe5eaf0));if(this.indeterminate){var segment=Math.max(30,Math.round(this.width/5)),x=Math.round((this.width-segment)*(this.phase%20)/19);g.fillRect(x,0,x+segment,this.height,new Brush(0xff78b6f0));}else g.fillRect(0,0,Math.round(this.width*this.value/100),this.height,new Brush(0xff78b6f0));g.pen=new Pen(0xff14283c);g.font=this.font;g.drawText(8,this.height-7,this.indeterminate?"Searching…":this.value+" %");}
+      finally{g.end();}
+   };
 }
+HeaderBatchProgress.prototype=new Control;
+HeaderEditorDialog.prototype.beginLoading=function()
+{
+   this.busy=true;this.loading=true;this.stopRequested=false;this.progressBar.value=0;
+   for(var i=0;i<this.batchControls.length;++i)this.batchControls[i].enabled=false;
+   this.cancelButton.text="Cancel loading";
+   this.taskStatus.text="Loading files…";this.countStatus.text="Files found: 0 · Headers read: 0";
+   this.progressBar.repaint();this.taskStatus.repaint();this.countStatus.repaint();processEvents();
+};
+HeaderEditorDialog.prototype.endLoading=function()
+{
+   this.busy=false;this.loading=false;this.stopRequested=false;this.progressBar.indeterminate=false;
+   for(var i=0;i<this.batchControls.length;++i)this.batchControls[i].enabled=true;
+   this.cancelButton.text="Close";this.updateDestination();this.progressBar.repaint();this.taskStatus.repaint();
+};
+HeaderEditorDialog.prototype.showSearchProgress=function(found,visited,pending,path)
+{
+   this.progressBar.indeterminate=true;++this.progressBar.phase;
+   this.taskStatus.text="Searching folder: "+path;
+   this.countStatus.text="Files found: "+found+" · Folders searched: "+visited+" · Folders pending: "+pending;
+   this.progressBar.repaint();this.taskStatus.repaint();this.countStatus.repaint();processEvents();
+};
+HeaderEditorDialog.prototype.showLoadingProgress=function(done,total,path,errors)
+{
+   this.progressBar.indeterminate=false;this.progressBar.value=total?Math.floor(100*done/total):0;
+   this.taskStatus.text="Reading headers"+(path?": "+File.extractNameAndExtension(path):"…");
+   this.countStatus.text="Headers read: "+done+" / "+total+" · Remaining: "+(total-done)+" · Read errors: "+errors;
+   this.progressBar.repaint();this.taskStatus.repaint();this.countStatus.repaint();processEvents();
+};
+HeaderEditorDialog.prototype.showBatchProgress=function(stats,path,dryRun)
+{
+   var done=stats.saved+stats.simulated+stats.skipped+stats.errors,remaining=Math.max(0,stats.selected-done);
+   this.progressBar.value=stats.selected?Math.floor(100*done/stats.selected):0;
+   if(!this.stopRequested)this.taskStatus.text=path?(dryRun?"Simulating: ":"Updating: ")+File.extractNameAndExtension(path):"Preparing batch…";
+   this.countStatus.text="Updated: "+stats.saved+" · Remaining: "+remaining+" · Simulated: "+stats.simulated+" · Skipped: "+stats.skipped+" · Errors: "+stats.errors;
+   this.progressBar.repaint();this.taskStatus.repaint();this.countStatus.repaint();
+   processEvents();
+};
+HeaderEditorDialog.prototype.runVisibleBatch=function(config,services)
+{
+   if(this.busy)return;
+   services=services || {};var self=this,result=null;
+   this.busy=true;this.stopRequested=false;
+   for(var i=0;i<this.batchControls.length;++i)this.batchControls[i].enabled=false;
+   this.cancelButton.text="Stop after current file";
+   try
+   {
+      this.showBatchProgress({selected:config.files.length,saved:0,simulated:0,skipped:0,errors:0},"",config.dryRun);
+      result=(services.runBatch || runHeaderBatch)(config,function(stats,path){self.showBatchProgress(stats,path,config.dryRun);},function(){return self.stopRequested;});
+      this.showBatchProgress({selected:config.files.length,saved:result.saved,simulated:result.simulated,skipped:result.skipped,errors:result.errors},"",config.dryRun);
+      var done=result.saved+result.simulated+result.skipped+result.errors;
+      this.taskStatus.text=done<config.files.length?"Batch stopped. Remaining files have not been processed.":config.dryRun?"Simulation complete. Ready for another batch.":"Batch complete. Ready for another batch.";
+   }
+   catch(e)
+   {
+      this.taskStatus.text="Batch error: "+String(e);
+      (services.error || function(error){new MessageBox(String(error),"Header Editor",StdIcon_Error,StdButton_Ok).execute();})(e);
+   }
+   finally
+   {
+      this.busy=false;this.stopRequested=false;
+      for(var j=0;j<this.batchControls.length;++j)this.batchControls[j].enabled=true;
+      this.cancelButton.text="Close";this.updateDestination();this.taskStatus.repaint();
+   }
+   return result;
+};
+#ifndef METADATA_LIBRARY
+try{(new HeaderEditorDialog).execute();}
 catch(e){new MessageBox(String(e),"Error",StdIcon_Error,StdButton_Ok).execute();}
 #endif

@@ -1,0 +1,10 @@
+FOCAL LENGTH BLEND 0.9.1
+Copyright © Carlos Rincón 2026
+
+Show the selected original base identifier with a prepared-copy note.
+Create immediately when the whole preview is visible.
+If zooming or panning hides pixels, recommend Fit Image in a popup with
+Fit Image, Create Anyway and Cancel actions. No mandatory second click.
+Preserve the current lightness/color display mode and all fusion calculations.
+RDG still starts at zero; sample download remains disabled.
+49 automated checks and 12 native PixInsight checks passed.

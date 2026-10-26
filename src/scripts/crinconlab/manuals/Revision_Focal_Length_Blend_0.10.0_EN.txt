@@ -1,0 +1,16 @@
+MASK EDITOR NAVIGATION — NEW IN 0.10.0
+Wheel over either panel: zoom at the pointer.
+Shift + left-button drag over either panel: pan both views.
+Normal left drag on the image: move a vertex.
+Fit Image: return to the full field. 100%: one image pixel per screen pixel.
++ and - buttons zoom around the shared center. Both panels stay synchronized.
+Zoom and pan never resize or modify the actual mask or its feathering.
+The blend comparison update control is now named Update Preview.
+
+VALIDATION
+53 automated checks passed. Native PixInsight 1.9.5 checks exercise pointer-
+centered zoom, Shift panning in both panels, accurate vertex dragging after
+navigation, preview preservation, Fit and 100%, and full-resolution mask output.
+Fit and zoomed dialogs rendered and inspected. Real PJSR callbacks are tested;
+physical mouse gestures are not automated. Blend and mask pixel calculations
+are unchanged. Visual evaluation with your own photographs remains necessary.

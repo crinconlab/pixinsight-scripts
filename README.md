@@ -1,4 +1,28 @@
-# pixinsight-scripts
+# Crinconlab PixInsight Scripts
+
+Latest complete collection: **2026-10-26**, for manual installation.
+
+[Download the complete collection](https://github.com/crinconlab/pixinsight-scripts/releases/tag/collection-2026-10-26)
+
+The ZIP includes all five current scripts, five orange icons, and English manuals. Extract the complete Crinconlab folder, preserving its icons and manuals subfolders. In PixInsight, use Script > Feature Scripts > Add to register that folder. Remove registrations pointing to older copies if duplicate entries appear.
+
+| Script | File |
+| --- | --- |
+| FITS / XISF Header Editor | [FITS_XISF_Header_Editor_EN.js](src/scripts/crinconlab/FITS_XISF_Header_Editor_EN.js) |
+| RGB + Dual Band, Image Solver and SPCC | [RGB_DualBand_Solver_SPCC_EN.js](src/scripts/crinconlab/RGB_DualBand_Solver_SPCC_EN.js) |
+| Focal Length Blend | [Mezcla_Focales.js](src/scripts/crinconlab/Mezcla_Focales.js) |
+| Astrometric Solution Copy | [Astrometric_Solution_Copy_EN.js](src/scripts/crinconlab/Astrometric_Solution_Copy_EN.js) |
+| PolyMask | [PolyMask_EN.js](src/scripts/crinconlab/PolyMask_EN.js) |
+
+[English manuals](src/scripts/crinconlab/manuals) · [Collection instructions](src/scripts/crinconlab/README_EN.txt) · [Version manifest](src/scripts/crinconlab/manifest.json)
+
+PolyMask 0.1.0 is preliminary: 26 native programmatic checks passed in PixInsight 1.9.5; user testing with real images and mouse interaction remains pending. The collection is published as a preliminary manual-installation release. This does not activate the PixInsight automatic update repository.
+
+Copyright © Carlos Rincón 2026.
+
+---
+
+# Publication tooling and earlier development notes
 
 Scripts para PixInsight de crinconlab y preparación de su repositorio de actualizaciones.
 

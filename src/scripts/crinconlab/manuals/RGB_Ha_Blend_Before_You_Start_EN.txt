@@ -1,0 +1,17 @@
+RGB + Ha Blend — Before you start
+
+Select two images of the same astronomical target:
+
+RGB image: the color image used as the reference for alignment and framing.
+
+Color Dual Band image: the script adds the Ha signal from this image to the RGB image.
+
+Both images must be linear, gradient-corrected and color-calibrated. Gentle noise reduction is recommended. A display STF is allowed.
+
+Choose the appropriate alignment method. Starless images require valid astrometric solutions.
+
+The script aligns and crops copies of your inputs as needed, adds the Ha signal and applies Spectrophotometric Color Calibration (SPCC) using your selected settings.
+
+Output: a new linear RGB + Ha image, calibrated with SPCC and with a valid astrometric solution. If the RGB input is not already solved, the script opens Image Solver to obtain the solution. Your original images remain unchanged. Save the result manually.
+
+Copyright © Carlos Rincón 2026

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<title>DuoFocalBlend</title>
+<rect x="2" y="2" width="60" height="60" rx="13" fill="#F28C28"/>
+<rect x="9" y="12" width="46" height="36" rx="4" fill="#fff"/>
+<rect x="14" y="17" width="36" height="26" rx="1" fill="#F28C28"/>
+<path d="m24 21 2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#fff"/>
+<rect x="29" y="29" width="28" height="27" rx="4" fill="#fff" stroke="#F28C28" stroke-width="3"/>
+<rect x="34" y="34" width="18" height="17" rx="1" fill="#F28C28"/>
+<path d="m43 35 2 5 5 2-5 2-2 6-2-6-5-2 5-2z" fill="#fff"/>
+</svg>

@@ -1,0 +1,1 @@
+0.11.4: Remove Full canvas. Back in the mask editor returns to initial setup without accepting edits. Existing geometry and selected mask remain available. All four Feature Scripts descriptions now include Copyright © Carlos Rincón 2026. Fusion and mask calculations are unchanged.

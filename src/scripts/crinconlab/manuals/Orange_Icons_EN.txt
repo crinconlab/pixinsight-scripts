@@ -1,0 +1,2 @@
+Crinconlab orange icon family
+Shared background: #F28C28; 64x64 SVG viewBox. Three icons use solid white symbols. RGB + Dual Band uses red, green and blue input bands plus a white Ha band entering an astronomical image. Existing filenames and feature-icon references are retained. Script behavior is unchanged. Replace the complete folder and refresh Script > Feature Scripts.

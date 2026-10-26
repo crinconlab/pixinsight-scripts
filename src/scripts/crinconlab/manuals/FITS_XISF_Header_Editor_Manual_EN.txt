@@ -1,0 +1,148 @@
+FITS / XISF HEADER EDITOR — ENGLISH EDITION
+Copyright © Carlos Rincón 2026
+
+OPEN AND INSPECT
+Run FITS_XISF_Header_Editor_EN.js with Script → Execute Script File….
+Use Select FITS / XISF to choose files from one folder, or Select folder and
+subfolders to search a complete directory tree, including its root folder.
+Supported extensions are .fit, .fits, .fts and .xisf, with one image per file.
+
+The top dropdown selects the displayed file. Recursive mode shows relative
+paths to distinguish repeated names. The table displays FITS keywords, values,
+comments and types. XISF image and file properties are also shown read-only.
+Search filters keyword names and property identifiers. Selecting a row shows
+its full contents in the detail box and loads editable keyword fields.
+
+PREPARE CHANGES
+Select an editable keyword, or click New keyword. Enter Keyword, Type, Value
+and Comment, then click Add / update change. Repeat to prepare more keywords.
+Adding the same name replaces its pending change. Select a pending change to
+review it; Remove selected change removes it from the list.
+
+If you edit a field and click Simulate or Save directly, that edited keyword
+is automatically added to the pending list. Simply inspecting an unchanged
+keyword does not add it. For multiple edits, add each change before selecting
+another row or starting a new keyword.
+
+Apply to selects all selected files or only the displayed file. The pending
+changes are applied independently to each file: existing keywords are updated
+and missing keywords are added. Other headers from the displayed file are not
+copied to the other files. Choosing new input files clears pending changes.
+
+TYPES AND EXAMPLES
+Text: enter text without enclosing quotes. Example: L-Pro.
+Number: use a decimal point, for example 300 or 1.25E-3.
+Boolean: enter T or F.
+
+Filter example: FILTER / Text / L-Pro / Filter used in the session
+Author example: CREATOR / Text / Carlos Rincon / Photographer
+The editor fields initially remain blank. Neither filter nor author is required.
+An explicitly queued empty Text value saves an empty string; it does not mean
+leave the keyword unchanged or delete it.
+EXPTIME and EXPOSURE must have equal values if both are included.
+
+SIMULATION AND SAVE MODES
+Simulation only is unchecked by default. Save copies is the initial mode. Enable Simulation only if you want a dry run before writing files.
+Simulation creates no files or folders, including in overwrite modes.
+Uncheck Simulation only to write files.
+
+Save copies to another folder (default): click Choose folder and select any
+accessible destination, including another disk. Headers_Metadata beside the
+source folder is the initial suggested destination. Originals are preserved.
+Existing destination files are skipped, not overwritten. In recursive mode,
+relative subfolder structure is preserved, including for a single-file scope.
+
+Overwrite originals (with backup): the script finishes and verifies a new file
+first, then preserves the original under Metadata_Backups/date-time-identifier/
+inside its source folder and installs the edited version. If installation
+fails, it attempts to restore the original. Backups remain after completion.
+Space is needed for the new versions and backups.
+
+Overwrite originals WITHOUT backup: the new file is verified and installed in
+the original location. A temporary recovery original is retained during the
+replacement, then removed after success. Installation failure triggers an
+attempt to restore the original. No Metadata_Backups folder is created in this
+mode. If temporary cleanup fails, the console reports the recovery file path.
+There is no retained previous version after successful completion.
+
+Overwrite modes ask for confirmation and show the number of affected files.
+The no-backup mode explicitly warns that the previous version cannot be
+recovered through this script. The UI shows destination or backup information;
+actual backup paths are reported in the console.
+
+Files retain their names and formats. Errors are reported per file and the
+batch continues. Replacement is per file, not an all-or-nothing batch: files
+processed before a later error may already have been updated.
+After a forced shutdown or disk failure, inspect Metadata_Backups and any
+.metadata_* temporary files. If restoration fails, the console identifies
+where the original is preserved.
+
+To restore a backup manually, first preserve the edited version, then copy the
+backup to the original location. Before overwriting, close any PixInsight
+images opened from the files being replaced to avoid conflicts.
+
+RECURSIVE SEARCH
+Includes the root folder and all levels of subfolders. Symbolic links are
+skipped to prevent loops. Metadata_Backups, Headers_Metadata, the destination
+folder if already selected, and .metadata_* temporary files are excluded.
+Other folder names are included, so older copies in other folders may appear.
+Review the file scope before applying changes to an entire tree.
+
+Unreadable files are skipped and reported. The final loading message gives
+loaded-file and error counts. You cannot use the root input folder as the
+copies destination; use overwrite mode to edit originals. When the destination
+is inside the input tree, sources already inside it are excluded from the
+operation. The relative output path starts at the selected root folder.
+
+FORMAT RULES AND LIMITS
+FITS editing applies to the primary header, preserving data bytes and later
+extensions. This is not an editor for separate keywords in every extension/HDU.
+Structural keywords, including SIMPLE, BITPIX, NAXIS, scaling and checksums,
+are displayed but cannot be edited. COMMENT and HISTORY are also read-only
+because they may have multiple entries. New keyword names are conventional
+FITS names of up to eight characters. HIERARCH and CONTINUE long strings are
+not supported for new entries.
+
+FITS values and comments must fit together in an 80-character card and use
+ASCII. Invalid content is rejected rather than truncated. CHECKSUM is removed
+from an edited header because it becomes obsolete; DATASUM is retained because
+the data do not change.
+
+XISF properties are displayed read-only; edits target FITS keywords. These
+keywords also synchronize their corresponding XISF properties:
+FILTER → Instrument:Filter:Name
+CREATOR → User:Creator (custom property)
+OBJECT → Observation:Object:Name
+EXPTIME / EXPOSURE → Instrument:ExposureTime
+Other XISF properties are preserved without inferring additional mappings.
+
+XISF is read and written through the format module. Properties and image data
+accessible through PJSR are preserved; encoding metadata is regenerated.
+The module may normalize FITS padding/comment whitespace. XML extensions not
+exposed through PJSR are not guaranteed to survive.
+Header snapshots are read when inputs are selected. At execution, each source
+is reopened and only pending changes are applied to its current content.
+
+NEW KEYWORDS AND VERIFICATION
+The console reports ADD for a new keyword and UPDATE for an existing one.
+Saved FITS and XISF files are reopened to verify each requested keyword, its
+value and comment before reporting success.
+A new XISF FITS keyword need not appear as a native XISF property. Inspect it
+with FITSHeader or reopen it in this editor. When saving copies, inspect the
+destination file rather than the original.
+
+INSTALL IN THE SCRIPT MENU
+Keep FITS_XISF_Header_Editor_EN.js in a permanent folder. Choose
+Script → Feature Scripts… → Add…, select its folder and click Done.
+Find it at Script → Crinconlab → FITS-XISF Header Editor.
+Replace that file in the same folder to update it.
+The Spanish edition remains in its previous menu category.
+
+TESTING
+The original implementation has been tested in PixInsight Core 1.9.5 for
+header/property reading, text/number/Boolean edits, new keywords, validation,
+simulation, verified output, existing-file skipping, recursive paths, and
+overwrite modes with and without backup. English-edition checks additionally
+exercise the translated type labels and interface using synthetic fixtures.
+
+Copyright © Carlos Rincón 2026

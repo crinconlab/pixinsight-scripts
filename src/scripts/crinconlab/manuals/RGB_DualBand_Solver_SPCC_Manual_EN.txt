@@ -1,0 +1,36 @@
+RGB + DUAL BAND — VERSION 0.14.2
+Copyright © Carlos Rincón 2026
+
+INPUT PREPARATION
+Both images must be linear, gradient-corrected and color-calibrated. ML Denoise is optional. RGB must have three channels. Dual Band may be RGB or monochrome. A display STF is allowed. Original inputs are never edited.
+
+REGISTRATION AND AUTOMATIC CROP
+RGB defines the pixel grid. Align using stars (default) uses native StarAlignment with a geometric registration mask. The largest axis-aligned rectangle fully inside that mask is retained, with a two-pixel interpolation guard if borders were removed. Both copies receive exactly the same crop. The mask is geometric: real dark pixels are not treated as missing coverage. Existing padding already present inside an input is not detected. Inputs need enough stars and overlapping field; different scales/rotations can be handled within StarAlignment's matching limits. If registration fails, review your data rather than accepting an unregistered blend.
+Align using astrometry supports already solved Dual Band images, including starless images. Its WCS is reprojected onto RGB with the official ImageReprojection backend. Coverage comes from reprojecting a constant-one image with the same geometry. This relies on the accuracy of both astrometric solutions; it is not a further stellar refinement.
+Images are already aligned bypasses registration and crop, requiring matching dimensions and your assurance that the pixel grids match. It preserves any existing padding. Do not select it just because two images have the same dimensions.
+
+ASTROMETRY
+RGB's solution is reused; if absent, Image Solver opens on a temporary RGB copy. An unsolved starless RGB cannot be solved: provide a valid solution first. The script never blindly copies an unregistered Dual Band solution onto RGB. The crop shifts the astrometric reference pixel and all image control points, preserves spline-generation parameters, regenerates the native solution and checks sky coordinates at three points. The final SPCC-calibrated image receives the cropped RGB solution. Registration/crop are cached during intensity changes and recreated after Back.
+
+WORKFLOW
+Select images and registration mode, name the result, review Configure SPCC, then Open preview. Preparation requirements remain visible without a confirmation checkbox. Click Update preview to register, crop, blend and calibrate. Both panels show the same cropped field. Adjust intensity from 1 to 5, initially 3, and Update preview again. Same STF remains off by default. Accept result retains the reviewed calibrated image without rerunning processing; save it yourself. Back returns to setup; Cancel discards owned temporary images. Failed updates retain the previous valid calibrated result. Unchanged originals remain open.
+
+BLEND
+R = RGB[0] + k * DualBand[0]
+G = RGB[1]
+B = RGB[2]
+The red channel is used for color Dual Band, or the single channel for mono. k ranges from 1 to 5, including intermediate values. No continuum subtraction or input brightness normalization is performed. Floating-point PixelMath output is not clipped or rescaled. SPCC may change all channels. Standard RGB SPCC settings do not guarantee rigorously photometric colors after adding narrowband signal.
+
+SPCC
+PixInsight 1.9.5 and ImageSolver 6.5.0 are required, with configured GaiaDR3SP data for SPCC. Configure the RGB filter responses, QE, white reference, limiting magnitude and background neutralization. Save as defaults preserves the exposed settings; background reference views are session-dependent. Preview suppresses graph/star-map/text outputs. Real SPCC depends on your installed catalog and equipment configuration.
+
+STATUS AND CONSOLE
+Blue text describes the task. The bar gives processing-stage percentages, not time estimates, and may remain fixed during native operations. Input controls are disabled during updates. The script does not explicitly open the process console and hides it at stage boundaries; native processes may still bring it forward. Technical messages remain available for troubleshooting.
+
+INSTALLATION
+Replace the complete Crinconlab folder, keeping icons/. Update Script > Feature Scripts and launch RGB DualBand Solver SPCC. Help works before selecting images; Save manual .txt exports these instructions.
+
+VALIDATION LIMITS
+Native tests use synthetic stars, real registration masks and astrometric coordinate comparisons after cropping. Automated calibration tests inject a calibration callback: validate a complete run with your installed SPCC catalog and real astrophotography data.
+
+Startup notice: OK opens setup; Cancel exits without processing images.

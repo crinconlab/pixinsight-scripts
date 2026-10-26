@@ -1,0 +1,7 @@
+Version 0.14
+
+New native StarAlignment registration with RGB as reference; generated geometric coverage mask; common-field crop applied to both copies; updated and validated WCS after crop. Alternative coordinate registration supports solved starless images; explicitly confirmed registered mode skips new registration/crop.
+
+Progress: blue task description and stage-based percentage. Intensity changes reuse prepared inputs. All four scripts avoid explicitly opening the process console.
+
+Tests: synthetic-star registration, real XISF astrometry and cropped coordinate validation, starless coordinate reprojection, formula on registered pixels, failure/cancellation cleanup, UI rendering and preservation of originals. Real SPCC is not run in automated tests.

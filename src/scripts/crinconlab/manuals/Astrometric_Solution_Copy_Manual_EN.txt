@@ -1,0 +1,109 @@
+CRINCONLAB — ASTROMETRIC SOLUTION COPY — VERSION 1.1
+Copyright © Carlos Rincón 2026
+
+PURPOSE AND REQUIREMENTS
+Copy an existing native PixInsight astrometric solution from a solved reference
+to other open main images. RGB and monochrome images are supported.
+Requires PixInsight 1.9.5. The script does not require the RGB/Dual Band script
+or Image Solver libraries. It does not register, resample, calibrate, save or
+overwrite image files. Pixel data and input selections are preserved.
+
+The reference must represent the final registered pixel grid. Targets must
+share its dimensions, orientation, scale, crop and alignment. Matching image
+sizes alone is insufficient. Solve the reference before running the script.
+
+WORKFLOW
+1. Open the solved reference and target images in PixInsight. Choose the
+   reference in Solved reference; only images with a valid solution appear.
+2. Check the target images, or click Select compatible. This button selects
+   same-size images eligible under the current existing-solution policy;
+   it does not mean that registration has already been verified.
+3. Leave Replace existing solutions unchecked to preserve target solutions.
+   Enable it only when you want to replace those solutions.
+4. Click Check registration. The script detects stars and compares their
+   full-resolution positions across the field.
+5. Review the Registration column. Select a row to read its details.
+6. For an Unable to verify target, select its row. A checkbox appears:
+   I confirm that this image is registered to the reference.
+   It is initially unchecked and applies to that target only. Check it only
+   if you know the image has been registered to this reference grid.
+   Repeat separately for other unverified targets you wish to authorize.
+7. Click Copy solution. The script checks registration again using current
+   pixels, then copies only to permitted targets. Review the summary and
+   console. Save the target images yourself to keep the metadata on disk.
+
+THREE REGISTRATION STATES
+Aligned: enough common stars agree in their pixel positions and cover the
+field. Copying is allowed without manual confirmation.
+
+Not aligned: dimensions differ, or robust star correspondences demonstrate
+a non-identity geometric transformation. Copying is blocked. There is no
+manual override for this state. Register the image correctly before retrying.
+
+Unable to verify: too few reliable stars, insufficient field coverage, no
+reliable common pattern, borderline offsets, or a star-analysis error.
+Copying is blocked unless this specific target has been manually confirmed.
+Selecting or confirming one target does not authorize other targets.
+A failed verification does not prove that an image is aligned or misaligned.
+
+CHANGES AND RECHECKING
+Copy solution always repeats the star analysis. A manual confirmation is
+retained only while the same target/reference pair remains Unable to verify.
+An Aligned result needs no override. A new Not aligned result blocks copying,
+even if the image was previously confirmed. Changing the reference or refreshing
+the image list clears checks and manual confirmations. Refresh after opening
+or closing images. A target changed outside this workflow should be refreshed
+and checked again before confirming it.
+
+WHAT THE CHECK MEASURES
+The detector works on a full-image temporary copy, using the intensity of RGB
+images. Up to 30 detections per cell of a 4×4 grid are retained to avoid a dense
+central region dominating the comparison. Source channel/ROI selections are
+restored and the actual image pixels are not modified.
+
+Verification requires at least 20 matched stars, at least 30% of the smaller
+sampled catalog, and broad coverage: six cells of a 3×3 grid (at least five outer
+cells), spanning at least 65% of both image dimensions. Aligned requires a median
+positional difference no greater than 0.35 pixels and a 90th-percentile difference
+no greater than 0.75 pixels. These are initial fixed tolerances, not user controls.
+
+Translation candidates and bounded triangle-pattern matching are used to seek
+common stars under shift, rotation and scale changes. Consistent non-identity
+geometry can produce Not aligned. An inconclusive search produces Unable to
+verify, rather than guessing that the image is aligned.
+
+This is a statistical check, not a proof of perfect registration at every pixel.
+Different filters, crowded fields, saturation, distorted stars, low signal,
+uneven coverage or local distortions can make the result inconclusive. Images
+without stars normally require manual confirmation. The check does not verify
+that the reference's existing astrometric solution is scientifically correct.
+
+COPYING, STOPPING AND ERRORS
+The native solution and its available distortion model are transferred; unrelated
+acquisition metadata are not copied. Existing target solutions are skipped by
+default. The reference itself is excluded, and size mismatches are always skipped.
+Unchecked or unauthorized targets cannot receive a solution through the copy
+routine. Different-size targets cannot be manually authorized.
+
+Stop requests are handled between images. Completed copies remain applied.
+A copying error is reported per target and other targets continue. Review any
+failed target before saving; the script does not promise rollback of a failed
+native transfer. No image files are saved automatically.
+
+HELP AND LOCAL INSTALLATION
+Help displays this manual without needing any images.
+Keep Astrometric_Solution_Copy_EN.js and icons/astrometric_copy.svg together.
+Place them alongside your other Crinconlab scripts, merging the icons folder
+so that header_editor.svg and rgb_dualband.svg remain available.
+Add the folder through Script → Feature Scripts… → Add….
+Find the script at Script → Crinconlab → Astrometric Solution Copy.
+To update an already registered copy, replace its .js file in the same folder.
+
+TESTING AND LIMITS
+Tests exercise native star detection on synthetic stellar images in PixInsight,
+aligned RGB/monochrome comparisons with brightness/PSF differences, shifted and
+rotated fields, blank fields, different dimensions, native WCS transfer, blocked
+misaligned targets, per-image manual authorization, preserved pixels/selections,
+and UI controls. Pure matching tests also cover scale changes and 180° rotation.
+These checks are a starting point; behavior with real fields and your filters
+still needs validation. The full-resolution analysis adds processing time.

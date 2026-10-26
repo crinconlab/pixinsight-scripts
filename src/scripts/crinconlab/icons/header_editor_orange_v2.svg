@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<title>Header Editor</title>
+<rect x="2" y="2" width="60" height="60" rx="13" fill="#F28C28"/>
+<path fill="#fff" d="M14 10h20l10 10v32H14z"/>
+<path fill="#F28C28" d="M34 10v10h10z"/>
+<rect x="20" y="25" width="17" height="4" rx="1" fill="#F28C28"/>
+<rect x="20" y="33" width="13" height="4" rx="1" fill="#F28C28"/>
+<rect x="20" y="41" width="10" height="4" rx="1" fill="#F28C28"/>
+<path d="m33 44 17-17 7 7-17 17-10 3z" fill="#fff" stroke="#F28C28" stroke-width="3" stroke-linejoin="round"/>
+<path d="m47 30 7 7" stroke="#F28C28" stroke-width="3"/>
+</svg>

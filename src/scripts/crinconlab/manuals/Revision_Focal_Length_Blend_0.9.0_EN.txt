@@ -1,0 +1,24 @@
+FOCAL LENGTH BLEND 0.9.0
+- Startup notice describes the required input preparation and StarX alternatives.
+- Relative detail gain starts at 0, with a range of 0 to 4. At zero the result
+  is the prepared base. Increase it and Update comparison to see injected detail.
+- Create Blended Image: the FIRST click displays the actual full image with
+  Fit image. Review the whole frame, then click AGAIN to confirm creation.
+- Download Sample Images is visible but disabled. There is no download action,
+  URL or sample-image package in this release.
+- Existing positive-gain fusion, automatic contrast estimation and mask behavior
+  are retained. Circular editable masks, step notices and copyright are included.
+- Transition is adjusted only in the mask editor. Session-created masks remain
+  hidden and close automatically; externally supplied masks remain untouched.
+- Optional Screen recombination creates an additional image with stars while
+  retaining the separate starless result and base stars. Save images manually.
+- Base = short focal length. Detail = long focal length. Output uses base grid.
+
+See manuals/Manual_Focal_Length_Blend_EN.md or Help for the complete guide.
+
+VALIDATION
+46 automated checks passed. Native PixInsight 1.9.5 tests verify zero gain,
+positive-gain injection, full-image review, two-click creation, the disabled
+control, and regression of masks/workflow/Screen combination. Dialogs rendered
+and inspected. Modal notices are intercepted in automated tests; physical mouse
+clicks are not automated. Visual evaluation with real photographs remains needed.

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<title>RGB plus Ha composition</title>
+<rect x="2" y="2" width="60" height="60" rx="13" fill="#F28C28"/>
+<rect x="9" y="13" width="20" height="8" rx="2" fill="#E92B40" stroke="#fff" stroke-width="1"/>
+<rect x="9" y="25" width="20" height="8" rx="2" fill="#28BF68" stroke="#fff" stroke-width="1"/>
+<rect x="9" y="37" width="20" height="8" rx="2" fill="#246BE5" stroke="#fff" stroke-width="1"/>
+<path d="M29 26h3v-4l7 7-7 7v-4h-3z" fill="#fff"/>
+<rect x="37" y="12" width="20" height="35" rx="3" fill="#fff"/>
+<rect x="41" y="16" width="12" height="27" rx="1" fill="#F28C28"/>
+<path d="m47 21 2 6 4 3-4 2-2 6-2-6-4-2 4-3z" fill="#fff"/>
+<path d="M9 50h35v-6h5v11H9z" fill="#fff"/>
+</svg>

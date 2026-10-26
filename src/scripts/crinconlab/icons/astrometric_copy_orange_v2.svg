@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<title>Astrometric Solution Copy</title>
+<rect x="2" y="2" width="60" height="60" rx="13" fill="#F28C28"/>
+<rect x="9" y="11" width="29" height="27" rx="4" fill="#fff"/>
+<path d="M16 19h15v4H16zm0 8h10v4H16z" fill="#F28C28"/>
+<rect x="26" y="28" width="29" height="27" rx="4" fill="#fff" stroke="#F28C28" stroke-width="3"/>
+<path d="M38 33h5v6h6v5h-6v6h-5v-6h-6v-5h6z" fill="#F28C28"/>
+<path d="M42 12h12v13l-5-5-5 5-4-4 5-5z" fill="#fff"/>
+</svg>
