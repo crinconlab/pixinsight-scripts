@@ -1,0 +1,15 @@
+CRINCONLAB POLYMASK 0.1.0
+Copyright © Carlos Rincón 2026
+
+1. Open a grayscale or RGB image. An STF helps view a linear image.
+2. Launch Script > Crinconlab > PolyMask, select it, then Open editor.
+3. Left click to add vertices; click the first vertex to close.
+4. Drag vertices to move them. Click a closed edge to add another point.
+5. Right click near a vertex to delete it, or use Close polygon/Clear contour.
+6. Wheel zooms; Shift + left drag pans. Undo restores contour edits.
+7. Choose Feather sigma and Inward/Both sides; optional Invert mask.
+8. Update Preview shows the actual output mask and a colored overlay.
+9. Enter a mask name; optionally Apply mask to the reference image.
+10. Create Mask. Save the output manually. Create more masks or Back.
+
+No astrometric solution or second image is required. Original pixels remain unchanged. Close/Back discards the contour and temporary preview but keeps created outputs. The first version supports one polygon, up to 64 vertices.

@@ -2,7 +2,7 @@
 
 Scripts para PixInsight de crinconlab y preparación de su repositorio de actualizaciones.
 
-**Estado: desarrollo. Hay tres scripts provisionales; todavía no hay una versión publicada mediante el gestor de actualizaciones.**
+**Estado: desarrollo. Los scripts son provisionales; todavía no hay una versión publicada mediante el gestor de actualizaciones.**
 
 ## Estructura
 
@@ -41,3 +41,17 @@ Consulta [entradas, controles, método y límites](docs/mezcla-focales.md). Las 
 
 El [icono SVG](src/scripts/crinconlab/Mezcla_Focales.svg) debe guardarse junto al archivo JavaScript al instalarlo.
 
+
+
+## PolyMask 0.1.0 — versión preliminar
+
+Editor independiente de máscaras poligonales sobre una imagen RGB o monocroma. Incluye vértices editables, menú contextual, zoom y desplazamiento sincronizados, previsualización con superposición, suavizado hacia dentro o a ambos lados, inversión y aplicación opcional de la máscara. No requiere astrometría ni otra imagen.
+
+- [Descargar PolyMask 0.1.0](https://github.com/crinconlab/pixinsight-scripts/releases/tag/polymask-v0.1.0)
+- [Manual en inglés](docs/polymask.md)
+- [Inicio rápido](docs/polymask-quick-start.txt)
+- [Comprobaciones realizadas](docs/polymask-validation.txt)
+
+Se han superado 26 comprobaciones nativas en PixInsight 1.9.5. Es una primera versión pendiente de la validación del usuario con imágenes reales. Se distribuye como ZIP para instalación manual; no activa ni modifica el repositorio de actualizaciones automáticas.
+
+Copyright © Carlos Rincón 2026.
