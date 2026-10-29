@@ -30,8 +30,8 @@
       "script": "PolyMask_EN.js",
       "feature": "CrinconlabPolyMask : Crinconlab > PolyMask",
       "icon": "icons/polymask_orange.svg",
-      "version": "0.1.0",
-      "sha256": "f0938204a43451d4b2b3195c7df0cdd6eff5dd06db980de9b7019fe8505f3f91"
+      "version": "0.2.0-beta.1",
+      "sha256": "c28acfcb1e85b2584f53baeb9490756d686dc7712710f3caa2574c88cc071640"
     }
   ]
 }

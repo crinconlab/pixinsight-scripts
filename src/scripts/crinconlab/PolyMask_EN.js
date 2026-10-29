@@ -1,7 +1,7 @@
 // Copyright © Carlos Rincón 2026
 #feature-id CrinconlabPolyMask : Crinconlab > PolyMask
 #feature-icon icons/polymask_orange.svg
-#feature-info Interactive polygon masks with editable vertices, synchronized zoom, full-resolution feathering and optional application. Version 0.1.0. Copyright &copy; Carlos Rinc&oacute;n 2026.
+#feature-info Multiple polygon regions with independent feathering and mask strength, combined or separate outputs. Version 0.2.0-beta.1. Copyright &copy; Carlos Rinc&oacute;n 2026.
 #engine v8
 #include <pjsr/StdIcon.jsh>
 #include <pjsr/StdButton.jsh>
@@ -350,6 +350,29 @@ function PM_edgeAt(points,x,y,geo,width,height)
    return best;
 }
 
+function PM_copyRegion(r)
+{
+   var selection=new PM_PolygonSelection(r.selection.width,r.selection.height);
+   selection.points=r.selection.points.map(function(p){return{x:p.x,y:p.y};});selection.closed=r.selection.closed;
+   return {selection:selection,feather:r.feather,mode:r.mode,invert:r.invert,strength:r.strength};
+}
+function PM_makeRegions(reference,regions,progress)
+{
+   if(!regions.length || regions.length>32)throw new Error("Select 1 to 32 regions.");
+   regions.forEach(function(r){r.selection.polygon();PM_number(r.strength,"Mask strength",0,100);});
+   var work=new PM_Work,result=null;
+   try{
+      for(var i=0;i<regions.length;++i){
+         var r=regions[i];if(progress)progress(100*i/regions.length,"Computing region "+(i+1)+" of "+regions.length+"…");
+         var mask=work.own(PM_makeMask(reference,r.selection.polygon(),r.feather,r.mode,r.invert));
+         var expression=mask.mainView.id+"*"+(r.strength/100);
+         if(result)expression="max("+result.mainView.id+","+expression+")";
+         var next=PM_math(expression,mask.mainView,work,"Regions",false);work.close(mask);if(result)work.close(result);result=next;
+      }
+      work.release(result);if(progress)progress(100,"All regions computed");return result;
+   }finally{work.dispose();}
+}
+
 class PM_MaskDialog extends Dialog
 {
 constructor(reference,feather,background,coverage,footprint)
@@ -364,7 +387,8 @@ constructor(reference,feather,background,coverage,footprint)
    this.imageWidth=image.width; this.imageHeight=image.height;
    this.camera=new PM_Camera(image.width,image.height);
    this.selection=new PM_PolygonSelection(image.width,image.height); this.selected=-1;
-   this.windowTitle="Crinconlab PolyMask · v0.1.0 · "+this.background.id;
+   this.regions=[];this.activeRegion=0;
+   this.windowTitle="Crinconlab PolyMask · v0.2.0-beta.1 · "+this.background.id;
    this.detailBitmap=PM_displayBitmap(this.background,true);
    this.vertex=new SpinBox(this); this.vertex.minValue=1; this.vertex.maxValue=1; this.vertex.value=1;
    this.vertex.toolTip="Select the editable polygon vertex by number.";
@@ -390,6 +414,17 @@ constructor(reference,feather,background,coverage,footprint)
    this.feather=new SpinBox(this); this.feather.minValue=0; this.feather.maxValue=256; this.feather.value=feather===undefined?16:feather;
    this.feather.toolTip="Gaussian sigma in source-image pixels. Zero creates hard edges. Inward keeps the exterior exactly black; Both sides spreads the transition outside and inside.";
    this.feather.onValueUpdated=function() { self.invalidate(); };
+   this.strength=new SpinBox(this);this.strength.minValue=0;this.strength.maxValue=100;this.strength.value=100;
+   this.strength.toolTip="Mask strength for the selected region. 100% allows full processing; 0% protects it. This does not adjust image brightness.";
+   this.strength.onValueUpdated=function(){self.invalidate();};
+   this.regionList=new ComboBox(this);this.regionList.setScaledMinWidth(160);
+   this.regionList.toolTip="Choose the polygon to edit. Other contours remain visible in cyan.";
+   this.regionList.onItemSelected=function(i){if(!self.syncing && !self.busy)self.switchRegion(i);};
+   this.addRegionButton=new PushButton(this);this.addRegionButton.text="Add region";
+   this.addRegionButton.onClick=function(){self.addRegion();};
+   this.deleteRegionButton=new PushButton(this);this.deleteRegionButton.text="Delete region";
+   this.deleteRegionButton.onClick=function(){self.deleteRegion();};
+   var regionRow=new HorizontalSizer;regionRow.spacing=8;regionRow.add(PM_label(this,"Region:"));regionRow.add(this.regionList);regionRow.add(this.addRegionButton);regionRow.add(this.deleteRegionButton);regionRow.addStretch();regionRow.add(PM_label(this,"Mask strength (%):"));regionRow.add(this.strength);
    var coordinates=new HorizontalSizer; coordinates.spacing=6;
    coordinates.add(PM_label(this,"Vertex:")); coordinates.add(this.vertex);
    coordinates.add(PM_label(this,"x:")); coordinates.add(this.vertexX);
@@ -451,14 +486,72 @@ constructor(reference,feather,background,coverage,footprint)
    buttons.add(help);buttons.add(this.preview); buttons.addStretch(); buttons.add(this.create); buttons.add(cancel);
    this.sizer=new VerticalSizer; this.sizer.margin=12; this.sizer.spacing=8;
    this.sizer.add(PM_label(this,"Left click to add vertices; click the first vertex or Close polygon to finish. Drag vertices to move them. Click a closed edge to insert a point. Right click for contour actions."));
-   this.sizer.add(navigation);this.sizer.add(columns,100); this.sizer.add(tools); this.sizer.add(coordinates);
+   this.sizer.add(regionRow);this.sizer.add(navigation);this.sizer.add(columns,100); this.sizer.add(tools); this.sizer.add(coordinates);
    this.sizer.add(PM_label(this,"Wheel: zoom at the pointer. Shift + left drag: pan both panels. Normal left drag: move a vertex. Fit Image: return to the full field."));
    this.sizer.add(PM_label(this,"Edit vertex coordinates numerically if needed. The generated mask includes exactly the feathering shown in the preview."));
    this.sizer.add(options);this.sizer.add(outputRow);
    this.sizer.add(this.status);this.sizer.add(this.progressBar); this.sizer.add(buttons);this.sizer.add(PM_copyright(this));
+   this.separate=new PushButton(this);this.separate.text="Create Separate Masks";
+   this.separate.toolTip="Create one mask per region for applying different PixInsight processes. No mask is attached automatically.";
+   this.separate.onClick=function(){self.createSeparate();};buttons.add(this.separate);
+   this.regions=[{selection:this.selection,feather:this.feather.value,mode:0,invert:false,strength:100}];this.refreshRegions();
    this.onClose=function(){return !self.busy;};
    this.setScaledMinSize(940,660); this.adjustToContents();this.fit(); this.invalidate();
 }
+
+saveRegion()
+{
+   if(!this.regions.length)return;
+   var r=this.regions[this.activeRegion];r.selection=this.selection;r.feather=this.feather.value;r.mode=this.mode.currentItem;r.invert=this.invert.checked;r.strength=this.strength.value;
+}
+refreshRegions()
+{
+   this.syncing=true;try{this.regionList.clear();for(var i=0;i<this.regions.length;++i)this.regionList.addItem("Region "+(i+1));this.regionList.currentItem=this.activeRegion;}finally{this.syncing=false;}
+}
+loadRegion()
+{
+   var r=this.regions[this.activeRegion];this.syncing=true;
+   try{this.selection=r.selection;this.feather.value=r.feather;this.mode.currentItem=r.mode;this.invert.checked=r.invert;this.strength.value=r.strength;this.selected=-1;}finally{this.syncing=false;}
+   this.refreshRegions();this.invalidate();
+}
+switchRegion(index)
+{
+   if(index<0 || index>=this.regions.length)return;
+   this.cancelDrags();this.saveRegion();this.activeRegion=index;this.loadRegion();
+}
+addRegion()
+{
+   if(this.busy)return;
+   if(this.regions.length>=32){this.status.text="Up to 32 regions are supported.";return;}
+   this.saveRegion();this.recordEdit();this.regions.push({selection:new PM_PolygonSelection(this.imageWidth,this.imageHeight),feather:16,mode:0,invert:false,strength:100});this.activeRegion=this.regions.length-1;this.loadRegion();
+}
+deleteRegion()
+{
+   if(this.busy)return;this.saveRegion();this.recordEdit();this.regions.splice(this.activeRegion,1);
+   if(!this.regions.length)this.regions.push({selection:new PM_PolygonSelection(this.imageWidth,this.imageHeight),feather:16,mode:0,invert:false,strength:100});
+   this.activeRegion=Math.min(this.activeRegion,this.regions.length-1);this.loadRegion();
+}
+allValid()
+{
+   try{this.saveRegion();this.regions.forEach(function(r){r.selection.polygon();});return this.regions.length>0;}catch(e){return false;}
+}
+createSeparate()
+{
+   if(this.busy || !this.allValid())return;
+   var work=new PM_Work,outputs=[];this.busy=true;
+   try{
+      var base=this.outputName.text.trim();PM_validId(base);
+      for(var i=0;i<this.regions.length;++i){
+         var r=this.regions[i],mask=work.own(PM_makeRegions(this.reference,[r]));
+         mask.mainView.id=PM_availableId(base+"_Region_"+(i+1));
+         if(this.reference.window.hasAstrometricSolution)mask.copyAstrometricSolution(this.reference.window);
+         outputs.push(mask);
+      }
+      outputs.forEach(function(w){w.show();work.release(w);});this.createdMasks=this.createdMasks.concat(outputs);
+      this.status.text="Created "+outputs.length+" separate masks. Attach each mask to apply different processes; save manually.";
+   }catch(e){this.status.text="Error: "+String(e);}finally{work.dispose();this.busy=false;console.hide();}
+}
+
 viewport()
 {
    return {width:Math.min(this.detailPane.width,this.maskPane.width),height:Math.min(this.detailPane.height,this.maskPane.height)};
@@ -502,6 +595,7 @@ syncCoordinates()
 }
 invalidate()
 {
+   if(this.syncing)return;
    PM_close(this.cachedMask);this.cachedMask=null;this.maskBitmap=null;this.overlayBitmap=null;if(this.progressBar)this.progressBar.setValue(0);this.syncCoordinates();
    var valid=false;
    if (!this.selection.closed)
@@ -511,20 +605,21 @@ invalidate()
       try { this.selection.polygon(); valid=true; this.status.text="Contour closed. Click Update Preview or Create Mask."; }
       catch (e) { this.status.text=String(e); }
    }
-   this.preview.enabled=this.create.enabled=valid && !this.busy;
+   valid=this.allValid();
+   if(this.selection.closed && !valid)this.status.text="Close every region before preview or output. Select an unfinished region, or delete it.";
+   this.preview.enabled=this.create.enabled=this.separate.enabled=valid && !this.busy;
    this.closePolygon.enabled=!this.selection.closed && this.selection.points.length>=3 && !this.busy;
    this.undo.enabled=this.history.length>0 && !this.busy;this.clear.enabled=this.selection.points.length>0 && !this.busy;
    this.detailPane.update(); this.maskPane.update();
 }
 recordEdit()
 {
-   this.history.push({points:this.selection.points.map(function(p){return{x:p.x,y:p.y};}),closed:this.selection.closed,selected:this.selected});
-   if(this.history.length>50)this.history.shift();
+   this.saveRegion();this.history.push({regions:this.regions.map(PM_copyRegion),active:this.activeRegion,selected:this.selected});if(this.history.length>50)this.history.shift();
 }
 undoEdit()
 {
    if(this.busy || !this.history.length)return;
-   var previous=this.history.pop();this.selection.points=previous.points;this.selection.closed=previous.closed;this.selected=previous.selected;this.invalidate();
+   var previous=this.history.pop();this.regions=previous.regions.map(PM_copyRegion);this.activeRegion=previous.active;this.loadRegion();this.selected=previous.selected;this.syncCoordinates();
 }
 clearContour()
 {
@@ -567,12 +662,13 @@ calculate()
    var candidate=null;
    try
    {
-      var self=this;candidate=PM_makeMask(this.reference,this.selection.polygon(),this.feather.value,this.mode.currentItem,this.invert.checked,function(p,text){self.status.text=text;self.status.repaint();self.progressBar.setValue(p);});
+      this.saveRegion();var self=this;
+      candidate=PM_makeRegions(this.reference,this.regions,function(p,text){self.status.text=text;self.status.repaint();self.progressBar.setValue(p);});
       var bitmap=candidate.mainView.image.render();PM_close(this.cachedMask);this.cachedMask=candidate;candidate=null;this.maskBitmap=bitmap;this.rebuildOverlay();
       this.progressBar.setValue(100);this.status.text="Preview ready. White allows processing; black protects. The output includes this feathering.";return true;
    }
    catch(e){this.status.text="Error: "+String(e);return false;}
-   finally{PM_close(candidate);this.busy=false;this.preview.enabled=this.create.enabled=this.selection.closed;this.repaintBoth();console.hide();}
+   finally{PM_close(candidate);this.busy=false;this.preview.enabled=this.create.enabled=this.separate.enabled=this.allValid();this.repaintBoth();console.hide();}
 }
 createOutput()
 {
@@ -630,6 +726,11 @@ makePane(isMask)
                g.pen=new Pen(0xffbf40ff,4.5);
                for(var k=0;k<self.guide.length;++k){var a=self.guide[k],b=self.guide[(k+1)%self.guide.length];g.drawLine(ox+a.x*s,oy+a.y*s,ox+b.x*s,oy+b.y*s);}
             }
+            self.regions.forEach(function(region,index){
+               if(index===self.activeRegion)return;var pts=region.selection.points;g.pen=new Pen(0xff20dfdf,1);
+               for(var k=1;k<pts.length;++k)g.drawLine(ox+pts[k-1].x*s,oy+pts[k-1].y*s,ox+pts[k].x*s,oy+pts[k].y*s);
+               if(region.selection.closed && pts.length>2)g.drawLine(ox+pts[pts.length-1].x*s,oy+pts[pts.length-1].y*s,ox+pts[0].x*s,oy+pts[0].y*s);
+            });
             var points=self.selection.points;
             g.pen=new Pen(self.guide.length?0xff65e4ed:0xffbf40ff,1);
             for (var i=1;i<points.length;++i)
@@ -725,39 +826,8 @@ makePane(isMask)
 }
 
 
-var PM_HELP = [
-"CRINCONLAB POLYMASK — VERSION 0.1.0",
-"Copyright © Carlos Rincón 2026",
-"",
-"PURPOSE",
-"Draw a polygon on one open monochrome or RGB image and create a full-resolution 32-bit grayscale mask. No astrometry, second reference, StarXTerminator or ImageSolver is required. The image can be linear or stretched. Alpha-channel images are not supported in this version.",
-"",
-"WORKFLOW",
-"Select a main image or Open image, then Open editor. The contour starts empty. Draw it on the left panel; the right panel shows the actual mask after Update Preview. Give the mask a unique image name, optionally enable Apply mask to the reference image, then Create Mask. The editor stays open for additional masks. Save the outputs manually.",
-"",
-"MOUSE AND CONTOUR",
-"Left click in an empty area adds a vertex while the contour is open. Drag a vertex to move it. Click the first vertex, or Close polygon, to close the contour. Click a closed edge to insert a vertex. Right click near a vertex for Delete vertex; the menu also provides Close polygon and Clear contour. Up to 64 vertices are supported. Duplicate points, self-intersections and zero-area contours cannot produce a mask.",
-"Undo restores up to 50 contour edit snapshots, including deletion, insertion and dragging. Numeric vertex controls allow precise positioning. Coordinates refer to the full-resolution image; zoom never changes geometry.",
-"Wheel: synchronized zoom around the pointer. Shift + left drag: pan both panels. Normal left drag edits vertices. Fit Image returns to the complete image; 100% shows one image pixel per display pixel.",
-"",
-"FEATHERING AND INVERSION",
-"Feather sigma is the Gaussian standard deviation in source-image pixels, from 0 to 256. It is not an exact transition width. Zero gives hard edges. Inward feathering softens inside the polygon and leaves every exterior pixel exactly black. Both sides uses a Gaussian transition extending inside and outside the contour. Invert mask exchanges white and black AFTER feathering.",
-"The output includes the feathering shown in the preview. Create Mask copies the full-resolution cached mask after automatically refreshing stale calculations, so preview and output share the same float pixel values. The rendered screen preview is quantized for display; the output remains 32-bit floating point. Feathering occurs once.",
-"",
-"DISPLAY",
-"The reference's current STF is used by default, without changing its pixels or STF settings. For a linear image, activate an STF before opening the editor. Disable Use image STF for an unstretched display. Overlay color and opacity affect display only. Purple, cyan and red are available. White mask values receive the strongest overlay; black is transparent. The grayscale output is never stretched.",
-"",
-"OUTPUT AND SAFETY",
-"White allows processing, black protects and gray applies it partially. The mask has exactly the source width and height. If a source astrometric solution exists, it is copied to the output because the pixel grid is unchanged, but no solution is required. Original image pixels and selection are preserved.",
-"Apply mask to the reference image is OFF by default. Enabling it attaches the new mask, replacing any current mask, and enables mask display. It does not alter image pixels. Previously attached mask images are never closed.",
-"Create Mask retains a new image in the workspace, then suggests a free name for the next output. Duplicate or invalid names are blocked. Back discards the current contour and hidden preview, returning to image selection; previously created output masks remain open. Closing the editor also cleans only its own temporary preview. Nothing is saved automatically.",
-"",
-"INSTALLATION",
-"Keep PolyMask_EN.js with icons/polymask_orange.svg in the same package. In Script > Feature Scripts, add the folder containing the JavaScript file and click Done. Launch Script > Crinconlab > PolyMask. Help works before selecting an image; Save manual .txt exports these instructions.",
-"",
-"LIMITS",
-"This first version supports one polygon, up to 64 vertices, standard Gaussian edge transitions and grayscale/RGB main images without alpha. Multiple regions, holes and contour-file import/export are not included. Native processing can pause stage progress while busy; technical messages may still be written by PixInsight, but the script does not explicitly open the process console."
-].join("\n");
+var PM_HELP = "POLYMASK MULTI-REGION — 0.2.0-beta.1 (PixInsight 1.9.5)\nCopyright © Carlos Rincón 2026\n\nSelect one RGB or monochrome image without alpha, then Open editor. Activate a display STF beforehand for linear images.\n\nDraw a polygon with left clicks, then click the first vertex or Close polygon. Add region starts another independent polygon. Select Region to return to any polygon. Delete region removes that polygon; Undo restores contour edits, region additions and deletions. Up to 32 regions and 64 vertices per region.\n\nEach region retains its own Feather sigma (0–256 source pixels), Inward/Both sides transition, inversion and Mask strength (0–100%). Strength scales the mask, not the image brightness. Inversion affects the entire image for that region; it can expose the exterior. Defaults: sigma 16, Inward, no inversion, 100% strength.\n\nThe active polygon is purple and the others cyan. Drag vertices to move them; click a closed edge to insert a vertex; right click for contour actions. Numeric coordinates are available. Wheel zooms; Shift + left drag pans both panels; Fit Image shows the whole field.\n\nClose ALL regions before Update Preview or output. The combined mask is the maximum of each feathered, optionally inverted, weighted region. Overlaps use the strongest value, never a sum. White allows processing; black protects; gray permits partial processing. The preview is the actual full-resolution mask, quantized only for screen display. Overlay opacity/color and STF are display settings only.\n\nCreate Mask produces the combined 32-bit grayscale image. Apply mask is optional and OFF by default. Create Separate Masks produces one image per region with that region's settings, without attaching any mask. Use these separate masks to run different PixInsight adjustments on each zone. This script creates masks; it does not execute brightness, color or noise-reduction adjustments. Outputs inherit source astrometry if available. Save manually.\n\nThe editor stays open. Back returns to image selection, discarding polygons/temporary preview and retaining created masks. Source pixels remain unchanged. Region layouts are held in memory only; project save/load and holes are not included.\n\nDevelopment branch: polymask-multi-region. Keep icons/polymask_orange.svg beside the script. Add the Crinconlab folder through Script > Feature Scripts. This beta targets PixInsight 1.9.5; test on copies before replacing an attached mask.\n";
+
 function PM_help()
 {
    var dialog=new Dialog;dialog.windowTitle="PolyMask · Help";
@@ -771,7 +841,7 @@ class PM_SetupDialog extends Dialog
 {
 constructor()
 {
-   super();var self=this;this.windowTitle="Crinconlab PolyMask · v0.1.0";
+   super();var self=this;this.windowTitle="Crinconlab PolyMask · v0.2.0-beta.1";
    this.views=new ViewList(this);this.views.getMainViews();this.views.setScaledMinWidth(430);
    var active=ImageWindow.activeWindow;if(active && !active.isNull)this.views.currentView=active.mainView;
    var open=new PushButton(this);open.text="Open image…";open.onClick=function()
@@ -788,7 +858,7 @@ constructor()
    var close=new PushButton(this);close.text="Close";close.onClick=function(){self.cancel();};
    var buttons=new HorizontalSizer;buttons.spacing=8;buttons.add(help);buttons.addStretch();buttons.add(next);buttons.add(close);
    this.sizer=new VerticalSizer;this.sizer.margin=14;this.sizer.spacing=10;
-   this.sizer.add(PM_label(this,"Create a polygon mask from one image. Select an open monochrome or RGB main image. No astrometry or second image is required. For linear images, set a display STF first."));
+   this.sizer.add(PM_label(this,"Create masks from multiple independent polygon regions on one image. Select an open monochrome or RGB main image. No astrometry or second image is required. For linear images, set a display STF first."));
    this.sizer.add(source);this.sizer.add(PM_label(this,"Draw and edit vertices, preview feathered edges, then create a full-resolution mask. Original image pixels remain unchanged."));this.sizer.add(buttons);this.sizer.add(PM_copyright(this));
    this.setScaledMinWidth(660);this.adjustToContents();
 }
