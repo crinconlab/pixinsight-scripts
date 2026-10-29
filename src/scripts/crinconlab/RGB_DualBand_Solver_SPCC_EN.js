@@ -1,8 +1,9 @@
 // Copyright © Carlos Rincón 2026
 #feature-id CarlosRinconRGBDualBandEN : Crinconlab > RGB DualBand Solver SPCC
 #feature-icon icons/rgb_dualband_orange_v2.svg
-#feature-info RGB + Dual Band composition, Image Solver and SPCC. Version 0.14.2. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026.
+#feature-info RGB + Dual Band composition, Image Solver and SPCC. Version 0.14.3. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026.
 #engine v8
+#include "ProtectedPaths.jsh"
 #include <pjsr/StdIcon.jsh>
 #include <pjsr/StdButton.jsh>
 #include <pjsr/PropertyType.jsh>
@@ -26,7 +27,7 @@ CoreApplication.ensureMinimumVersion(1,9,5);
 #include <../src/scripts/ImageSolver/ImageSolverEngine.js>
 
 var RD_HELP_TEXT=[
-   "RGB + DUAL BAND \u2014 VERSION 0.14.2",
+   "RGB + DUAL BAND \u2014 VERSION 0.14.3",
    "Copyright \u00a9 Carlos Rinc\u00f3n 2026",
    "",
    "INPUT PREPARATION",
@@ -66,7 +67,7 @@ class RD_HelpDialog extends Dialog
 {
 constructor()
 {
-   super();var self=this;this.windowTitle="Help and instructions · RGB + Dual Band · v0.14.2";
+   super();var self=this;this.windowTitle="Help and instructions · RGB + Dual Band · v0.14.3";
    this.manual=new TextBox(this);this.manual.readOnly=true;this.manual.text=RD_HELP_TEXT;
    this.manual.setScaledMinSize(700,460);
    this.exportButton=new PushButton(this);this.exportButton.text="Save manual .txt...";
@@ -74,7 +75,7 @@ constructor()
    {
       var picker=new SaveFileDialog;picker.caption="Save instructions";
       picker.filters=[["Text file",".txt"]];picker.initialPath="RGB_DualBand_Solver_SPCC_Manual_EN.txt";
-      if(picker.execute())try{File.writeTextFile(picker.fileName,RD_HELP_TEXT);}
+      if(picker.execute())try{CR_writeUserText(picker.fileName,RD_HELP_TEXT);}
       catch(e){new MessageBox(String(e),"Could not save the manual",StdIcon_Error,StdButton_Ok).execute();}
    };
    var close=new PushButton(this);close.text="Close";close.onClick=function(){self.ok();};
@@ -417,7 +418,7 @@ class RD_PreviewDialog extends Dialog
 constructor(config,services)
 {
    super();var self=this;this.busy=false;this.onClose=function(){return !self.busy;};this.config=config;this.services=services;this.state={reference:null,result:null,accepted:false};
-   this.windowTitle="SPCC-calibrated preview · v0.14.2";
+   this.windowTitle="SPCC-calibrated preview · v0.14.3";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function pane()
    {
@@ -635,7 +636,7 @@ class RD_Dialog extends Dialog
 constructor()
 {
    super();var self=this;
-   this.windowTitle="RGB + Dual Band → Image Solver → SPCC · v0.14.2";
+   this.windowTitle="RGB + Dual Band → Image Solver → SPCC · v0.14.3";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function choose(list)
    {

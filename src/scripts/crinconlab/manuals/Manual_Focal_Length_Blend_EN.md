@@ -1,4 +1,4 @@
-# Focal Length Blend — 0.11.5, preliminary CPD review build
+# Focal Length Blend — 0.11.6, preliminary CPD review build
 
 Copyright © Carlos Rincón 2026
 
@@ -230,7 +230,7 @@ Set default Relative detail gain to 0.50 (50%). The control continues displaying
 
 Enable Download Sample Images with an explicit copyright/usage notice and Agree and Download / Cancel actions. Use the verified GitHub Releases asset. Add a documented real-image sample package with English image names, with-stars/starless pairs and preserved astrometry. Fusion, gain defaults and mask navigation are unchanged.
 
-## Changes in 0.11.5
+## Changes in 0.11.6
 
 Sample downloads are restricted to HTTPS, including redirects. Before publication the script checks 85,376,365 bytes and the pinned SHA-256 `9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26`. The SHA-256 is calculated incrementally inside the script, without an external hash executable. An altered file is rejected even if its size is unchanged. An existing destination is retained during verification and protected with a temporary recovery file during replacement. File/read/transfer errors clean the partial download when possible.
 
@@ -244,3 +244,7 @@ Task descriptions appear in blue, with a percentage bar below. Percentages descr
 
 CPD REVIEW CANDIDATE — 29 OCTOBER 2026
 Current scope: four scripts, PolyMask excluded. See docs/validation-pixinsight-1.9.6.md in the cpd-review repository for newly executed checks and author-accepted continuity assumptions. Earlier validation notes in this manual describe earlier work, not additional 1.9.6 results.
+
+
+WRITE-PATH PROTECTION — 29 OCTOBER 2026
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.

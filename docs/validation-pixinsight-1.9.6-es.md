@@ -57,3 +57,7 @@ El autor ha decidido no bloquear esta revisión por los siguientes puntos y acep
 ## Trazabilidad
 
 Los resultados agregados sin rutas locales privadas están en [validation-results-1.9.6.json](validation-results-1.9.6.json). Los registros completos y capturas se conservan localmente con el autor. La instantánea probada figura arriba; el manifiesto y SHA256SUMS.txt identifican el candidato final. No se ha enviado ninguna solicitud CPD ni se han generado claves o firmas.
+
+
+## Subsequent write-path safety update
+The candidate was updated to Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.14.3 with ProtectedPaths.jsh. This adds disk-write protection, not image-algorithm changes. New native guard/I/O regression checks passed on PixInsight 1.9.6. See [path-write-safety.md](path-write-safety.md). Earlier processing results retain their original tested snapshot.

@@ -2,9 +2,9 @@ CRINCONLAB — FOUR-SCRIPT CPD SUBMISSION CANDIDATE
 Copyright © Carlos Rincón 2026
 
 PRODUCTS INCLUDED
-FITS / XISF Header Editor 1.0.0 — FITS_XISF_Header_Editor_EN.js
-RGB DualBand Solver SPCC 0.14.2 — RGB_DualBand_Solver_SPCC_EN.js
-Focal Length Blend 0.11.5 — Mezcla_Focales.js
+FITS / XISF Header Editor 1.0.1 — FITS_XISF_Header_Editor_EN.js
+RGB DualBand Solver SPCC 0.14.3 — RGB_DualBand_Solver_SPCC_EN.js
+Focal Length Blend 0.11.6 — Mezcla_Focales.js
 Astrometric Solution Copy 1.1 — Astrometric_Solution_Copy_EN.js
 
 PolyMask is not included in this review branch or package.
@@ -66,3 +66,7 @@ See docs/validation-pixinsight-1.9.6.md in the repository for evidence and limit
 Image files are never uploaded by any explicit upload routine in these four
 sources. Behaviour of the installed dependent components is outside that
 limited source finding and is not declared fully audited here.
+
+
+WRITE-PATH PROTECTION — 29 OCTOBER 2026
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.

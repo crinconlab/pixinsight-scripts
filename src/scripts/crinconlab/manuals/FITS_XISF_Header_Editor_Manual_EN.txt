@@ -1,4 +1,4 @@
-FITS / XISF HEADER EDITOR — VERSION 1.0.0 — ENGLISH EDITION
+FITS / XISF HEADER EDITOR — VERSION 1.0.1 — ENGLISH EDITION
 Copyright © Carlos Rincón 2026
 
 OPEN AND INSPECT
@@ -148,4 +148,8 @@ exercise the translated type labels and interface using synthetic fixtures.
 Copyright © Carlos Rincón 2026
 
 REVIEW PACKAGE — 29 OCTOBER 2026
-Version 1.0.0 identifies the existing implementation; this version-label change does not change processing. Native FITS/XISF copy, simulation, overwrite, readback and interface-state checks passed on PixInsight 1.9.6 x64/macOS. See docs/validation-pixinsight-1.9.6.md in the review repository for scope and limits.
+Version 1.0.1 identifies the existing implementation; this version-label change does not change processing. Native FITS/XISF copy, simulation, overwrite, readback and interface-state checks passed on PixInsight 1.9.6 x64/macOS. See docs/validation-pixinsight-1.9.6.md in the review repository for scope and limits.
+
+
+WRITE-PATH PROTECTION — 29 OCTOBER 2026
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.

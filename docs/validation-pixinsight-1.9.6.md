@@ -45,3 +45,7 @@ The Focal blend and the uncalibrated RGB geometry result were saved and reopened
 - The header editor retains its default legacy runtime; the other three scripts use V8. Legacy API warnings were observed without blocking successful checks.
 
 These limitations do not block the author's decision to submit. They must not be represented as newly measured successes or as CPD approval. No certification, keys, signatures or update repository were created. Sanitized results are in [validation-results-1.9.6.json](validation-results-1.9.6.json); complete logs and images remain with the author.
+
+
+## Subsequent write-path safety update
+The candidate was updated to Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.14.3 with ProtectedPaths.jsh. This adds disk-write protection, not image-algorithm changes. New native guard/I/O regression checks passed on PixInsight 1.9.6. See [path-write-safety.md](path-write-safety.md). Earlier processing results retain their original tested snapshot.

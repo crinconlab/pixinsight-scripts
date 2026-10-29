@@ -13,25 +13,31 @@
       "script": "FITS_XISF_Header_Editor_EN.js",
       "feature": "CarlosRinconHeaderEditorEN : Crinconlab > FITS-XISF Header Editor",
       "icon": "icons/header_editor_orange_v2.svg",
-      "sha256": "f93c2e436abb7b9cf5d3d4ae7c576ea5399ff35edd06944cd8219e03b9fbad33",
-      "version": "1.0.0"
+      "sha256": "7bcfc767e2c09766dbfd8bf0d23ee26d2054135a816ed91f0d03b386c033b886",
+      "version": "1.0.1"
     },
     {
       "script": "Mezcla_Focales.js",
       "feature": "CrinconlabMezclaFocales : Crinconlab > Focal Length Blend",
       "icon": "icons/Mezcla_Focales_orange_v2.svg",
-      "sha256": "fe64bd1aa1f78e7365a200b32e99443674179e5a4694ec6b84fcf6d3c05914c8",
-      "version": "0.11.5"
+      "sha256": "9af6336030611a29fcb6c1f1f4712e87e91c9445a14313b24ea911c492a6f25a",
+      "version": "0.11.6"
     },
     {
       "script": "RGB_DualBand_Solver_SPCC_EN.js",
       "feature": "CarlosRinconRGBDualBandEN : Crinconlab > RGB DualBand Solver SPCC",
       "icon": "icons/rgb_dualband_orange_v2.svg",
-      "sha256": "4c42ddf2a6eb1a57e3cfa068770b9e70ee47ee026fb877b8e8df23ec6050e7bc",
-      "version": "0.14.2"
+      "sha256": "ef11111026c70c7b9af0011e11e1dfce5cc15e677a0c92948b3541d195acc581",
+      "version": "0.14.3"
     }
   ],
   "scope": "Four-script CPD submission candidate; PolyMask excluded.",
   "reviewDate": "2026-10-29",
-  "distribution": "manual; unsigned; no active update repository"
+  "distribution": "manual; unsigned; no active update repository",
+  "resources": [
+    {
+      "file": "ProtectedPaths.jsh",
+      "sha256": "0c508d65cf27be6e2848545681c52f75aa6012c946488bcdc37ecc0e61d1dbdc"
+    }
+  ]
 }

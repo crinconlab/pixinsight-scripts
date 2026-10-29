@@ -1,8 +1,9 @@
 // Copyright © Carlos Rincón 2026
 #feature-id CrinconlabMezclaFocales : Crinconlab > Focal Length Blend
 #feature-icon icons/Mezcla_Focales_orange_v2.svg
-#feature-info Astrometric preparation, StarXTerminator separation and selectable native MLT detail injection on a fixed short-focal canvas. Version 0.11.5. Copyright &copy; Carlos Rinc&oacute;n 2026.
+#feature-info Astrometric preparation, StarXTerminator separation and selectable native MLT detail injection on a fixed short-focal canvas. Version 0.11.6. Copyright &copy; Carlos Rinc&oacute;n 2026.
 #engine v8
+#include "ProtectedPaths.jsh"
 #include <pjsr/StdIcon.jsh>
 #include <pjsr/StdButton.jsh>
 #include <pjsr/ButtonCodes.jsh>
@@ -33,7 +34,7 @@ CoreApplication.ensureMinimumVersion(1,9,5);
  * Default: inject selected native MLT detail layers. Gaussian-band replacement
  * remains available as an alternative.
  */
-var MF_VERSION = "0.11.5";
+var MF_VERSION = "0.11.6";
 
 function MF_clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
 function MF_number(value, name, low, high)
@@ -853,6 +854,7 @@ function MF_sampleTemporaryPath(path,kind)
 }
 function MF_publishSampleZip(partial,path)
 {
+   partial=CR_assertUserWritePath(partial);path=CR_assertUserWritePath(path);
    var backup=null;
    if(File.exists(path))
    {
@@ -892,7 +894,8 @@ constructor()
 // Transfer directly: never open a modal web browser from the processing workflow.
 function MF_saveSampleZip(path,transfer)
 {
-   var partial=MF_sampleTemporaryPath(path,"download"),completed=false;
+   path=CR_assertUserWritePath(path);
+   var partial=CR_assertUserWritePath(MF_sampleTemporaryPath(path,"download")),completed=false;
    try
    {
       var program=/^(MS)?Windows$/i.test(CoreApplication.platform)?"curl.exe":"/usr/bin/curl";
@@ -993,7 +996,7 @@ MF_Camera.prototype.pan=function(dx,dy,w,h)
 };
 
 var MF_HELP = [
-   "# Focal Length Blend \u2014 0.11.5, preliminary release",
+   "# Focal Length Blend \u2014 0.11.6, preliminary release",
    "",
    "Copyright \u00a9 Carlos Rinc\u00f3n 2026",
    "",
