@@ -1,3 +1,0 @@
-Focal Length Blend 0.11.1
-
-Fix startup parsing of embedded help. Help is now stored in short ASCII-escaped lines for compatibility with the PixInsight script reader. Image processing and sample downloads are unchanged.

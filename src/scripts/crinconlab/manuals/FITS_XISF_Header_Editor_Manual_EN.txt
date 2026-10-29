@@ -136,7 +136,7 @@ Keep FITS_XISF_Header_Editor_EN.js in a permanent folder. Choose
 Script → Feature Scripts… → Add…, select its folder and click Done.
 Find it at Script → Crinconlab → FITS-XISF Header Editor.
 Replace that file in the same folder to update it.
-The Spanish edition remains in its previous menu category.
+This review package contains the English edition.
 
 TESTING
 The original implementation has been tested in PixInsight Core 1.9.5 for

@@ -1,1 +1,0 @@
-Blue task descriptions and percentage bars below the status text. Progress is based on processing stages, not elapsed time. A compact task window also shows intermediate comparison preparation. Image processing is unchanged.

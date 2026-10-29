@@ -1,0 +1,59 @@
+# Descripción de los cuatro scripts para la solicitud CPD
+
+Autor: Carlos Rincón. Identificador solicitado: `Carlos_Rincon_Astrophoto`. Colección: Crinconlab.
+
+**Borrador basado en el código publicado**, revisado estáticamente el 29 de octubre de 2026. Fuentes de referencia: commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. PolyMask queda fuera de esta entrega. Las descripciones no suponen una certificación de seguridad ni una prueba completa de los componentes nativos.
+
+## 1. FITS / XISF Header Editor
+
+**Archivo:** `FITS_XISF_Header_Editor_EN.js`. No declara una versión de producto en su cabecera.
+
+Herramienta para consultar y modificar palabras clave FITS en archivos FITS y XISF, de forma individual o por lotes. Permite seleccionar archivos de una carpeta o buscar en subcarpetas, consultar valores y comentarios, preparar cambios de texto, número o booleano y simular la operación antes de escribir. Las propiedades XISF se muestran en modo de lectura; determinadas palabras clave editables sincronizan sus propiedades XISF correspondientes.
+
+El modo inicial guarda copias en una carpeta elegida por el usuario y conserva los originales. También permite sobrescribirlos, con confirmación expresa, conservando o no una copia de seguridad. Reabre los archivos generados para verificar los metadatos solicitados antes de completar su publicación. En FITS modifica la cabecera primaria y copia los bytes posteriores sin reprocesar los píxeles. En XISF utiliza el módulo de formato, por lo que la serialización y los metadatos de codificación pueden cambiar; las extensiones no expuestas por PJSR no tienen garantía de conservación.
+
+**Red y programas externos:** no implementa conexiones de red, cargas de archivos, sincronización entre participantes ni lanzamiento de programas externos. Opera sobre las rutas del sistema de archivos seleccionadas por el usuario. Si se elige una carpeta montada por el sistema operativo desde un NAS o servidor, ese acceso no equivale a una función propia de intercambio entre participantes del script.
+
+**Ubicaciones de escritura:** carpeta de destino elegida, inicialmente sugerida como `Headers_Metadata`; carpetas de origen al sobrescribir; `Metadata_Backups/<fecha-hora-identificador>/` dentro de cada carpeta de origen si se conserva copia; archivos temporales `.metadata_*` en las carpetas de trabajo y de origen. En simulación no crea archivos ni carpetas. Las copias se conservan hasta que el usuario las gestione; la limpieza de temporales se intenta al terminar cada operación.
+
+## 2. RGB DualBand Solver SPCC — 0.14.2
+
+**Archivo:** `RGB_DualBand_Solver_SPCC_EN.js`.
+
+Asistente para combinar una imagen RGB de banda ancha con señal de una imagen de doble banda, sobre datos lineales preparados previamente. Trabaja con copias y ofrece registro mediante estrellas con StarAlignment, reproyección astrométrica de imágenes ya resueltas o uso de imágenes que el usuario confirma que están alineadas. Cuando corresponde, calcula y aplica un recorte del campo común a ambas copias.
+
+La composición añade al rojo de RGB la señal del canal rojo de la doble banda, o de su canal único si es monocroma, con intensidad ajustable. Después aplica SpectrophotometricColorCalibration con los parámetros seleccionados por el usuario. Reutiliza la solución astrométrica de RGB o abre ImageSolver si falta; mantiene la correspondencia astrométrica al recortar. Permite comparar y conservar un resultado sin repetir el cálculo ya revisado. No realiza sustracción del continuo ni garantiza color fotométrico tras incorporar banda estrecha.
+
+**Red y dependencias:** utiliza el ImageSolver y las bibliotecas astrométricas de la instalación de PixInsight; no los descarga. ImageSolver puede consultar catálogos o servicios de resolución de coordenadas según su configuración. SPCC utiliza el proceso nativo y el catálogo espectrofotométrico configurado por el usuario. Los destinos, protocolos, cachés y datos transmitidos por esos componentes en PixInsight 1.9.6 deben completarse en la revisión técnica. El archivo propio no contiene un cliente de red, un instalador ni llamadas a programas externos.
+
+**Archivos y preferencias:** puede abrir imágenes seleccionadas por el usuario, pero no guarda automáticamente los resultados. La exportación opcional del manual escribe un `.txt` en la ubicación elegida. La opción de guardar valores SPCC predeterminados utiliza la API oficial `Settings`, con la clave `CarlosRincon/RGBDualBandSPCC/v1/defaults`. Lee los archivos instalados `filters.xspd` y `white-references.xspd` sin modificarlos. El proceso de previsualización desactiva la generación de gráficos, mapas de estrellas y archivos de texto de SPCC.
+
+## 3. Focal Length Blend — 0.11.4
+
+**Archivo:** `Mezcla_Focales.js`.
+
+Herramienta para incorporar de manera selectiva estructuras de alta frecuencia de una imagen de focal larga a una imagen de gran campo, sobre imágenes ya estiradas y preparadas. Conserva las dimensiones y la cuadrícula de la imagen de focal corta; la imagen de focal larga se reproyecta sobre ella. Reutiliza la astrometría existente o abre ImageSolver para resolver copias cuando faltan soluciones y hay estrellas suficientes.
+
+Puede separar estrellas mediante un StarXTerminator instalado y activado. Si no se utiliza, las entradas deben estar ya sin estrellas y conservar su solución astrométrica. Calcula la cobertura geométrica y permite ajustarla con una máscara poligonal editable y una transición hacia dentro. La combinación principal incorpora capas seleccionadas de MultiscaleLinearTransform a la luminosidad; conserva como origen del color la base. Ofrece una alternativa por bandas gaussianas y un comparador con navegación sincronizada. Puede conservar las estrellas por separado y crear opcionalmente otra imagen con recombinación Screen. No estira las entradas ni elimina sus gradientes, y el remuestreo no garantiza conservar todo el detalle original de la focal larga.
+
+**Red y programas externos:** además del posible acceso de ImageSolver a catálogos, ofrece una descarga opcional de imágenes de ejemplo desde GitHub Releases. Requiere aceptar las condiciones de uso y elegir el destino. Invoca `curl` (`/usr/bin/curl`, o `curl.exe` en la rama Windows del código), que debe estar disponible en el sistema. No descarga ni ejecuta actualizaciones de código; el ZIP de ejemplo no se extrae ni ejecuta automáticamente. StarXTerminator es un módulo dentro de PixInsight, no un ejecutable que el script instale o lance externamente.
+
+**Ubicaciones de escritura:** destino ZIP seleccionado por el usuario y un archivo parcial adyacente `<destino>.download-<marca de tiempo>`, que intenta eliminar si falla la descarga. Si ya existe el destino y el usuario acepta sobrescribirlo, se reemplaza después de la descarga y la comprobación de tamaño. Las imágenes de mezcla, estrellas y recombinación quedan abiertas en PixInsight; no se guardan automáticamente en disco. Las ubicaciones internas de los componentes nativos deben verificarse por separado.
+
+**Punto pendiente importante:** la descarga de ejemplo comprueba actualmente un tamaño esperado de 85.376.365 bytes, pero no un resumen criptográfico. Debe revisarse ese mecanismo y la seguridad de las redirecciones antes de presentar la descarga como verificada frente a alteraciones.
+
+## 4. Astrometric Solution Copy — 1.1
+
+**Archivo:** `Astrometric_Solution_Copy_EN.js`.
+
+Utilidad para transferir una solución astrométrica nativa ya existente desde una imagen de referencia a otras imágenes abiertas que comparten su cuadrícula. Comprueba dimensiones y analiza posiciones de estrellas para evaluar el registro. Bloquea imágenes que detecta como desalineadas; cuando no puede verificar el registro, exige una confirmación individual del usuario para cada destino. Las soluciones existentes se conservan por defecto, salvo autorización para sustituirlas.
+
+No resuelve el campo mediante catálogos, no registra ni remuestrea imágenes y no modifica sus píxeles. Cambia deliberadamente los metadatos astrométricos de las ventanas de destino autorizadas. La comprobación estelar es estadística: no demuestra por sí sola que toda la imagen esté perfectamente registrada ni que la solución de la referencia sea correcta.
+
+**Red, programas y archivos:** no implementa conexiones de red ni lanzamiento de programas externos. Utiliza imágenes abiertas y funciones de PixInsight, sin guardar archivos de imagen automáticamente. Para conservar los metadatos en disco, el usuario debe guardar las imágenes. Los mensajes de estado y resultados se muestran en el diálogo y en la consola; no hay una función propia de registro de actividad a disco.
+
+## Estado de la entrega
+
+La rama `cpd-review` contiene solo estos cuatro scripts y sus recursos. El repositorio de actualizaciones automáticas todavía no forma parte de esta entrega. Las fuentes se mantienen sin cambios respecto al commit de referencia; se han preparado estas descripciones y corregido indicaciones de publicación e iconos en los manuales externos.
+
+Antes de dar por cerrada la descripción exigida por PTeam quedan las comprobaciones indicadas en [cpd-pending-checks.md](cpd-pending-checks.md), especialmente los accesos de componentes nativos y las pruebas con PixInsight 1.9.6.

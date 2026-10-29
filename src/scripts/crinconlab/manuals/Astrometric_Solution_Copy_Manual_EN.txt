@@ -92,9 +92,9 @@ native transfer. No image files are saved automatically.
 
 HELP AND LOCAL INSTALLATION
 Help displays this manual without needing any images.
-Keep Astrometric_Solution_Copy_EN.js and icons/astrometric_copy.svg together.
+Keep Astrometric_Solution_Copy_EN.js and icons/astrometric_copy_orange_v2.svg together.
 Place them alongside your other Crinconlab scripts, merging the icons folder
-so that header_editor.svg and rgb_dualband.svg remain available.
+so that header_editor_orange_v2.svg and rgb_dualband_orange_v2.svg remain available.
 Add the folder through Script → Feature Scripts… → Add….
 Find the script at Script → Crinconlab → Astrometric Solution Copy.
 To update an already registered copy, replace its .js file in the same folder.

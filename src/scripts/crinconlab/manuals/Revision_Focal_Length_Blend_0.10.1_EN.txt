@@ -1,2 +1,0 @@
-Default Relative detail gain: 0.50 (50%). Intensity remains 35%.
-Blend calculations unchanged. 53 automated checks passed.

@@ -1,1 +1,0 @@
-All bundled scripts avoid explicitly opening the process console. Native processes may still reveal it or log messages. Blue task text and percentage bars remain available in RGB DualBand and Focal Length Blend; the Header Editor retains its per-file progress counters. Technical console output is retained for diagnosing failures.

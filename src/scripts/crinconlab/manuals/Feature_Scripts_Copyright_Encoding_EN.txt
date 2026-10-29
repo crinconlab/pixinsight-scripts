@@ -1,1 +1,0 @@
-Feature Scripts descriptions use ASCII-safe HTML entities for the copyright symbol and accented author name. This avoids mojibake in PixInsight feature registration. Script behavior is unchanged.

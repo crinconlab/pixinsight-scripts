@@ -1,81 +1,32 @@
-# Crinconlab PixInsight Scripts
+# Crinconlab — four-script CPD review draft
 
-Latest complete collection: **2026-10-26**, for manual installation.
+Author: Carlos Rincón. Requested CPD identifier: `Carlos_Rincon_Astrophoto`.
 
-[Download the complete collection](https://github.com/crinconlab/pixinsight-scripts/releases/tag/collection-2026-10-26)
+This branch contains the four products currently proposed for CPD review. **PolyMask is excluded from this branch and package.** The development branch and older releases are outside the scope of this review package.
 
-The ZIP includes all five current scripts, five orange icons, and English manuals. Extract the complete Crinconlab folder, preserving its icons and manuals subfolders. In PixInsight, use Script > Feature Scripts > Add to register that folder. Remove registrations pointing to older copies if duplicate entries appear.
+The executable sources are unchanged from commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8` (26 October 2026). The descriptions and review notes were prepared on 29 October 2026. This is a documentation draft, not a claim of CPD approval or completed compliance testing.
 
-| Script | File |
-| --- | --- |
-| FITS / XISF Header Editor | [FITS_XISF_Header_Editor_EN.js](src/scripts/crinconlab/FITS_XISF_Header_Editor_EN.js) |
-| RGB + Dual Band, Image Solver and SPCC | [RGB_DualBand_Solver_SPCC_EN.js](src/scripts/crinconlab/RGB_DualBand_Solver_SPCC_EN.js) |
-| Focal Length Blend | [Mezcla_Focales.js](src/scripts/crinconlab/Mezcla_Focales.js) |
-| Astrometric Solution Copy | [Astrometric_Solution_Copy_EN.js](src/scripts/crinconlab/Astrometric_Solution_Copy_EN.js) |
-| PolyMask | [PolyMask_EN.js](src/scripts/crinconlab/PolyMask_EN.js) |
+| Product | Source | Version in the reviewed source |
+| --- | --- | --- |
+| FITS / XISF Header Editor | [FITS_XISF_Header_Editor_EN.js](src/scripts/crinconlab/FITS_XISF_Header_Editor_EN.js) | No product version declared in its header |
+| RGB DualBand Solver SPCC | [RGB_DualBand_Solver_SPCC_EN.js](src/scripts/crinconlab/RGB_DualBand_Solver_SPCC_EN.js) | 0.14.2 |
+| Focal Length Blend | [Mezcla_Focales.js](src/scripts/crinconlab/Mezcla_Focales.js) | 0.11.4 |
+| Astrometric Solution Copy | [Astrometric_Solution_Copy_EN.js](src/scripts/crinconlab/Astrometric_Solution_Copy_EN.js) | 1.1 |
 
-[English manuals](src/scripts/crinconlab/manuals) · [Collection instructions](src/scripts/crinconlab/README_EN.txt) · [Version manifest](src/scripts/crinconlab/manifest.json)
+- [Product descriptions and technical disclosures — English](docs/cpd-scripts-en.md)
+- [Descripciones de los cuatro scripts — español](docs/cpd-scripts-es.md)
+- [Checks still required before final submission](docs/cpd-pending-checks.md)
+- [User manuals](src/scripts/crinconlab/manuals)
+- [Package instructions](src/scripts/crinconlab/README_EN.txt)
 
-PolyMask 0.1.0 is preliminary: 26 native programmatic checks passed in PixInsight 1.9.5; user testing with real images and mouse interaction remains pending. The collection is published as a preliminary manual-installation release. This does not activate the PixInsight automatic update repository.
+## Review package
 
-Copyright © Carlos Rincón 2026.
+Use this branch's source or [download this branch as a ZIP](https://github.com/crinconlab/pixinsight-scripts/archive/refs/heads/cpd-review.zip). Older collection releases include additional development products and are not the four-script review package.
 
----
+Extract the archive and keep `src/scripts/crinconlab/` together with its `icons/` and `manuals/` subfolders. Place it in a user-managed folder and register it with **Script → Feature Scripts… → Add**. The scripts appear under **Script → Crinconlab**. They do not install themselves into PixInsight or change its security preferences.
 
-# Publication tooling and earlier development notes
+These are preliminary scripts, without CPD signatures in this package. This branch does not activate a PixInsight automatic-update repository. The source targets PixInsight 1.9.5; the requested checks on PixInsight 1.9.6 remain pending. ImageSolver and other PixInsight libraries are referenced from the installed application, not copied into this package. StarXTerminator is an optional dependency of Focal Length Blend and must already be installed and activated.
 
-Scripts para PixInsight de crinconlab y preparación de su repositorio de actualizaciones.
-
-**Estado: desarrollo. Los scripts son provisionales; todavía no hay una versión publicada mediante el gestor de actualizaciones.**
-
-## Estructura
-
-| Ruta | Contenido |
-| --- | --- |
-| `src/scripts/crinconlab/` | Scripts, firmas públicas y recursos que se instalarán |
-| `tools/build_release.py` | Preparación local del ZIP y del índice `updates.xri` |
-| `release.example.json` | Plantilla de metadatos para una publicación |
-| `build/` | Resultados locales, pendientes de firma y comprobación; ignorados por Git |
-| `repository/` | Paquetes e índice definitivos, cuando se publique la primera versión |
-| `docs/publicacion.md` | Procedimiento de firma, empaquetado y actualización |
-
-## Próximo paso
-
-Trabajar sobre los scripts provisionales, revisar sus dependencias y comprobarlos en PixInsight antes de preparar la primera versión firmada. Véase [Estado de desarrollo](docs/desarrollo.md). Las claves `.xssk` y su contraseña permanecen fuera del repositorio.
-
-La guía [Publicar una versión](docs/publicacion.md) explica el procedimiento. El empaquetador requiere Python 3.9 o posterior y solo utiliza la biblioteca estándar.
-
-## Dirección prevista para PixInsight
-
-```text
-https://raw.githubusercontent.com/crinconlab/pixinsight-scripts/main/repository/
-```
-
-Esta dirección se podrá añadir al gestor de actualizaciones cuando contenga el primer `updates.xri` y su paquete comprobado. No es necesario activar GitHub Pages para este alojamiento.
-
-## Validación pendiente
-
-Las comprobaciones del empaquetador no ejecutan PixInsight ni verifican criptográficamente las firmas. Antes de la primera entrega hay que comprobar la firma, una instalación nueva y una actualización desde una versión anterior dentro de PixInsight.
-
-## Probar la mezcla de focales
-
-La versión de desarrollo [Mezcla_Focales.js](src/scripts/crinconlab/Mezcla_Focales.js) trabaja con imágenes estiradas y sin estrellas, ya registradas, y una máscara de cobertura. Permite dibujar un polígono sobre el detalle, mover sus vértices y previsualizar su transición, seleccionar una banda de detalle, ajustar intensidad y ganancia y comparar a resolución completa sin aplicar STF.
-
-Consulta [entradas, controles, método y límites](docs/mezcla-focales.md). Las pruebas fuera de PixInsight se ejecutan con `node --test tests/mezcla_focales.test.cjs`. La ejecución con los procesos y la interfaz nativos sigue pendiente; se incluye una [prueba sintética para PixInsight](tests/Test_Mezcla_Focales_PixInsight.js).
-
-El [icono SVG](src/scripts/crinconlab/Mezcla_Focales.svg) debe guardarse junto al archivo JavaScript al instalarlo.
-
-
-
-## PolyMask 0.1.0 — versión preliminar
-
-Editor independiente de máscaras poligonales sobre una imagen RGB o monocroma. Incluye vértices editables, menú contextual, zoom y desplazamiento sincronizados, previsualización con superposición, suavizado hacia dentro o a ambos lados, inversión y aplicación opcional de la máscara. No requiere astrometría ni otra imagen.
-
-- [Descargar PolyMask 0.1.0](https://github.com/crinconlab/pixinsight-scripts/releases/tag/polymask-v0.1.0)
-- [Manual en inglés](docs/polymask.md)
-- [Inicio rápido](docs/polymask-quick-start.txt)
-- [Comprobaciones realizadas](docs/polymask-validation.txt)
-
-Se han superado 26 comprobaciones nativas en PixInsight 1.9.5. Es una primera versión pendiente de la validación del usuario con imágenes reales. Se distribuye como ZIP para instalación manual; no activa ni modifica el repositorio de actualizaciones automáticas.
+For the FITS header tool, the reviewed implementation uses file-system access and has no direct network API, remote participant exchange or external-program invocation. Focal Length Blend has an optional sample-data download and invokes `curl`; RGB DualBand Solver SPCC and Focal Length Blend also invoke installed ImageSolver components. Those distinctions and outstanding network checks are documented explicitly rather than describing the whole collection as offline.
 
 Copyright © Carlos Rincón 2026.

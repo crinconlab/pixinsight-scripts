@@ -1,4 +1,4 @@
-# Focal Length Blend — 0.11.4, local release
+# Focal Length Blend — 0.11.4, preliminary CPD review build
 
 Copyright © Carlos Rincón 2026
 
@@ -25,7 +25,7 @@ The script does not stretch images, remove gradients or calibrate color. The pre
 
 Keep the complete **Crinconlab** folder together with its four scripts, the four SVG files in **icons**, and **manuals**. Replace the previous complete folder, keeping any personal files separately. In PixInsight, open **Script → Feature Scripts…**, remove outdated entries pointing to other locations if necessary, then **Add…** the folder containing the four `.js` files and click **Done**.
 
-Launch **Script → Crinconlab → Focal Length Blend**. The filename remains `Mezcla_Focales.js` so the replacement updates the existing script. Do not install both old and new copies in different folders. This is a local distribution; nothing has been published to GitHub.
+Launch **Script → Crinconlab → Focal Length Blend**. The filename remains `Mezcla_Focales.js` so the replacement updates the existing script. Do not install both old and new copies in different folders. The source is published in the cpd-review branch of this GitHub repository for manual installation and CPD evaluation. No automatic update repository is active.
 
 ## 1. Solve, separate stars and prepare geometry
 

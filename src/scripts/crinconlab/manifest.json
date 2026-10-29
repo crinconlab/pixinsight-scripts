@@ -25,13 +25,7 @@
       "feature": "CarlosRinconRGBDualBandEN : Crinconlab > RGB DualBand Solver SPCC",
       "icon": "icons/rgb_dualband_orange_v2.svg",
       "sha256": "4c42ddf2a6eb1a57e3cfa068770b9e70ee47ee026fb877b8e8df23ec6050e7bc"
-    },
-    {
-      "script": "PolyMask_EN.js",
-      "feature": "CrinconlabPolyMask : Crinconlab > PolyMask",
-      "icon": "icons/polymask_orange.svg",
-      "version": "0.1.0",
-      "sha256": "f0938204a43451d4b2b3195c7df0cdd6eff5dd06db980de9b7019fe8505f3f91"
     }
-  ]
+  ],
+  "scope": "Four-script CPD review draft; PolyMask excluded."
 }

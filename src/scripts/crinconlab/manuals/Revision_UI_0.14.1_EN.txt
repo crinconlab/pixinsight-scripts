@@ -1,1 +1,0 @@
-RGB Dual Band 0.14.1: simplified registration labels; removed the general preparation confirmation checkbox. Processing is unchanged. Header Editor: simulation off by default, with Save copies as the initial save mode. Other features, icons and manuals are retained. The separate per-target alignment override in Astrometric Solution Copy remains available.

@@ -1,1 +1,0 @@
-0.11.2: Download samples directly to a user-selected ZIP file without opening a web browser. Consent is still required. Failed transfers remove partial downloads. Processing is unchanged.
