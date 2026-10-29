@@ -2,11 +2,11 @@
 
 Autor: Carlos Rincón. Identificador solicitado: `Carlos_Rincon_Astrophoto`. Colección: Crinconlab.
 
-**Borrador basado en el código publicado**, con referencia inicial al commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. El 29 de octubre de 2026 se añade la descarga verificada de Focal Length Blend 0.11.5; los otros tres scripts mantienen sus fuentes. PolyMask queda fuera de esta entrega. Las descripciones no suponen una certificación de seguridad ni una prueba completa de los componentes nativos.
+**Borrador basado en el código publicado**, con referencia inicial al commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. El 29 de octubre de 2026 se añade la descarga verificada de Focal Length Blend 0.11.5; RGB DualBand y Astrometric Solution Copy mantienen su implementación. El editor de cabeceras recibe la etiqueta 1.0.0 sin cambiar el procesamiento. PolyMask queda fuera de esta entrega. Las descripciones no suponen una certificación de seguridad ni una prueba completa de los componentes nativos.
 
 ## 1. FITS / XISF Header Editor
 
-**Archivo:** `FITS_XISF_Header_Editor_EN.js`. No declara una versión de producto en su cabecera.
+**Archivo:** `FITS_XISF_Header_Editor_EN.js`. **Versión: 1.0.0.** Etiqueta la implementación existente sin cambiar el procesamiento.
 
 Herramienta para consultar y modificar palabras clave FITS en archivos FITS y XISF, de forma individual o por lotes. Permite seleccionar archivos de una carpeta o buscar en subcarpetas, consultar valores y comentarios, preparar cambios de texto, número o booleano y simular la operación antes de escribir. Las propiedades XISF se muestran en modo de lectura; determinadas palabras clave editables sincronizan sus propiedades XISF correspondientes.
 
@@ -40,7 +40,7 @@ Puede separar estrellas mediante un StarXTerminator instalado y activado. Si no 
 
 **Ubicaciones de escritura:** destino ZIP seleccionado por el usuario y un archivo parcial adyacente `<destino>.download-<marca de tiempo>-<identificador>`, que intenta eliminar si falla la descarga o su verificación. Si ya existe el destino y el usuario acepta sobrescribirlo, se mueve temporalmente a `<destino>.previous-<marca de tiempo>-<identificador>` después de validar el nuevo ZIP. Se restaura si falla la sustitución, cuando es posible; si la restauración falla, se conserva esa copia y se informa de su ruta. Tras el éxito se elimina la copia anterior, o se comunica un fallo de limpieza. Las imágenes de mezcla, estrellas y recombinación quedan abiertas en PixInsight; no se guardan automáticamente en disco.
 
-**Verificación de descarga:** comprueba el tamaño esperado de 85.376.365 bytes y el SHA-256 `9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26`, fijado dentro del script y contrastado con el ZIP publicado. El cálculo es incremental y no utiliza otro programa externo. Una discrepancia rechaza la descarga antes de sustituir el destino. `curl` admite únicamente HTTPS tanto en la solicitud inicial como en las redirecciones. Se han superado once pruebas fuera de PixInsight, incluida la comprobación del ZIP real; la prueba nativa de la nueva versión sigue pendiente.
+**Verificación de descarga:** comprueba el tamaño esperado de 85.376.365 bytes y el SHA-256 `9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26`, fijado dentro del script y contrastado con el ZIP publicado. El cálculo es incremental y no utiliza otro programa externo. Una discrepancia rechaza la descarga antes de sustituir el destino. `curl` admite únicamente HTTPS tanto en la solicitud inicial como en las redirecciones. Se han superado once pruebas fuera de PixInsight, incluida la comprobación del ZIP real; la prueba nativa y la descarga real con SHA-256 también han pasado en PixInsight 1.9.6.
 
 ## 4. Astrometric Solution Copy — 1.1
 
@@ -56,4 +56,4 @@ No resuelve el campo mediante catálogos, no registra ni remuestrea imágenes y 
 
 La rama `cpd-review` contiene solo estos cuatro productos y sus recursos, junto con pruebas de desarrollo. El repositorio de actualizaciones automáticas todavía no forma parte de esta entrega. Solo Focal Length Blend cambia respecto a la referencia inicial para incorporar la descarga verificada 0.11.5; la combinación de imágenes no cambia.
 
-La dependencia de ImageSolver queda descrita como uso del componente oficial de PixInsight. Antes de cerrar el paquete quedan las comprobaciones indicadas en [cpd-pending-checks.md](cpd-pending-checks.md), especialmente las pruebas nativas en PixInsight 1.9.6.
+La dependencia de ImageSolver queda descrita como uso del componente oficial de PixInsight. El estado final figura en [cpd-pending-checks.md](cpd-pending-checks.md) y en el informe de validación: se distinguen las comprobaciones ejecutadas en 1.9.6 de la aceptación del autor por funcionamiento previo.

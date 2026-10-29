@@ -1,8 +1,8 @@
-CRINCONLAB — FOUR-SCRIPT CPD REVIEW DRAFT
+CRINCONLAB — FOUR-SCRIPT CPD SUBMISSION CANDIDATE
 Copyright © Carlos Rincón 2026
 
 PRODUCTS INCLUDED
-FITS / XISF Header Editor — FITS_XISF_Header_Editor_EN.js
+FITS / XISF Header Editor 1.0.0 — FITS_XISF_Header_Editor_EN.js
 RGB DualBand Solver SPCC 0.14.2 — RGB_DualBand_Solver_SPCC_EN.js
 Focal Length Blend 0.11.5 — Mezcla_Focales.js
 Astrometric Solution Copy 1.1 — Astrometric_Solution_Copy_EN.js
@@ -17,7 +17,10 @@ The entries appear under Script > Crinconlab. Avoid registering multiple copies.
 
 This is a preliminary manual-installation package without CPD signatures.
 There is no automatic-update repository in this package. The source targets
-PixInsight 1.9.5; compatibility and full native checks on 1.9.6 remain pending.
+PixInsight 1.9.5. Native checks on 1.9.6/macOS now cover interfaces, header I/O,
+WCS copying, reprojection/crop, blending and verified sample downloads. SPCC,
+fresh solving and StarX are accepted by the author based on prior operation,
+not claimed as completed native checks in this 1.9.6 session.
 Use the root README and docs/cpd-scripts-en.md for the review scope and
 docs/cpd-pending-checks.md for outstanding documentation and validation work.
 
@@ -56,7 +59,9 @@ The hash is computed inside the script without an external hash program.
 tests/sample-download.test.cjs covers the production hash/download helpers with
 Node file adapters, including the real sample ZIP when CR_MF_SAMPLE_ZIP is set.
 tests/Test_Sample_Download_PixInsight.js checks native file operations and hash
-verification on synthetic fixtures; it has not been executed here.
+verification on synthetic fixtures; it passed in PixInsight 1.9.6/macOS.
+A real production HTTPS transfer also matched the pinned size and SHA-256.
+See docs/validation-pixinsight-1.9.6.md in the repository for evidence and limits.
 
 Image files are never uploaded by any explicit upload routine in these four
 sources. Behaviour of the installed dependent components is outside that

@@ -1,7 +1,7 @@
 // Copyright © Carlos Rincón 2026
 #feature-id CarlosRinconHeaderEditorEN : Crinconlab > FITS-XISF Header Editor
 #feature-icon icons/header_editor_orange_v2.svg
-#feature-info FITS keyword and XISF metadata editor, with simulation, recursive selection and save modes. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026.
+#feature-info FITS keyword and XISF metadata editor, with simulation, recursive selection and save modes. Version 1.0.0. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026.
 
 /* FITS_XISF_Header_Editor_EN.js — PixInsight PJSR. Default: save copies; simulation is optional.
  * Output: Sesion_1/Lights_Metadata (sibling of Lights_OK).
@@ -524,7 +524,7 @@ function HeaderEditorDialog()
    this.__base__=Dialog;this.__base__();
    var self=this;
    this.paths=[];this.inputRoot=null;this.snapshots=[];this.changes=[];this.visibleRows=[];this.config=null;
-   this.windowTitle="FITS / XISF Header Editor";
+   this.windowTitle="FITS / XISF Header Editor · v1.0.0";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function button(text,callback){var b=new PushButton(self);b.text=text;b.onClick=callback;return b;}
    function row(controls){var r=new HorizontalSizer;r.spacing=6;for(var i=0;i<controls.length;++i)r.add(controls[i],controls[i] instanceof Edit?1:0);return r;}

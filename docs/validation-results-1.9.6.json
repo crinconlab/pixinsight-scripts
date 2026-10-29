@@ -1,0 +1,193 @@
+{
+  "runtime": "PixInsight Core 1.9.6 Lockhart x64 macOS",
+  "date": "2026-10-29",
+  "testedCommit": "31a7c48782d4b466cb1d784429298a9b75117daa",
+  "authorDisposition": "accepted to continue; uncompleted dependencies accepted by continuity, not newly tested successes",
+  "download": {
+    "expectedBytes": 85376365,
+    "expectedSHA256": "9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26",
+    "url": "https://github.com/crinconlab/pixinsight-scripts/releases/download/sample-images-v1.0/Crinconlab_Sample_Images.zip",
+    "saved": true,
+    "sha256": "9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26",
+    "bytes": 85376365,
+    "ok": true,
+    "elapsedSeconds": 52.552
+  },
+  "headerIO": [
+    {
+      "name": "Write test fixtures FITS and XISF",
+      "ok": true
+    },
+    {
+      "name": "Simulation writes no outputs",
+      "ok": true
+    },
+    {
+      "name": "Add new headers to FITS and XISF copies with readback",
+      "ok": true
+    },
+    {
+      "name": "Existing destinations are skipped",
+      "ok": true
+    },
+    {
+      "name": "Overwrite with backup on owned fixtures",
+      "ok": true
+    },
+    {
+      "name": "Overwrite without backup on owned fixtures",
+      "ok": true
+    },
+    {
+      "name": "Header editor initializes non-busy after file-I/O tests",
+      "ok": true
+    }
+  ],
+  "headerUI": {
+    "ok": true,
+    "text": "Headers read: 1 / 2 · Remaining: 1 · Read errors: 0"
+  },
+  "focal": [
+    {
+      "name": "Read real solved starless sample pair",
+      "ok": true,
+      "detail": {
+        "base": [
+          1500,
+          1500
+        ],
+        "detail": [
+          1500,
+          1021
+        ]
+      }
+    },
+    {
+      "name": "Real fixed-canvas astrometric geometry without StarX",
+      "ok": true,
+      "detail": {
+        "footprintVertices": 32,
+        "coverage": 0.05012088888888889
+      }
+    },
+    {
+      "name": "Mask editor and coverage on real registered image",
+      "ok": true,
+      "detail": {
+        "gain": 0.791972085766855,
+        "offset": 0.07159820885041843,
+        "reliable": true,
+        "count": 109,
+        "r2": 0.9624823801221563
+      }
+    },
+    {
+      "name": "MLT blend real samples, WCS and source preservation",
+      "ok": true,
+      "detail": {
+        "wcs": true,
+        "sourceSolutionRetained": true
+      }
+    }
+  ],
+  "savedResultReadback": [
+    {
+      "file": "FocalBlend_Result.xisf",
+      "ok": true,
+      "width": 1500,
+      "height": 1500,
+      "skyCenter": [
+        324.9007028999116,
+        57.46702263179159
+      ]
+    },
+    {
+      "file": "RGBHa_Geometry_Result.xisf",
+      "ok": true,
+      "width": 148,
+      "height": 363,
+      "skyCenter": [
+        324.30941853128854,
+        57.53300025272246
+      ]
+    }
+  ],
+  "controlledStarRegistration": [
+    {
+      "name": "Native star registration of real image translated 18 x 9 pixels",
+      "ok": true,
+      "crop": {
+        "x": 2,
+        "y": 2,
+        "width": 1478,
+        "height": 1487
+      }
+    },
+    {
+      "name": "Gaia local catalog probe",
+      "available": false,
+      "release": 3
+    }
+  ],
+  "uncompleted": {
+    "spcc": "configured catalog unavailable",
+    "freshSolve": "inconclusive after bounded >4 minute run; owned instance terminated",
+    "starX": "constructor unavailable in V8 test instances"
+  },
+  "polymask": "excluded",
+  "rgbAndCopy": [
+    {
+      "name": "Real star detection verifies an identical registered target",
+      "ok": true,
+      "detail": {
+        "detectedStars": 480,
+        "registration": {
+          "status": "Aligned",
+          "matches": 480,
+          "median": 0,
+          "p90": 0
+        },
+        "copy": {
+          "copied": 1,
+          "skipped": 0,
+          "errors": 0,
+          "canceled": false,
+          "items": [
+            {
+              "image": "RD_Input",
+              "status": "copied"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Unverified target is blocked without explicit confirmation",
+      "ok": true
+    },
+    {
+      "name": "RGB coordinate registration and common crop on real samples",
+      "ok": true,
+      "detail": {
+        "x": 649,
+        "y": 445,
+        "width": 148,
+        "height": 363
+      }
+    },
+    {
+      "name": "Real RGB red-channel composition retains cropped astrometry",
+      "ok": true
+    },
+    {
+      "name": "Real star registration and common crop",
+      "ok": false,
+      "error": "Error: Star registration failed. Images need stars and sufficient overlap. For solved starless images, select coordinate registration."
+    },
+    {
+      "name": "SPCC execution API smoke test on sample copy (nonlinear, not scientific calibration)",
+      "ok": false,
+      "error": "Error: SPCC returned failure"
+    }
+  ]
+}

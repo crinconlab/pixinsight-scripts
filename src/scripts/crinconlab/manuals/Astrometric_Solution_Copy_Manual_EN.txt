@@ -107,3 +107,7 @@ misaligned targets, per-image manual authorization, preserved pixels/selections,
 and UI controls. Pure matching tests also cover scale changes and 180° rotation.
 These checks are a starting point; behavior with real fields and your filters
 still needs validation. The full-resolution analysis adds processing time.
+
+
+CPD REVIEW CANDIDATE — 29 OCTOBER 2026
+Current scope: four scripts, PolyMask excluded. See docs/validation-pixinsight-1.9.6.md in the cpd-review repository for newly executed checks and author-accepted continuity assumptions. Earlier validation notes in this manual describe earlier work, not additional 1.9.6 results.

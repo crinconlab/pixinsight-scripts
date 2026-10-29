@@ -34,3 +34,7 @@ VALIDATION LIMITS
 Native tests use synthetic stars, real registration masks and astrometric coordinate comparisons after cropping. Automated calibration tests inject a calibration callback: validate a complete run with your installed SPCC catalog and real astrophotography data.
 
 Startup notice: OK opens setup; Cancel exits without processing images.
+
+
+CPD REVIEW CANDIDATE — 29 OCTOBER 2026
+Current scope: four scripts, PolyMask excluded. See docs/validation-pixinsight-1.9.6.md in the cpd-review repository for newly executed checks and author-accepted continuity assumptions. Earlier validation notes in this manual describe earlier work, not additional 1.9.6 results.

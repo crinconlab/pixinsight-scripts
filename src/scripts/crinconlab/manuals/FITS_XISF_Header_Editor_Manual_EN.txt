@@ -1,4 +1,4 @@
-FITS / XISF HEADER EDITOR — ENGLISH EDITION
+FITS / XISF HEADER EDITOR — VERSION 1.0.0 — ENGLISH EDITION
 Copyright © Carlos Rincón 2026
 
 OPEN AND INSPECT
@@ -146,3 +146,6 @@ overwrite modes with and without backup. English-edition checks additionally
 exercise the translated type labels and interface using synthetic fixtures.
 
 Copyright © Carlos Rincón 2026
+
+REVIEW PACKAGE — 29 OCTOBER 2026
+Version 1.0.0 identifies the existing implementation; this version-label change does not change processing. Native FITS/XISF copy, simulation, overwrite, readback and interface-state checks passed on PixInsight 1.9.6 x64/macOS. See docs/validation-pixinsight-1.9.6.md in the review repository for scope and limits.
