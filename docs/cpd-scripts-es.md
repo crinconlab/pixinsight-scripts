@@ -2,7 +2,7 @@
 
 Autor: Carlos Rincón. Identificador solicitado: `Carlos_Rincon_Astrophoto`. Colección: Crinconlab.
 
-**Borrador basado en el código publicado**, revisado estáticamente el 29 de octubre de 2026. Fuentes de referencia: commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. PolyMask queda fuera de esta entrega. Las descripciones no suponen una certificación de seguridad ni una prueba completa de los componentes nativos.
+**Borrador basado en el código publicado**, con referencia inicial al commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. El 29 de octubre de 2026 se añade la descarga verificada de Focal Length Blend 0.11.5; los otros tres scripts mantienen sus fuentes. PolyMask queda fuera de esta entrega. Las descripciones no suponen una certificación de seguridad ni una prueba completa de los componentes nativos.
 
 ## 1. FITS / XISF Header Editor
 
@@ -24,11 +24,11 @@ Asistente para combinar una imagen RGB de banda ancha con señal de una imagen d
 
 La composición añade al rojo de RGB la señal del canal rojo de la doble banda, o de su canal único si es monocroma, con intensidad ajustable. Después aplica SpectrophotometricColorCalibration con los parámetros seleccionados por el usuario. Reutiliza la solución astrométrica de RGB o abre ImageSolver si falta; mantiene la correspondencia astrométrica al recortar. Permite comparar y conservar un resultado sin repetir el cálculo ya revisado. No realiza sustracción del continuo ni garantiza color fotométrico tras incorporar banda estrecha.
 
-**Red y dependencias:** utiliza el ImageSolver y las bibliotecas astrométricas de la instalación de PixInsight; no los descarga. ImageSolver puede consultar catálogos o servicios de resolución de coordenadas según su configuración. SPCC utiliza el proceso nativo y el catálogo espectrofotométrico configurado por el usuario. Los destinos, protocolos, cachés y datos transmitidos por esos componentes en PixInsight 1.9.6 deben completarse en la revisión técnica. El archivo propio no contiene un cliente de red, un instalador ni llamadas a programas externos.
+**Red y dependencias:** utiliza el ImageSolver oficial incluido en PixInsight y sus bibliotecas astrométricas; no los descarga. Las consultas a catálogos o servicios de resolución de coordenadas corresponden a ese componente y a su configuración en la instalación del usuario. SPCC utiliza el proceso nativo y el catálogo espectrofotométrico configurado. No se implementa un servicio astrométrico independiente. El archivo propio no contiene un cliente de red, un instalador ni llamadas a programas externos.
 
 **Archivos y preferencias:** puede abrir imágenes seleccionadas por el usuario, pero no guarda automáticamente los resultados. La exportación opcional del manual escribe un `.txt` en la ubicación elegida. La opción de guardar valores SPCC predeterminados utiliza la API oficial `Settings`, con la clave `CarlosRincon/RGBDualBandSPCC/v1/defaults`. Lee los archivos instalados `filters.xspd` y `white-references.xspd` sin modificarlos. El proceso de previsualización desactiva la generación de gráficos, mapas de estrellas y archivos de texto de SPCC.
 
-## 3. Focal Length Blend — 0.11.4
+## 3. Focal Length Blend — 0.11.5
 
 **Archivo:** `Mezcla_Focales.js`.
 
@@ -38,9 +38,9 @@ Puede separar estrellas mediante un StarXTerminator instalado y activado. Si no 
 
 **Red y programas externos:** además del posible acceso de ImageSolver a catálogos, ofrece una descarga opcional de imágenes de ejemplo desde GitHub Releases. Requiere aceptar las condiciones de uso y elegir el destino. Invoca `curl` (`/usr/bin/curl`, o `curl.exe` en la rama Windows del código), que debe estar disponible en el sistema. No descarga ni ejecuta actualizaciones de código; el ZIP de ejemplo no se extrae ni ejecuta automáticamente. StarXTerminator es un módulo dentro de PixInsight, no un ejecutable que el script instale o lance externamente.
 
-**Ubicaciones de escritura:** destino ZIP seleccionado por el usuario y un archivo parcial adyacente `<destino>.download-<marca de tiempo>`, que intenta eliminar si falla la descarga. Si ya existe el destino y el usuario acepta sobrescribirlo, se reemplaza después de la descarga y la comprobación de tamaño. Las imágenes de mezcla, estrellas y recombinación quedan abiertas en PixInsight; no se guardan automáticamente en disco. Las ubicaciones internas de los componentes nativos deben verificarse por separado.
+**Ubicaciones de escritura:** destino ZIP seleccionado por el usuario y un archivo parcial adyacente `<destino>.download-<marca de tiempo>-<identificador>`, que intenta eliminar si falla la descarga o su verificación. Si ya existe el destino y el usuario acepta sobrescribirlo, se mueve temporalmente a `<destino>.previous-<marca de tiempo>-<identificador>` después de validar el nuevo ZIP. Se restaura si falla la sustitución, cuando es posible; si la restauración falla, se conserva esa copia y se informa de su ruta. Tras el éxito se elimina la copia anterior, o se comunica un fallo de limpieza. Las imágenes de mezcla, estrellas y recombinación quedan abiertas en PixInsight; no se guardan automáticamente en disco.
 
-**Punto pendiente importante:** la descarga de ejemplo comprueba actualmente un tamaño esperado de 85.376.365 bytes, pero no un resumen criptográfico. Debe revisarse ese mecanismo y la seguridad de las redirecciones antes de presentar la descarga como verificada frente a alteraciones.
+**Verificación de descarga:** comprueba el tamaño esperado de 85.376.365 bytes y el SHA-256 `9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26`, fijado dentro del script y contrastado con el ZIP publicado. El cálculo es incremental y no utiliza otro programa externo. Una discrepancia rechaza la descarga antes de sustituir el destino. `curl` admite únicamente HTTPS tanto en la solicitud inicial como en las redirecciones. Se han superado once pruebas fuera de PixInsight, incluida la comprobación del ZIP real; la prueba nativa de la nueva versión sigue pendiente.
 
 ## 4. Astrometric Solution Copy — 1.1
 
@@ -54,6 +54,6 @@ No resuelve el campo mediante catálogos, no registra ni remuestrea imágenes y 
 
 ## Estado de la entrega
 
-La rama `cpd-review` contiene solo estos cuatro scripts y sus recursos. El repositorio de actualizaciones automáticas todavía no forma parte de esta entrega. Las fuentes se mantienen sin cambios respecto al commit de referencia; se han preparado estas descripciones y corregido indicaciones de publicación e iconos en los manuales externos.
+La rama `cpd-review` contiene solo estos cuatro productos y sus recursos, junto con pruebas de desarrollo. El repositorio de actualizaciones automáticas todavía no forma parte de esta entrega. Solo Focal Length Blend cambia respecto a la referencia inicial para incorporar la descarga verificada 0.11.5; la combinación de imágenes no cambia.
 
-Antes de dar por cerrada la descripción exigida por PTeam quedan las comprobaciones indicadas en [cpd-pending-checks.md](cpd-pending-checks.md), especialmente los accesos de componentes nativos y las pruebas con PixInsight 1.9.6.
+La dependencia de ImageSolver queda descrita como uso del componente oficial de PixInsight. Antes de cerrar el paquete quedan las comprobaciones indicadas en [cpd-pending-checks.md](cpd-pending-checks.md), especialmente las pruebas nativas en PixInsight 1.9.6.

@@ -2,7 +2,7 @@
 
 **Author:** Carlos Rincón. **Requested developer identifier:** `Carlos_Rincon_Astrophoto`.
 
-**Scope:** four scripts only; PolyMask is excluded. These draft descriptions were prepared on 29 October 2026 from the executable sources at commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. The code is unchanged in this review package. This is a static source review and a description of current behaviour, not a declaration that native-component network access or PixInsight 1.9.6 compatibility has been fully verified. Outstanding checks are listed separately.
+**Scope:** four products only; PolyMask is excluded. The source baseline is commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. On 29 October 2026 Focal Length Blend 0.11.5 adds verified sample downloads; the other three source files are unchanged. These descriptions identify direct I/O and installed dependencies. They are not a declaration of CPD approval or completed native testing on PixInsight 1.9.6. Outstanding checks are listed separately.
 
 ## 1. FITS / XISF Header Editor
 
@@ -40,13 +40,13 @@ The composition adds an adjustable multiple of the dual-band red channel, or its
 
 ### Dependencies, network and external programs
 
-The script references installed PixInsight astrometry/ImageSolver libraries; it does not download or bundle replacement copies. ImageSolver may contact catalogue or coordinate-resolver services according to its version and configuration. SPCC uses the user's installed native process and configured GaiaDR3SP spectral-catalogue resources. Exact endpoints, protocols, cache locations and transmitted query fields of these installed components remain to be inventoried on the target PixInsight 1.9.6 installation. There is no direct networking API, external executable invocation, self-installer or self-updater in this script's own source.
+The script uses the official ImageSolver included with PixInsight and its installed astrometry libraries; it does not download or bundle replacement copies. Catalogue and coordinate-resolver queries are performed by that official component according to its installed version and the user's configuration. SPCC uses the installed native process and configured GaiaDR3SP spectral-catalogue resources. No independent catalogue service is implemented by this script. There is no direct networking API, external executable invocation, self-installer or self-updater in its own source.
 
 ### Files and preferences
 
-Input files may be opened at the user's request. Working and accepted images remain in the workspace; image files are not automatically saved. Optional manual export writes a text file to a user-selected path. SPCC defaults are persisted only when the user selects Save as defaults, through the official Settings API at `CarlosRincon/RGBDualBandSPCC/v1/defaults`; the physical settings location is managed by PixInsight. Installed `filters.xspd` and `white-references.xspd` are read from `CoreApplication.libraryDirPath` and are not modified. Preview calibration explicitly suppresses native graph, star-map and text-file generation. Native catalogue/solver cache locations still need final documentation.
+Input files may be opened at the user's request. Working and accepted images remain in the workspace; image files are not automatically saved. Optional manual export writes a text file to a user-selected path. SPCC defaults are persisted only when the user selects Save as defaults, through the official Settings API at `CarlosRincon/RGBDualBandSPCC/v1/defaults`; the physical settings location is managed by PixInsight. Installed `filters.xspd` and `white-references.xspd` are read from `CoreApplication.libraryDirPath` and are not modified. Preview calibration explicitly suppresses native graph, star-map and text-file generation. Native catalogue/solver cache handling is delegated to the installed official components.
 
-## 3. Focal Length Blend — 0.11.4
+## 3. Focal Length Blend — 0.11.5
 
 **File:** `Mezcla_Focales.js`.
 
@@ -58,19 +58,19 @@ The longer-focal image is reprojected onto the base with the installed ImageRepr
 
 ### Network and external programs
 
-ImageSolver has the delegated catalogue/resolver behaviour described above; its exact native endpoints and caches require verification. StarXTerminator must already be installed and activated with a working model; this script does not download, install or license that module or its model. Its own component-specific behaviour must not be confused with a fully audited offline guarantee for the workflow.
+Astrometric solving and its catalogue/resolver queries use the official ImageSolver included with PixInsight, under that component's installed version and configuration. No independent catalogue service is implemented. StarXTerminator must already be installed and activated with a working model; this script does not download, install or license that module or its model. These dependencies are not presented as an offline guarantee for the workflow.
 
 The optional Download Sample Images action requests acceptance of copyright/usage terms and a destination before connecting to:
 
 `https://github.com/crinconlab/pixinsight-scripts/releases/download/sample-images-v1.0/Crinconlab_Sample_Images.zip`
 
-The code invokes the system's `curl` through `ExternalProcess.execute`: `/usr/bin/curl`, or `curl.exe` in the source's Windows branch. The executable is not bundled. Arguments request HTTPS at that initial URL, follow redirects, report errors and apply connection/transfer timeouts. No certificate-verification bypass option is passed. Redirect destinations are determined by GitHub at transfer time; the current invocation does not explicitly restrict redirect protocols to HTTPS. The availability of the executable and platform selection need validation on supported systems.
+The code invokes the system's `curl` through `ExternalProcess.execute`: `/usr/bin/curl`, or `curl.exe` for Windows/MSWindows platform identifiers. The executable is not bundled. Both initial requests and redirects are restricted to HTTPS with `--proto =https` and `--proto-redir =https`. Transfer errors and connection/transfer timeouts are handled; no certificate-verification bypass is requested. Asset redirects are managed by GitHub. Native executable availability remains part of platform testing.
 
-The downloaded ZIP is intended to contain sample images and usage/settings documents. The script does not automatically extract it or execute code from it. The current implementation checks an expected length of **85,376,365 bytes**, not a cryptographic digest. This limitation must be resolved before describing the download as cryptographically integrity-verified or declaring the relevant network requirement fully addressed.
+The ZIP is intended to contain sample images and usage/settings documents. It is not automatically extracted and no code from it is executed. Before publication the script checks **85,376,365 bytes** and the pinned SHA-256 **`9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26`**. The expected digest was obtained from the GitHub release asset metadata and independently matched against the downloaded ZIP. It is embedded in the script, not accepted from a new remote checksum file at download time. Incremental SHA-256 is implemented in the script and uses bounded file reads; no external hash executable is required. A mismatch rejects the partial download before touching an existing destination. Changing the sample asset requires deliberately updating the pin.
 
 ### File locations and retention
 
-The ZIP is saved at the path chosen in the Save dialog. A partial file named `<destination>.download-<timestamp>` is created beside it and is removed on failure when cleanup succeeds. If the user confirms overwriting an existing destination, the current code replaces that destination after transfer and length checking. Unzipping is a separate user action. The script does not automatically save blend, stars or recombined image files; accepted results remain open in PixInsight. Temporary image windows belong to the script and are cleaned up by its workflow. Native solver/module cache and temporary-file paths remain to be checked in the target installation.
+The ZIP is saved at the path chosen in the Save dialog. A partial file named `<destination>.download-<timestamp>-<identifier>` is created beside it and is removed on failure when cleanup succeeds. After size and hash verification, an existing destination is temporarily preserved as `<destination>.previous-<timestamp>-<identifier>` during replacement. It is restored if publication fails when possible, and removed after success. If restoration or cleanup fails, the recovery file is retained and its path reported. Unzipping is a separate user action. Blend, stars and recombined image files are not automatically saved; accepted results remain open in PixInsight. Native solver/module cache handling belongs to the installed components.
 
 ## 4. Astrometric Solution Copy — 1.1
 
@@ -90,4 +90,4 @@ No network connection, catalogue query, external executable invocation or automa
 
 The four own-source files contain no request for administrator privileges, self-installation into PixInsight, direct edit of security preferences, or network code downloader/executor found in this static review. This finding is limited to those files and is not a certification of every installed dependency's behaviour.
 
-The package is available as source for manual review; no active automatic-update repository or CPD signatures are included. Descriptions of direct I/O above are supported by the current source. The dependency-level network/storage inventory, download-integrity improvement, product versioning for the header editor and checks on PixInsight 1.9.6 remain open: see [cpd-pending-checks.md](cpd-pending-checks.md). No application has been resubmitted on the author's behalf.
+The package is available as source for manual review; no active automatic-update repository or CPD signatures are included. Descriptions of direct I/O above are supported by the current source. Eleven download/hash tests passed outside PixInsight, including the actual published ZIP, same-size tampering, failed transfers, rollback and HTTPS-only arguments. Native bindings and full execution on PixInsight 1.9.6 remain to be tested; product versioning for the header editor is also still open. See [cpd-pending-checks.md](cpd-pending-checks.md). No application has been resubmitted on the author's behalf.

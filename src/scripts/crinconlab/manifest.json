@@ -18,7 +18,8 @@
       "script": "Mezcla_Focales.js",
       "feature": "CrinconlabMezclaFocales : Crinconlab > Focal Length Blend",
       "icon": "icons/Mezcla_Focales_orange_v2.svg",
-      "sha256": "119d46394a73d0c70d14b6c2b08e6bc2d4903f0df335210465a585b740ddca25"
+      "sha256": "fe64bd1aa1f78e7365a200b32e99443674179e5a4694ec6b84fcf6d3c05914c8",
+      "version": "0.11.5"
     },
     {
       "script": "RGB_DualBand_Solver_SPCC_EN.js",

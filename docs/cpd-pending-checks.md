@@ -1,32 +1,32 @@
 # Comprobaciones pendientes antes de cerrar la solicitud CPD
 
-Ámbito: los cuatro productos de esta rama. PolyMask está excluido. Revisión estática realizada sobre el commit de fuentes `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`; no se ha ejecutado PixInsight en esta revisión documental.
+Ámbito: los cuatro productos de esta rama. PolyMask está excluido. Se parte del commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`, con la descarga verificada añadida en Focal Length Blend 0.11.5. No se ha ejecutado PixInsight en este entorno; las pruebas del cambio se han realizado con adaptadores de archivo en Node.
 
-## Conexiones de componentes nativos
+## Dependencia de ImageSolver: documentada
 
-Focal Length Blend y RGB DualBand Solver SPCC invocan ImageSolver y bibliotecas astrométricas instaladas en PixInsight. No basta con que nuestros archivos no contengan sus URL: se deben comprobar los servicios de catálogo y resolución de coordenadas realmente utilizados, las condiciones que disparan cada conexión, sus protocolos y redirecciones, los campos transmitidos y las ubicaciones de cachés/archivos temporales en la instalación 1.9.6. Hacerlo también para cualquier acceso pertinente de SPCC y del módulo opcional StarXTerminator. No afirmar que son completamente offline sin esa comprobación.
+Focal Length Blend y RGB DualBand Solver SPCC utilizan el ImageSolver oficial incluido en PixInsight. Sus consultas a catálogos y servicios de resolución corresponden al componente instalado y a la configuración elegida por el usuario. No se implementa un servicio astrométrico independiente. Las descripciones identifican esta dependencia, además de SPCC y del módulo opcional StarXTerminator, sin presentarlos como herramientas completamente offline.
 
-Las descripciones actuales identifican esta dependencia y esta limitación, sin inventar una lista de destinos. La documentación final debe incorporar el inventario verificado exigido por PTeam.
+No se atribuyen al código propio destinos ni comportamientos de red que no implementa. Si PTeam solicita más detalle sobre un proveedor o una configuración de catálogo concreta, se añadirá a partir de la instalación utilizada.
 
-## Descarga de imágenes de ejemplo
+## Descarga de imágenes de ejemplo: hash y HTTPS incorporados
 
-`MF_saveSampleZip` en Focal Length Blend 0.11.4 llama a `curl` y comprueba únicamente el tamaño esperado del ZIP. Una longitud coincidente no demuestra que los bytes no hayan sido alterados. Antes de declarar resuelto el requisito de integridad, implementar y comprobar un mecanismo adecuado, por ejemplo un resumen criptográfico esperado obtenido de una fuente protegida.
+Focal Length Blend 0.11.5 comprueba tamaño y SHA-256 fijados en el código antes de publicar el ZIP. El hash se obtuvo de los metadatos del asset de GitHub y se contrastó con el archivo real descargado: `9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26`, 85.376.365 bytes. El cálculo es incremental y no añade programas externos. Se restringen a HTTPS tanto la solicitud como las redirecciones de `curl`.
 
-La URL inicial utiliza HTTPS y no se solicita desactivar la verificación de certificados. La invocación sigue redirecciones sin restringir expresamente el protocolo de destino: comprobar la cadena real y asegurar conexiones seguras también tras las redirecciones. Documentar el programa externo y las ubicaciones del ZIP/archivo parcial. Validar la detección de plataforma y la disponibilidad de `curl` en cada sistema admitido. Esta rama no modifica el descargador ni lo presenta como ya corregido.
+Once pruebas fuera de PixInsight comprueban vectores conocidos, archivos binarios, lectura incremental, el ZIP publicado, rechazo de cambios del mismo tamaño, errores, cancelación, recuperación del destino y argumentos HTTPS. El archivo parcial y cualquier copia temporal de recuperación quedan documentados. Queda probar las API de archivo y la transferencia real desde PixInsight 1.9.6, incluida la disponibilidad de `curl` en los sistemas que se vayan a admitir. La prueba nativa preparada es `tests/Test_Sample_Download_PixInsight.js`.
 
 ## Archivos, preferencias y versiones
 
 Las rutas que escribe directamente el editor de cabeceras están descritas, incluidos copias, originales, respaldos y temporales. Confirmar con el paquete final que no hay otras rutas introducidas por cambios posteriores. En una carpeta de red montada, el sistema operativo puede transportar los accesos de archivos: no describirlo como una función de colaboración entre participantes.
 
-RGB DualBand persiste valores SPCC mediante la API Settings, con una clave de aplicación documentada. Registrar la ubicación gestionada por PixInsight en los sistemas admitidos sin inventar una ruta universal ni modificar directamente sus archivos de configuración. Completar por separado las cachés y temporales de las dependencias.
+RGB DualBand persiste valores SPCC mediante la API Settings, con una clave de aplicación documentada. La ubicación física la gestiona PixInsight; no se modifica directamente su archivo de configuración ni se inventa una ruta universal. Las cachés nativas pertenecen a los componentes instalados.
 
 El editor de cabeceras no declara una versión propia en la cabecera revisada. Definirla antes de cerrar el paquete candidato a firma y registrar los hashes del paquete final.
 
-Se han actualizado indicaciones de publicación e iconos en los manuales externos de esta rama. Las fuentes se han conservado intactas: parte de su ayuda integrada y notas históricas puede seguir describiendo paquetes anteriores. Unificar también esos textos con el alcance de cuatro scripts antes de cerrar la versión candidata, recalculando después su manifiesto.
+Se han actualizado la descripción y la ayuda de descarga de Focal Length Blend. Revisar las demás notas históricas de instalación antes de cerrar la versión candidata. El manifiesto debe seguir reflejando los hashes de las fuentes finales.
 
 ## Validación en PixInsight 1.9.6
 
-PTeam pide reenviar la solicitud desde PixInsight 1.9.6 y SubmitCPD 1.2.1, aceptando las normas vigentes. Las fuentes de esta rama conservan la implementación publicada para 1.9.5. No se ha comprobado aquí su ejecución en 1.9.6 ni la compatibilidad de las inclusiones/configuración de ImageSolver 6.5.0 con esa instalación.
+PTeam pide reenviar la solicitud desde PixInsight 1.9.6 y SubmitCPD 1.2.1, aceptando las normas vigentes. Las fuentes parten de la implementación publicada para 1.9.5, con la descarga 0.11.5 comprobada fuera de PixInsight. No se ha comprobado aquí su ejecución nativa en 1.9.6 ni la compatibilidad de las inclusiones/configuración de ImageSolver 6.5.0 con esa instalación.
 
 Repetir las pruebas nativas y la inspección de interfaz pertinentes con la versión final: lectura/escritura del editor de cabeceras y sus modos de sustitución; copia de astrometría; resolución/reproyección real de imágenes; ejecución real de SPCC; separación opcional con StarXTerminator; descarga y verificación de muestras. Los manuales heredados describen comprobaciones previas, no resultados nuevos de esta revisión.
 
