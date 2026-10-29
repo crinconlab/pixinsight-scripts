@@ -2,6 +2,8 @@
 
 Latest complete collection: **2026-10-26**, for manual installation.
 
+**Source update — 2026-10-29:** Focal Length Blend **0.11.5** now checks sample ZIP downloads with a pinned SHA-256 and permits HTTPS requests/redirects only. The older collection release above still contains 0.11.4. Use the [four-script CPD review branch](https://github.com/crinconlab/pixinsight-scripts/tree/cpd-review) for the updated review package without PolyMask. [Download verification and tests](docs/sample-download-verification.md).
+
 [Download the complete collection](https://github.com/crinconlab/pixinsight-scripts/releases/tag/collection-2026-10-26)
 
 The ZIP includes all five current scripts, five orange icons, and English manuals. Extract the complete Crinconlab folder, preserving its icons and manuals subfolders. In PixInsight, use Script > Feature Scripts > Add to register that folder. Remove registrations pointing to older copies if duplicate entries appear.

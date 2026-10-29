@@ -1,4 +1,4 @@
-# Focal Length Blend — 0.11.4, local release
+# Focal Length Blend — 0.11.5, preliminary CPD review build
 
 Copyright © Carlos Rincón 2026
 
@@ -23,9 +23,9 @@ The script does not stretch images, remove gradients or calibrate color. The pre
 
 ## Install and update locally
 
-Keep the complete **Crinconlab** folder together with its four scripts, the four SVG files in **icons**, and **manuals**. Replace the previous complete folder, keeping any personal files separately. In PixInsight, open **Script → Feature Scripts…**, remove outdated entries pointing to other locations if necessary, then **Add…** the folder containing the four `.js` files and click **Done**.
+Keep the complete **Crinconlab** folder together with its scripts, the SVG files in **icons**, and **manuals**. Replace the previous complete folder, keeping any personal files separately. In PixInsight, open **Script → Feature Scripts…**, remove outdated entries pointing to other locations if necessary, then **Add…** the folder containing the `.js` files and click **Done**.
 
-Launch **Script → Crinconlab → Focal Length Blend**. The filename remains `Mezcla_Focales.js` so the replacement updates the existing script. Do not install both old and new copies in different folders. This is a local distribution; nothing has been published to GitHub.
+Launch **Script → Crinconlab → Focal Length Blend**. The filename remains `Mezcla_Focales.js` so the replacement updates the existing script. Do not install both old and new copies in different folders. The source is published in the cpd-review branch of this GitHub repository for manual installation and CPD evaluation. No automatic update repository is active.
 
 ## 1. Solve, separate stars and prepare geometry
 
@@ -175,7 +175,7 @@ Click **Download Sample Images** in setup. Before opening the download, an Engli
 >
 > Thank you for respecting the author’s work.
 
-**Agree and Download** lets you choose where to save the ZIP, then downloads it directly without opening a browser. **Cancel** or closing either dialog starts no download. The notice appears each time; consent is not remembered. Transfer failures are reported and incomplete downloads are removed. Unzip the downloaded file, then use its two workflows:
+**Agree and Download** lets you choose where to save the ZIP, then downloads it directly without opening a browser. **Cancel** or closing either dialog starts no download. The notice appears each time; consent is not remembered. Requests and redirects allow HTTPS only. The script checks the file size and a pinned SHA-256 before publishing the ZIP. Rejected partial downloads are removed when possible, and an existing destination is preserved during verification. During replacement it is temporarily stored beside the destination as a unique `.previous-*` recovery file, restored on failure when possible and removed after success; any retained recovery path is reported. Unzip the verified file, then use its two workflows:
 
 - **With_StarX:** Short_Focal_Length.xisf as Base and Long_Focal_Length.xisf as Detail. Leave StarXTerminator enabled. Both images contain stars and verified astrometry.
 - **Without_StarX:** Short_Focal_Length_Starless.xisf as Base and Long_Focal_Length_Starless.xisf as Detail. Disable star separation. These derivatives already have stars removed and preserve the same astrometric geometry as the with-stars counterparts.
@@ -229,6 +229,12 @@ Set default Relative detail gain to 0.50 (50%). The control continues displaying
 ## Changes in 0.11.4
 
 Enable Download Sample Images with an explicit copyright/usage notice and Agree and Download / Cancel actions. Use the verified GitHub Releases asset. Add a documented real-image sample package with English image names, with-stars/starless pairs and preserved astrometry. Fusion, gain defaults and mask navigation are unchanged.
+
+## Changes in 0.11.5
+
+Sample downloads are restricted to HTTPS, including redirects. Before publication the script checks 85,376,365 bytes and the pinned SHA-256 `9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26`. The SHA-256 is calculated incrementally inside the script, without an external hash executable. An altered file is rejected even if its size is unchanged. An existing destination is retained during verification and protected with a temporary recovery file during replacement. File/read/transfer errors clean the partial download when possible.
+
+Eleven standalone tests passed outside PixInsight, including the real published sample ZIP, known hash vectors, same-size tampering, failed transfers, replacement/rollback and HTTPS-only curl arguments. These tests use Node file adapters, not native PJSR bindings. Run `tests/Test_Sample_Download_PixInsight.js` for the native file/hash smoke test; that test and the full workflow on PixInsight 1.9.6 remain pending. Image blending, astrometry, masks and gains are unchanged by this revision.
 
 
 Task progress
