@@ -1,5 +1,7 @@
 # Crinconlab — product descriptions for CPD review
 
+**Manual validation:** Carlos Rincón confirms that all workflow tests have been repeated manually with satisfactory results.
+
 **Manual workflow validation:** Carlos Rincón confirms that astrometric solving with ImageSolver and full color calibration with SPCC were manually tested and completed successfully in **both PixInsight 1.9.5 and 1.9.6**. This author-confirmed end-to-end validation complements the automated development and native processing checks.
 
 **Automated development checks — PixInsight 1.9.5:** astrometric-solution handling, ImageSolver initialization and SPCC configuration/workflow integration were covered by automated development checks. These are distinct from the subsequent native 1.9.6 results.

@@ -6,28 +6,28 @@
       "script": "Astrometric_Solution_Copy_EN.js",
       "feature": "CrinconlabAstrometricCopyEN : Crinconlab > Astrometric Solution Copy",
       "icon": "icons/astrometric_copy_orange_v2.svg",
-      "sha256": "8ae5edb310d1e89c0e004092902c894ae2de78354c046557ccd447b48bd9f342",
+      "sha256": "c38b2a6440686307ffe80b34e22290d3e9e2e1fa658c94ae7fde31e1679cb3e6",
       "version": "1.1"
     },
     {
       "script": "FITS_XISF_Header_Editor_EN.js",
       "feature": "CarlosRinconHeaderEditorEN : Crinconlab > FITS-XISF Header Editor",
       "icon": "icons/header_editor_orange_v2.svg",
-      "sha256": "7bcfc767e2c09766dbfd8bf0d23ee26d2054135a816ed91f0d03b386c033b886",
+      "sha256": "7ee0e2555602c2383dd6177b31989ef187569c3d8ecb2856718eed79439a7ae1",
       "version": "1.0.1"
     },
     {
       "script": "Mezcla_Focales.js",
       "feature": "CrinconlabMezclaFocales : Crinconlab > Focal Length Blend",
       "icon": "icons/Mezcla_Focales_orange_v2.svg",
-      "sha256": "345255c80beb7944caf16ea241d892275a03592aae0100ad0e8df0e051361ef6",
+      "sha256": "5c4f1ccc4e3a9feb3e1ab45d7674c322dea36f7ed7e043b5f2b1594157b6c205",
       "version": "0.11.7"
     },
     {
       "script": "RGB_DualBand_Solver_SPCC_EN.js",
       "feature": "CarlosRinconRGBDualBandEN : Crinconlab > RGB DualBand Solver SPCC",
       "icon": "icons/rgb_dualband_orange_v2.svg",
-      "sha256": "ef11111026c70c7b9af0011e11e1dfce5cc15e677a0c92948b3541d195acc581",
+      "sha256": "013084459d23e96677cb747cc0eaf2ed181cdd27e4593c7bbe15a4d1d0c45529",
       "version": "0.14.3"
     }
   ],
@@ -39,5 +39,11 @@
       "file": "ProtectedPaths.jsh",
       "sha256": "0c508d65cf27be6e2848545681c52f75aa6012c946488bcdc37ecc0e61d1dbdc"
     }
-  ]
+  ],
+  "manualValidationNote": {
+    "scope": "all four script workflows",
+    "result": "repeated manually with satisfactory results",
+    "tester": "Carlos Rincon",
+    "evidence": "author confirmation"
+  }
 }

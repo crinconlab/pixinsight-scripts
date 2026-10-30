@@ -1,5 +1,8 @@
 # Focal Length Blend — 0.11.7, preliminary CPD review build
 
+MANUAL VALIDATION
+Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+
 Copyright © Carlos Rincón 2026
 
 ## Before you start

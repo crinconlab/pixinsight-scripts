@@ -1,7 +1,8 @@
 // Copyright © Carlos Rincón 2026
+// Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 #feature-id CarlosRinconHeaderEditorEN : Crinconlab > FITS-XISF Header Editor
 #feature-icon icons/header_editor_orange_v2.svg
-#feature-info FITS keyword and XISF metadata editor, with simulation, recursive selection and save modes. Version 1.0.1. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026.
+#feature-info FITS keyword and XISF metadata editor, with simulation, recursive selection and save modes. Version 1.0.1. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 
 /* FITS_XISF_Header_Editor_EN.js — PixInsight PJSR. Default: save copies; simulation is optional.
  * Output: Sesion_1/Lights_Metadata (sibling of Lights_OK).
@@ -654,6 +655,7 @@ function HeaderEditorDialog()
    this.busy=false;this.stopRequested=false;this.onClose=function(){return !self.busy;};
    this.batchControls=[this.select,this.selectDirectory,this.fileCombo,this.search,this.headers,this.nameEdit,this.typeCombo,this.valueEdit,this.commentEdit,this.add,this.newButton,this.pending,this.remove,this.scope,this.modeCombo,this.folderEdit,this.browseButton,this.simulation,this.runButton];
    this.copyrightLabel=label("Copyright © Carlos Rincón 2026");
+   this.copyrightLabel.toolTip="Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.";
    this.sizer=new VerticalSizer;this.sizer.margin=10;this.sizer.spacing=5;
    var items=[this.intro,this.sourceButtons,this.fileCombo,row([label("Search:"),this.search]),this.headers,this.detail,this.editRow,this.commentRow,this.editButtons,
               this.pendingLabel,this.pending,this.remove,this.scopeRow,this.outputRow,this.destination,this.notice,this.taskStatus,this.countStatus,this.progressBar,this.bottom,this.copyrightLabel];

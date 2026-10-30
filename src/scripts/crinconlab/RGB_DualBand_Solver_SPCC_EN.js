@@ -1,7 +1,8 @@
 // Copyright © Carlos Rincón 2026
+// Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 #feature-id CarlosRinconRGBDualBandEN : Crinconlab > RGB DualBand Solver SPCC
 #feature-icon icons/rgb_dualband_orange_v2.svg
-#feature-info RGB + Dual Band composition, Image Solver and SPCC. Version 0.14.3. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026.
+#feature-info RGB + Dual Band composition, Image Solver and SPCC. Version 0.14.3. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 #engine v8
 #include "ProtectedPaths.jsh"
 #include <pjsr/StdIcon.jsh>
@@ -29,6 +30,9 @@ CoreApplication.ensureMinimumVersion(1,9,5);
 var RD_HELP_TEXT=[
    "RGB + DUAL BAND \u2014 VERSION 0.14.3",
    "Copyright \u00a9 Carlos Rinc\u00f3n 2026",
+   "",
+   "MANUAL VALIDATION",
+   "Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.",
    "",
    "INPUT PREPARATION",
    "Both images must be linear, gradient-corrected and color-calibrated. ML Denoise is optional. RGB must have three channels. Dual Band may be RGB or monochrome. A display STF is allowed. Original inputs are never edited.",

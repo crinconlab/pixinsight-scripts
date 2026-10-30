@@ -217,5 +217,11 @@
   "automatedSessionUncompleted": {
     "spcc": "configured catalog unavailable",
     "freshSolve": "inconclusive after bounded >4 minute run; owned instance terminated"
+  },
+  "authorManualWorkflowConfirmation": {
+    "tester": "Carlos Rincón",
+    "statement": "All workflow tests have been repeated manually with satisfactory results.",
+    "evidenceType": "explicit author confirmation",
+    "independentlyAutomated": false
   }
 }

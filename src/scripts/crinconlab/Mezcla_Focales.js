@@ -1,7 +1,8 @@
 // Copyright © Carlos Rincón 2026
+// Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 #feature-id CrinconlabMezclaFocales : Crinconlab > Focal Length Blend
 #feature-icon icons/Mezcla_Focales_orange_v2.svg
-#feature-info Astrometric preparation, StarXTerminator separation and selectable native MLT detail injection on a fixed short-focal canvas. Version 0.11.7. Copyright &copy; Carlos Rinc&oacute;n 2026.
+#feature-info Astrometric preparation, StarXTerminator separation and selectable native MLT detail injection on a fixed short-focal canvas. Version 0.11.7. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 #engine v8
 #include "ProtectedPaths.jsh"
 #include <pjsr/StdIcon.jsh>
@@ -1071,6 +1072,9 @@ MF_Camera.prototype.pan=function(dx,dy,w,h)
 
 var MF_HELP = [
    "# Focal Length Blend \u2014 0.11.7, preliminary release",
+   "",
+   "MANUAL VALIDATION",
+   "Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.",
    "",
    "Copyright \u00a9 Carlos Rinc\u00f3n 2026",
    "",

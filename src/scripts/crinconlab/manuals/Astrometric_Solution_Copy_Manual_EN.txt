@@ -1,6 +1,9 @@
 CRINCONLAB — ASTROMETRIC SOLUTION COPY — VERSION 1.1
 Copyright © Carlos Rincón 2026
 
+MANUAL VALIDATION
+Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+
 PURPOSE AND REQUIREMENTS
 Copy an existing native PixInsight astrometric solution from a solved reference
 to other open main images. RGB and monochrome images are supported.

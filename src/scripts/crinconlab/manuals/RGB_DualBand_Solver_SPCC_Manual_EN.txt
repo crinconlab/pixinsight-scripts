@@ -1,6 +1,9 @@
 RGB + DUAL BAND — VERSION 0.14.3
 Copyright © Carlos Rincón 2026
 
+MANUAL VALIDATION
+Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+
 INPUT PREPARATION
 Both images must be linear, gradient-corrected and color-calibrated. ML Denoise is optional. RGB must have three channels. Dual Band may be RGB or monochrome. A display STF is allowed. Original inputs are never edited.
 
