@@ -1,6 +1,6 @@
 # Estado del candidato y pasos para la solicitud CPD
 
-29 de octubre de 2026. Cuatro scripts; PolyMask excluido.
+29 de octubre de 2026; actualizado el 30 de octubre con la prueba nativa de StarX. Cuatro scripts; PolyMask excluido.
 
 ## Preparación completada
 
@@ -8,7 +8,7 @@
 - Documentación y versiones coherentes, manifiesto con los cuatro SHA-256 y SHA256SUMS.txt del contenido final.
 - Prueba nativa de descarga ejecutada primero en PixInsight 1.9.6; descarga real HTTPS verificada por tamaño y SHA-256.
 - Interfaces, FITS/XISF I/O, copia WCS, reproyección, recorte y mezcla MLT comprobados. Consulte [el informe en inglés](validation-pixinsight-1.9.6.md).
-- Carlos Rincón acepta continuar y da SPCC, resolución nueva y StarX por buenos según el funcionamiento previo. Esto no se presenta como una prueba nueva completada en 1.9.6. Se conservan las limitaciones y el fallo de registro del par de focales distintas en el informe.
+- Carlos Rincón acepta continuar y da SPCC y resolución nueva por buenos según el funcionamiento previo. StarXTerminator 2.6.10/modelo 11 ya ha superado la prueba automática de separación, mezcla MLT y recombinación Screen en 1.9.6/macOS; véase starx-validation-1.9.6.md. Se conservan las limitaciones y el fallo de registro del par de focales distintas en el informe.
 
 ## Dependencias y distribución
 

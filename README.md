@@ -27,7 +27,7 @@ Use this branch's source or [download this branch as a ZIP](https://github.com/c
 
 Extract the archive and keep `src/scripts/crinconlab/` together with its `icons/` and `manuals/` subfolders. Place it in a user-managed folder and register it with **Script → Feature Scripts… → Add**. The scripts appear under **Script → Crinconlab**. They do not install themselves into PixInsight or change its security preferences.
 
-These are preliminary scripts, without CPD signatures in this package. This branch does not activate a PixInsight automatic-update repository. The source targets PixInsight 1.9.5; native checks on PixInsight 1.9.6/macOS have been performed for the scope listed in the report. SPCC, fresh solving and StarXTerminator are accepted by the author based on previous operation, without claiming new successful execution in this session. ImageSolver and other PixInsight libraries are referenced from the installed application, not copied into this package. StarXTerminator is an optional dependency of Focal Length Blend and must already be installed and activated.
+These are preliminary scripts, without CPD signatures in this package. This branch does not activate a PixInsight automatic-update repository. The source targets PixInsight 1.9.5; native checks on PixInsight 1.9.6/macOS have been performed for the scope listed in the report. SPCC and fresh solving remain accepted by the author based on previous operation. StarXTerminator separation and Screen recombination have now passed the native 1.9.6 follow-up described in docs/starx-validation-1.9.6.md. ImageSolver and other PixInsight libraries are referenced from the installed application, not copied into this package. StarXTerminator is an optional dependency of Focal Length Blend and must already be installed and activated.
 
 For the FITS header tool, the reviewed implementation uses file-system access and has no direct network API, remote participant exchange or external-program invocation. RGB DualBand Solver SPCC and Focal Length Blend use the official ImageSolver included with PixInsight; catalogue queries follow that component's installed version and configuration. Focal Length Blend also offers an optional sample-data download using `curl`, restricted to HTTPS and checked against a pinned SHA-256 before publication. No separate catalogue service is implemented by the collection.
 
@@ -44,3 +44,7 @@ Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Leng
 
 SAMPLE DOWNLOAD UPDATE — 30 OCTOBER 2026
 Focal Length Blend 0.11.7 adds a responsive progress window, separate transfer/SHA-256 percentages and Cancel, blocks duplicate clicks and accelerates native bounded file hashing. Two consecutive real button-callback downloads passed in PixInsight 1.9.6/macOS. HTTPS, the pinned SHA-256 and protected destinations remain enforced. See docs/sample-download-ui-1.9.6.md in cpd-review.
+
+
+STARX FOLLOW-UP — 30 OCTOBER 2026
+Native StarXTerminator 2.6.10/model 11 separation and Screen recombination passed the real-sample automatic workflow in PixInsight 1.9.6/macOS. StarX is no longer an untested dependency in this environment. Exact recovery of every original pixel from the native decomposition is not claimed; numerical diagnostics and remaining limits are documented in docs/starx-validation-1.9.6.md.

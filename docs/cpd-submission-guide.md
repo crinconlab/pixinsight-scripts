@@ -16,7 +16,7 @@ Identificador solicitado en la documentación anterior: `Carlos_Rincon_Astrophot
 
 Crinconlab is a collection of four PixInsight scripts by Carlos Rincón: FITS/XISF Header Editor 1.0.1, RGB DualBand Solver SPCC 0.14.3, Focal Length Blend 0.11.7 and Astrometric Solution Copy 1.1. PolyMask is excluded from this request.
 
-The cpd-review branch contains the final source files, icons, English manuals, product descriptions, manifest and SHA-256 checksums. Native checks were performed in PixInsight Core 1.9.6 on macOS for interfaces, header editing, astrometric copying, reprojection/cropping, MLT blending and a real HTTPS sample download with pinned SHA-256 verification. The validation report distinguishes these results from SPCC, fresh solving and StarXTerminator compatibility accepted by the author based on prior operation.
+The cpd-review branch contains the final source files, icons, English manuals, product descriptions, manifest and SHA-256 checksums. Native checks were performed in PixInsight Core 1.9.6 on macOS for interfaces, header editing, astrometric copying, reprojection/cropping, MLT blending and a real HTTPS sample download with pinned SHA-256 verification. The validation report distinguishes these results from SPCC and fresh solving compatibility accepted by the author based on prior operation. StarXTerminator separation and Screen recombination were subsequently verified automatically in PixInsight 1.9.6.
 
 The package is currently distributed manually, without CPD signatures or an active automatic-update repository. The descriptions disclose file access, preferences, optional sample downloads and dependencies on the installed official ImageSolver, SPCC/Gaia DR3SP and optional StarXTerminator.
 
@@ -42,3 +42,7 @@ Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Leng
 
 SAMPLE DOWNLOAD UPDATE — 30 OCTOBER 2026
 Focal Length Blend 0.11.7 adds a responsive progress window, separate transfer/SHA-256 percentages and Cancel, blocks duplicate clicks and accelerates native bounded file hashing. Two consecutive real button-callback downloads passed in PixInsight 1.9.6/macOS. HTTPS, the pinned SHA-256 and protected destinations remain enforced. See docs/sample-download-ui-1.9.6.md in cpd-review.
+
+
+STARX FOLLOW-UP — 30 OCTOBER 2026
+Native StarXTerminator 2.6.10/model 11 separation and Screen recombination passed the real-sample automatic workflow in PixInsight 1.9.6/macOS. StarX is no longer an untested dependency in this environment. Exact recovery of every original pixel from the native decomposition is not claimed; numerical diagnostics and remaining limits are documented in docs/starx-validation-1.9.6.md.

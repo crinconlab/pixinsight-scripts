@@ -1,5 +1,7 @@
 # Validación nativa de Crinconlab en PixInsight 1.9.6
 
+**Actualización 30/10/2026:** StarX ya está probado automáticamente en 1.9.6: separación, mezcla y recombinación Screen correctas. La observación de indisponibilidad que figura más abajo corresponde a las pruebas anteriores y ha quedado superada. [Informe nuevo](starx-validation-1.9.6.md). SPCC y resolución nueva no cambian de estado.
+
 Fecha: 29 de octubre de 2026. Entorno: PixInsight Core 1.9.6 Lockhart x64, macOS.
 Rama: `cpd-review`. Commit probado: `31a7c48782d4b466cb1d784429298a9b75117daa`.
 Solo cuatro scripts. PolyMask excluido. Las fuentes descargadas coinciden por hash Git con la rama. Las pruebas de procesamiento se ejecutaron sobre ese commit. El candidato de solicitud añade después la etiqueta 1.0.0 al editor de cabeceras y actualiza documentación y hashes; no cambia algoritmos.

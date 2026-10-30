@@ -61,3 +61,7 @@ La dependencia de ImageSolver queda descrita como uso del componente oficial de 
 
 WRITE-PATH PROTECTION — 29 OCTOBER 2026
 Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.7 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
+
+
+ACTUALIZACIÓN STARX — 30 OCTUBRE 2026
+Separación con StarXTerminator 2.6.10/modelo 11, mezcla MLT y recombinación Screen verificadas automáticamente en PixInsight 1.9.6/macOS con las muestras reales. Se conserva la astrometría y la imagen de estrellas de la base. La descomposición no se presenta como inversión exacta del original. Véase starx-validation-1.9.6.md.

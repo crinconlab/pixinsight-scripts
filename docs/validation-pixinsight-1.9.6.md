@@ -1,5 +1,7 @@
 # PixInsight 1.9.6 native review — Crinconlab
 
+**Update 30 October 2026:** StarX separation, MLT blending and Screen recombination have now passed the automatic 1.9.6 follow-up. The missing-constructor and continuity-only statements below describe the earlier session and are superseded for StarX. [New report](starx-validation-1.9.6.md). SPCC/fresh-solve scope is unchanged.
+
 Date: 29 October 2026. Runtime: PixInsight Core 1.9.6 Lockhart x64, macOS.
 Tested processing snapshot: `31a7c48782d4b466cb1d784429298a9b75117daa` on `cpd-review`.
 Scope: four products; PolyMask excluded.

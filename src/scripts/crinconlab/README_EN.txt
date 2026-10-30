@@ -19,8 +19,9 @@ This is a preliminary manual-installation package without CPD signatures.
 There is no automatic-update repository in this package. The source targets
 PixInsight 1.9.5. Native checks on 1.9.6/macOS now cover interfaces, header I/O,
 WCS copying, reprojection/crop, blending and verified sample downloads. SPCC,
-fresh solving and StarX are accepted by the author based on prior operation,
-not claimed as completed native checks in this 1.9.6 session.
+fresh solving remain accepted by the author based on prior operation.
+Native StarX separation and Screen recombination subsequently passed the
+automatic 1.9.6 workflow; see docs/starx-validation-1.9.6.md in the repository.
 Use the root README and docs/cpd-scripts-en.md for the review scope and
 docs/cpd-pending-checks.md for outstanding documentation and validation work.
 

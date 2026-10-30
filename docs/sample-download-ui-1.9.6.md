@@ -19,4 +19,4 @@ Native PixInsight Core 1.9.6 x64/macOS tests invoked the actual setup Download b
 - Cancel during a real curl transfer: passed; previous destination preserved and partial download removed.
 - Native Cancel control and UI unlock: passed.
 
-Timings depend on the network and computer. Windows/Linux native execution remains untested in this session. The older SPCC/fresh-solve/StarX validation scope is unchanged; the author reports that StarX is installed and working in his interactive environment. See the earlier report for the exact automated scope.
+Timings depend on the network and computer. Windows/Linux native execution remains untested in this session. SPCC/fresh-solve scope is unchanged. StarX has subsequently passed a native automatic separation/blend/recombination workflow; see starx-validation-1.9.6.md. See the earlier report for the exact automated scope.

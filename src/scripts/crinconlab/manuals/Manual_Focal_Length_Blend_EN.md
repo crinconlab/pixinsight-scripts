@@ -252,3 +252,7 @@ Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Leng
 
 SAMPLE DOWNLOAD UPDATE — 30 OCTOBER 2026
 Focal Length Blend 0.11.7 adds a responsive progress window, separate transfer/SHA-256 percentages and Cancel, blocks duplicate clicks and accelerates native bounded file hashing. Two consecutive real button-callback downloads passed in PixInsight 1.9.6/macOS. HTTPS, the pinned SHA-256 and protected destinations remain enforced. See docs/sample-download-ui-1.9.6.md in cpd-review.
+
+
+STARX NATIVE FOLLOW-UP — 30 OCTOBER 2026
+The real with-stars samples passed native StarX 2.6.10/model 11 separation, MLT blending and Screen recombination in PixInsight 1.9.6/macOS. WCS and separate base stars were retained. This validates execution and the requested formula, not perfect inversion of every original pixel. See docs/starx-validation-1.9.6.md in cpd-review for the full diagnostic and test-launch configuration.

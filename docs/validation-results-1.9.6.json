@@ -131,8 +131,7 @@
   ],
   "uncompleted": {
     "spcc": "configured catalog unavailable",
-    "freshSolve": "inconclusive after bounded >4 minute run; owned instance terminated",
-    "starX": "constructor unavailable in V8 test instances"
+    "freshSolve": "inconclusive after bounded >4 minute run; owned instance terminated"
   },
   "polymask": "excluded",
   "rgbAndCopy": [
@@ -189,5 +188,12 @@
       "ok": false,
       "error": "Error: SPCC returned failure"
     }
-  ]
+  ],
+  "historicalStarXStatus": "constructor unavailable in V8 test instances",
+  "starXFollowUp": {
+    "status": "native workflow verified",
+    "report": "starx-validation-1.9.6.md",
+    "results": "../tests/starx-validation-results.json",
+    "exactInverseDiagnosticPassed": false
+  }
 }
