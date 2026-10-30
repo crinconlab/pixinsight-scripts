@@ -2,7 +2,7 @@
   "runtime": "PixInsight Core 1.9.6 Lockhart x64 macOS",
   "date": "2026-10-29",
   "testedCommit": "31a7c48782d4b466cb1d784429298a9b75117daa",
-  "authorDisposition": "accepted to continue; uncompleted dependencies accepted by continuity, not newly tested successes",
+  "authorDisposition": "Successful manual end-to-end ImageSolver and SPCC runs confirmed for 1.9.5 and 1.9.6, complementing recorded automated checks.",
   "download": {
     "expectedBytes": 85376365,
     "expectedSHA256": "9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26",
@@ -129,10 +129,6 @@
       "release": 3
     }
   ],
-  "uncompleted": {
-    "spcc": "configured catalog unavailable",
-    "freshSolve": "inconclusive after bounded >4 minute run; owned instance terminated"
-  },
   "polymask": "excluded",
   "rgbAndCopy": [
     {
@@ -206,5 +202,20 @@
     "calibrationWorkflowMethod": "injected calibration callback as documented in the source/manual",
     "catalogBackedSPCCExecutionVerifiedByTheseChecks": false,
     "freshCatalogSolveVerifiedByTheseChecks": false
+  },
+  "manualEndToEndValidation": {
+    "evidenceType": "explicit author confirmation",
+    "tester": "Carlos Rincón",
+    "pixInsightVersions": [
+      "1.9.5",
+      "1.9.6"
+    ],
+    "ImageSolverAstrometricSolving": "completed successfully",
+    "SPCCColorCalibration": "completed successfully",
+    "independentlyAutomated": false
+  },
+  "automatedSessionUncompleted": {
+    "spcc": "configured catalog unavailable",
+    "freshSolve": "inconclusive after bounded >4 minute run; owned instance terminated"
   }
 }

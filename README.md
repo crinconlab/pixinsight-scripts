@@ -1,5 +1,7 @@
 # Crinconlab — tools for PixInsight
 
+**Manual workflow validation:** Carlos Rincón confirms that astrometric solving with ImageSolver and full color calibration with SPCC were manually tested and completed successfully in **both PixInsight 1.9.5 and 1.9.6**. This author-confirmed end-to-end validation complements the automated development and native processing checks.
+
 **Bring your images together, add fine detail and streamline everyday preparation.**
 
 Crinconlab is a collection of four complementary scripts by Carlos Rincón:
@@ -22,7 +24,7 @@ Includes English manuals, matching icons, sample-image downloads in Focal Length
 - [English manuals](src/scripts/crinconlab/manuals)
 - [Submission reference](docs/cpd-submission-guide.md)
 
-Native 1.9.6/macOS checks confirm metadata editing, registration/reprojection, astrometric transfer, MLT blending, StarX separation/Screen recombination and verified downloads. Full SPCC calibration requires accessible Gaia DR3/SP data and prepared linear inputs; full SPCC and a fresh solve were not completed in this validation session. The validation summary sets out this scope clearly.
+Native 1.9.6/macOS checks confirm metadata editing, registration/reprojection, astrometric transfer, MLT blending, StarX separation/Screen recombination and verified downloads. Full SPCC calibration requires accessible Gaia DR3/SP data and prepared linear inputs; the author has confirmed successful manual ImageSolver and full SPCC runs on both 1.9.5 and 1.9.6. The validation summary sets out this scope clearly.
 
 ## Installation
 

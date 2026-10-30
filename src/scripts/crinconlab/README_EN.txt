@@ -18,8 +18,8 @@ The entries appear under Script > Crinconlab. Avoid registering multiple copies.
 This is a preliminary manual-installation package without CPD signatures.
 There is no automatic-update repository in this package. The source targets
 PixInsight 1.9.5. Native checks on 1.9.6/macOS now cover interfaces, header I/O,
-WCS copying, reprojection/crop, blending and verified sample downloads. SPCC,
-fresh solving remain accepted by the author based on prior operation.
+WCS copying, reprojection/crop, blending and verified sample downloads. Successful manual ImageSolver and SPCC execution in both 1.9.5 and 1.9.6
+is confirmed by Carlos Rincon.
 Native StarX separation and Screen recombination subsequently passed the
 automatic 1.9.6 workflow; see docs/starx-validation-1.9.6.md in the repository.
 Use the root README and docs/cpd-scripts-en.md for the review scope and
@@ -71,4 +71,7 @@ limited source finding and is not declared fully audited here.
 
 
 VALIDATION SUMMARY
-Automated development checks in PixInsight 1.9.5 covered astrometric-solution handling, ImageSolver initialization and SPCC configuration/workflow integration. Native automatic 1.9.6/macOS checks cover metadata editing, registration/reprojection, astrometric transfer, MLT blending, StarX separation/Screen recombination and verified downloads. Full SPCC and a fresh solve were not completed in the 1.9.6 validation session. See docs/validation-pixinsight-1.9.6.md in the repository.
+Automated development checks in PixInsight 1.9.5 covered astrometric-solution handling, ImageSolver initialization and SPCC configuration/workflow integration. Native automatic 1.9.6/macOS checks cover metadata editing, registration/reprojection, astrometric transfer, MLT blending, StarX separation/Screen recombination and verified downloads. The author separately confirms successful manual ImageSolver and full SPCC execution on both 1.9.5 and 1.9.6. See docs/validation-pixinsight-1.9.6.md in the repository.
+
+MANUAL END-TO-END VALIDATION
+Carlos Rincon confirms successful manual ImageSolver astrometric solving and full SPCC calibration in both PixInsight 1.9.5 and 1.9.6. These results complement the automated checks.

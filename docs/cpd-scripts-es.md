@@ -1,5 +1,7 @@
 # Descripción de los cuatro scripts para la solicitud CPD
 
+**Validación manual del flujo:** Carlos Rincón confirma que probó manualmente la resolución astrométrica con ImageSolver y la calibración de color completa con SPCC, con resultado satisfactorio en **PixInsight 1.9.5 y 1.9.6**. Esta validación del autor complementa las pruebas automáticas de desarrollo y procesamiento nativo.
+
 **Pruebas automáticas de desarrollo — PixInsight 1.9.5:** las comprobaciones automáticas cubrieron el manejo de soluciones astrométricas, la inicialización de ImageSolver y la configuración e integración de SPCC en el flujo. Se distinguen de los resultados nativos posteriores en 1.9.6.
 
 Autor: Carlos Rincón. Identificador solicitado: `Carlos_Rincon_Astrophoto`. Colección: Crinconlab.
@@ -66,4 +68,4 @@ La dependencia de ImageSolver queda descrita como uso del componente oficial de 
 
 ## Validación y distribución
 
-La instalación actual es manual. Se incluyen protección de rutas, manuales y hashes. Las funciones verificadas y las dos comprobaciones completas todavía no realizadas —SPCC y resolución nueva— se detallan en el resumen de validación. La solicitud CPD no se presenta como un aval de los productos.
+La instalación actual es manual. Se incluyen protección de rutas, manuales y hashes. El resumen de validación recoge las pruebas automáticas y las ejecuciones manuales satisfactorias de ImageSolver y SPCC confirmadas por el autor en 1.9.5 y 1.9.6. La solicitud CPD no se presenta como un aval de los productos.

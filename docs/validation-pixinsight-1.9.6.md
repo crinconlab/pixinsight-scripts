@@ -1,5 +1,7 @@
 # Crinconlab — PixInsight 1.9.6 validation summary
 
+**Manual workflow validation:** Carlos Rincón confirms that astrometric solving with ImageSolver and full color calibration with SPCC were manually tested and completed successfully in **both PixInsight 1.9.5 and 1.9.6**. This author-confirmed end-to-end validation complements the automated development and native processing checks.
+
 **Automated development checks — PixInsight 1.9.5:** astrometric-solution handling, ImageSolver initialization and SPCC configuration/workflow integration were covered by automated development checks. These are distinct from the subsequent native 1.9.6 results.
 
 **Four complementary tools for astronomical image processing, by Carlos Rincón.**
@@ -23,7 +25,7 @@ Native checks on PixInsight Core 1.9.6 x64/macOS confirm metadata editing, astro
 
 ## Requirements and validation scope
 
-SPCC requires a configured, accessible Gaia DR3/SP catalog and prepared linear RGB/Dual Band images. A new astrometric solution requires suitable stellar data and the installed ImageSolver resources. **Full SPCC calibration and a fresh solve were not completed in this validation session**; their integration uses the installed PixInsight components. Reuse, reprojection, cropping and preservation of existing solutions were verified.
+SPCC requires a configured, accessible Gaia DR3/SP catalog and prepared linear RGB/Dual Band images. A new astrometric solution requires suitable stellar data and the installed ImageSolver resources. **The author completed both operations successfully in manual runs on 1.9.5 and 1.9.6**; these are recorded as manual results, separately from the automated session. Reuse, reprojection, cropping and preservation of existing solutions were verified.
 
 Native results apply to this macOS installation and the documented sample workflows. Windows/Linux execution is not claimed by this session. These results describe the tools' behavior; CPD approval remains with PTeam.
 

@@ -1,5 +1,7 @@
 # Crinconlab — product descriptions for CPD review
 
+**Manual workflow validation:** Carlos Rincón confirms that astrometric solving with ImageSolver and full color calibration with SPCC were manually tested and completed successfully in **both PixInsight 1.9.5 and 1.9.6**. This author-confirmed end-to-end validation complements the automated development and native processing checks.
+
 **Automated development checks — PixInsight 1.9.5:** astrometric-solution handling, ImageSolver initialization and SPCC configuration/workflow integration were covered by automated development checks. These are distinct from the subsequent native 1.9.6 results.
 
 **Author:** Carlos Rincón. **Requested developer identifier:** `Carlos_Rincon_Astrophoto`.
@@ -92,7 +94,7 @@ No network connection, catalogue query, external executable invocation or automa
 
 ## Validation, installation and data protection
 
-The four tools integrate with installed PixInsight processes and PJSR libraries. Native checks cover interfaces, header I/O, astrometric transfer, registration/reprojection, cropping, MLT blending, StarX separation/Screen recombination and real SHA-256-verified downloads. The [validation summary](validation-pixinsight-1.9.6.md) identifies the tested scope and the two remaining end-to-end checks: full SPCC calibration and a fresh solve.
+The four tools integrate with installed PixInsight processes and PJSR libraries. Native checks cover interfaces, header I/O, astrometric transfer, registration/reprojection, cropping, MLT blending, StarX separation/Screen recombination and real SHA-256-verified downloads. The [validation summary](validation-pixinsight-1.9.6.md) identifies the tested scope and the automated checks and the author-confirmed successful manual ImageSolver/SPCC runs in both 1.9.5 and 1.9.6.
 
 The current package uses manual installation through standard PixInsight procedures. ProtectedPaths.jsh must remain beside the scripts; its shared validation protects the running installation and configuration directories from product disk writes. The downloader provides responsive progress and cancellation. Source files, resources and checksums are available for review. This submission does not yet activate signed automatic updates.
 

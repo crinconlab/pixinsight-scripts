@@ -1,5 +1,7 @@
 # Guía de envío — Crinconlab
 
+**Manual workflow validation:** Carlos Rincón confirms that astrometric solving with ImageSolver and full color calibration with SPCC were manually tested and completed successfully in **both PixInsight 1.9.5 and 1.9.6**. This author-confirmed end-to-end validation complements the automated development and native processing checks.
+
 Paquete candidato de cuatro scripts, 29 de octubre de 2026.
 
 ## Enlaces para el formulario
@@ -18,7 +20,7 @@ Crinconlab is a collection of four complementary PixInsight tools by Carlos Rinc
 
 The cpd-review branch provides the source code, matching icons, English manuals, technical disclosures and SHA-256 checksums. Native testing on PixInsight 1.9.6/macOS confirms metadata editing, registration and reprojection, astrometric transfer, MLT blending, native StarX separation and Screen recombination, protected output paths, and responsive sample downloads with SHA-256 verification and cancellation.
 
-Automated development checks in PixInsight 1.9.5 covered astrometric-solution handling, ImageSolver initialization and SPCC configuration/workflow integration. The validation summary identifies the tested workflows and their requirements. Full SPCC calibration and a fresh astrometric solve remain outside the completed checks in this session. The package is currently distributed manually while the CPD application is reviewed.
+Automated development checks in PixInsight 1.9.5 covered astrometric-solution handling, ImageSolver initialization and SPCC configuration/workflow integration. The validation summary identifies the tested workflows and their requirements. The author has also confirmed successful manual ImageSolver and full SPCC runs on both PixInsight 1.9.5 and 1.9.6. The package is currently distributed manually while the CPD application is reviewed.
 
 Source and technical descriptions: https://github.com/crinconlab/pixinsight-scripts/blob/cpd-review/docs/cpd-scripts-en.md
 
