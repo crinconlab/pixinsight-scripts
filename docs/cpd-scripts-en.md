@@ -2,7 +2,7 @@
 
 **Author:** Carlos Rincón. **Requested developer identifier:** `Carlos_Rincon_Astrophoto`.
 
-**Scope:** four products only; PolyMask is excluded. The source baseline is commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. On 29 October 2026 Focal Length Blend 0.11.6 adds verified sample downloads; RGB DualBand and Astrometric Solution Copy retain their implementations. The header editor is now labelled 1.0.1 without changing processing. These descriptions identify direct I/O and installed dependencies. They do not declare CPD approval. Native PixInsight 1.9.6 results and author-accepted compatibility assumptions are recorded in [the validation report](validation-pixinsight-1.9.6.md).
+**Scope:** four products only; PolyMask is excluded. The source baseline is commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. On 29 October 2026 Focal Length Blend 0.11.7 adds verified sample downloads; RGB DualBand and Astrometric Solution Copy retain their implementations. The header editor is now labelled 1.0.1 without changing processing. These descriptions identify direct I/O and installed dependencies. They do not declare CPD approval. Native PixInsight 1.9.6 results and author-accepted compatibility assumptions are recorded in [the validation report](validation-pixinsight-1.9.6.md).
 
 ## 1. FITS / XISF Header Editor
 
@@ -46,7 +46,7 @@ The script uses the official ImageSolver included with PixInsight and its instal
 
 Input files may be opened at the user's request. Working and accepted images remain in the workspace; image files are not automatically saved. Optional manual export writes a text file to a user-selected path. SPCC defaults are persisted only when the user selects Save as defaults, through the official Settings API at `CarlosRincon/RGBDualBandSPCC/v1/defaults`; the physical settings location is managed by PixInsight. Installed `filters.xspd` and `white-references.xspd` are read from `CoreApplication.libraryDirPath` and are not modified. Preview calibration explicitly suppresses native graph, star-map and text-file generation. Native catalogue/solver cache handling is delegated to the installed official components.
 
-## 3. Focal Length Blend — 0.11.6
+## 3. Focal Length Blend — 0.11.7
 
 **File:** `Mezcla_Focales.js`.
 
@@ -94,4 +94,4 @@ The package is available as source for manual review; no active automatic-update
 
 
 WRITE-PATH PROTECTION — 29 OCTOBER 2026
-Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.7 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.

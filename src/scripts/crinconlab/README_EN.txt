@@ -4,7 +4,7 @@ Copyright © Carlos Rincón 2026
 PRODUCTS INCLUDED
 FITS / XISF Header Editor 1.0.1 — FITS_XISF_Header_Editor_EN.js
 RGB DualBand Solver SPCC 0.14.3 — RGB_DualBand_Solver_SPCC_EN.js
-Focal Length Blend 0.11.6 — Mezcla_Focales.js
+Focal Length Blend 0.11.7 — Mezcla_Focales.js
 Astrometric Solution Copy 1.1 — Astrometric_Solution_Copy_EN.js
 
 PolyMask is not included in this review branch or package.
@@ -69,4 +69,8 @@ limited source finding and is not declared fully audited here.
 
 
 WRITE-PATH PROTECTION — 29 OCTOBER 2026
-Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.7 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
+
+
+SAMPLE DOWNLOAD UPDATE — 30 OCTOBER 2026
+Focal Length Blend 0.11.7 adds a responsive progress window, separate transfer/SHA-256 percentages and Cancel, blocks duplicate clicks and accelerates native bounded file hashing. Two consecutive real button-callback downloads passed in PixInsight 1.9.6/macOS. HTTPS, the pinned SHA-256 and protected destinations remain enforced. See docs/sample-download-ui-1.9.6.md in cpd-review.

@@ -2,7 +2,7 @@
 
 Autor: Carlos Rincón. Identificador solicitado: `Carlos_Rincon_Astrophoto`. Colección: Crinconlab.
 
-**Borrador basado en el código publicado**, con referencia inicial al commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. El 29 de octubre de 2026 se añade la descarga verificada de Focal Length Blend 0.11.6; RGB DualBand y Astrometric Solution Copy mantienen su implementación. El editor de cabeceras recibe la etiqueta 1.0.1 sin cambiar el procesamiento. PolyMask queda fuera de esta entrega. Las descripciones no suponen una certificación de seguridad ni una prueba completa de los componentes nativos.
+**Borrador basado en el código publicado**, con referencia inicial al commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. El 29 de octubre de 2026 se añade la descarga verificada de Focal Length Blend 0.11.7; RGB DualBand y Astrometric Solution Copy mantienen su implementación. El editor de cabeceras recibe la etiqueta 1.0.1 sin cambiar el procesamiento. PolyMask queda fuera de esta entrega. Las descripciones no suponen una certificación de seguridad ni una prueba completa de los componentes nativos.
 
 ## 1. FITS / XISF Header Editor
 
@@ -28,7 +28,7 @@ La composición añade al rojo de RGB la señal del canal rojo de la doble banda
 
 **Archivos y preferencias:** puede abrir imágenes seleccionadas por el usuario, pero no guarda automáticamente los resultados. La exportación opcional del manual escribe un `.txt` en la ubicación elegida. La opción de guardar valores SPCC predeterminados utiliza la API oficial `Settings`, con la clave `CarlosRincon/RGBDualBandSPCC/v1/defaults`. Lee los archivos instalados `filters.xspd` y `white-references.xspd` sin modificarlos. El proceso de previsualización desactiva la generación de gráficos, mapas de estrellas y archivos de texto de SPCC.
 
-## 3. Focal Length Blend — 0.11.6
+## 3. Focal Length Blend — 0.11.7
 
 **Archivo:** `Mezcla_Focales.js`.
 
@@ -54,10 +54,10 @@ No resuelve el campo mediante catálogos, no registra ni remuestrea imágenes y 
 
 ## Estado de la entrega
 
-La rama `cpd-review` contiene solo estos cuatro productos y sus recursos, junto con pruebas de desarrollo. El repositorio de actualizaciones automáticas todavía no forma parte de esta entrega. Solo Focal Length Blend cambia respecto a la referencia inicial para incorporar la descarga verificada 0.11.6; la combinación de imágenes no cambia.
+La rama `cpd-review` contiene solo estos cuatro productos y sus recursos, junto con pruebas de desarrollo. El repositorio de actualizaciones automáticas todavía no forma parte de esta entrega. Solo Focal Length Blend cambia respecto a la referencia inicial para incorporar la descarga verificada 0.11.7; la combinación de imágenes no cambia.
 
 La dependencia de ImageSolver queda descrita como uso del componente oficial de PixInsight. El estado final figura en [cpd-pending-checks.md](cpd-pending-checks.md) y en el informe de validación: se distinguen las comprobaciones ejecutadas en 1.9.6 de la aceptación del autor por funcionamiento previo.
 
 
 WRITE-PATH PROTECTION — 29 OCTOBER 2026
-Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.7 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.

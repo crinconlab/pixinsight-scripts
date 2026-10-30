@@ -4,13 +4,13 @@ Author: Carlos Rincón. Requested CPD identifier: `Carlos_Rincon_Astrophoto`.
 
 This branch contains the four products currently proposed for CPD review. **PolyMask is excluded from this branch and package.** The development branch and older releases are outside the scope of this review package.
 
-The baseline sources are from commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8` (26 October 2026). Focal Length Blend 0.11.6 adds SHA-256 sample-download verification, HTTPS-only redirects and protected replacement of an existing download. The header editor has version 1.0.1 with write-path protection; RGB DualBand 0.14.3 and Focal Length Blend 0.11.6 include the same shared write-path guard; Astrometric Solution Copy retains its implementation. This is a submission candidate, not CPD approval. Native 1.9.6 results and the author's accepted continuity assumptions are distinguished in the validation report.
+The baseline sources are from commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8` (26 October 2026). Focal Length Blend 0.11.7 adds SHA-256 sample-download verification, HTTPS-only redirects and protected replacement of an existing download. The header editor has version 1.0.1 with write-path protection; RGB DualBand 0.14.3 and Focal Length Blend 0.11.7 include the same shared write-path guard; Astrometric Solution Copy retains its implementation. This is a submission candidate, not CPD approval. Native 1.9.6 results and the author's accepted continuity assumptions are distinguished in the validation report.
 
 | Product | Source | Version in the reviewed source |
 | --- | --- | --- |
 | FITS / XISF Header Editor | [FITS_XISF_Header_Editor_EN.js](src/scripts/crinconlab/FITS_XISF_Header_Editor_EN.js) | 1.0.1 |
 | RGB DualBand Solver SPCC | [RGB_DualBand_Solver_SPCC_EN.js](src/scripts/crinconlab/RGB_DualBand_Solver_SPCC_EN.js) | 0.14.3 |
-| Focal Length Blend | [Mezcla_Focales.js](src/scripts/crinconlab/Mezcla_Focales.js) | 0.11.6 |
+| Focal Length Blend | [Mezcla_Focales.js](src/scripts/crinconlab/Mezcla_Focales.js) | 0.11.7 |
 | Astrometric Solution Copy | [Astrometric_Solution_Copy_EN.js](src/scripts/crinconlab/Astrometric_Solution_Copy_EN.js) | 1.1 |
 
 - [Product descriptions and technical disclosures — English](docs/cpd-scripts-en.md)
@@ -39,4 +39,8 @@ Copyright © Carlos Rincón 2026.
 
 
 WRITE-PATH PROTECTION — 29 OCTOBER 2026
-Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.7 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
+
+
+SAMPLE DOWNLOAD UPDATE — 30 OCTOBER 2026
+Focal Length Blend 0.11.7 adds a responsive progress window, separate transfer/SHA-256 percentages and Cancel, blocks duplicate clicks and accelerates native bounded file hashing. Two consecutive real button-callback downloads passed in PixInsight 1.9.6/macOS. HTTPS, the pinned SHA-256 and protected destinations remain enforced. See docs/sample-download-ui-1.9.6.md in cpd-review.

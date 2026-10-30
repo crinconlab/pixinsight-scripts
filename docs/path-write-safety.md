@@ -1,6 +1,6 @@
 # Protected write paths
 
-29 October 2026. Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.14.3 use the shared `ProtectedPaths.jsh`. Keep that file beside the JavaScript scripts. Astrometric Solution Copy 1.1 has no direct disk writer and is unchanged.
+29 October 2026. Header Editor 1.0.1, Focal Length Blend 0.11.7 and RGB DualBand 0.14.3 use the shared `ProtectedPaths.jsh`. Keep that file beside the JavaScript scripts. Astrometric Solution Copy 1.1 has no direct disk writer and is unchanged.
 
 Before disk writes the guard resolves existing POSIX symbolic links, including directory aliases, and compares complete directory boundaries against the running application's documented `CoreApplication.baseDirPath`, `configDirPath` and `appDirPath`. Comparison is conservative, case folded and Unicode NFC normalized when available. Nonexistent child destinations are checked through existing ancestors. Parent-directory segments, invalid paths, ambiguous Windows names (including short-name aliases and reserved device names) and Windows redirection/reparse points are refused. Existing file hard links are rejected when their count is reported by the platform. Missing protected-root information stops writing.
 

@@ -20,8 +20,8 @@
       "script": "Mezcla_Focales.js",
       "feature": "CrinconlabMezclaFocales : Crinconlab > Focal Length Blend",
       "icon": "icons/Mezcla_Focales_orange_v2.svg",
-      "sha256": "9af6336030611a29fcb6c1f1f4712e87e91c9445a14313b24ea911c492a6f25a",
-      "version": "0.11.6"
+      "sha256": "345255c80beb7944caf16ea241d892275a03592aae0100ad0e8df0e051361ef6",
+      "version": "0.11.7"
     },
     {
       "script": "RGB_DualBand_Solver_SPCC_EN.js",
@@ -32,7 +32,7 @@
     }
   ],
   "scope": "Four-script CPD submission candidate; PolyMask excluded.",
-  "reviewDate": "2026-10-29",
+  "reviewDate": "2026-10-30",
   "distribution": "manual; unsigned; no active update repository",
   "resources": [
     {
