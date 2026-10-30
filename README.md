@@ -15,7 +15,7 @@ Includes English manuals, matching icons, sample-image downloads in Focal Length
 
 ## Review and validation
 
-**Previous author validation — PixInsight 1.9.5:** astrometric solving with ImageSolver and color calibration with SPCC were tested by Carlos Rincón in PixInsight 1.9.5. This records the author's prior workflow validation; it is separate from the automated 1.9.6 checks below.
+**Automated development checks — PixInsight 1.9.5:** astrometric-solution handling, ImageSolver initialization and SPCC configuration/workflow integration were covered by automated development checks. These are distinct from the subsequent native 1.9.6 results.
 
 - [Product descriptions and technical disclosures](docs/cpd-scripts-en.md)
 - [PixInsight 1.9.6 validation summary](docs/validation-pixinsight-1.9.6.md)

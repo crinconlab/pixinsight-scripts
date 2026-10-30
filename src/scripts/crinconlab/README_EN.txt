@@ -71,4 +71,4 @@ limited source finding and is not declared fully audited here.
 
 
 VALIDATION SUMMARY
-Astrometric solving with ImageSolver and SPCC were previously tested by Carlos Rincon in PixInsight 1.9.5. Native automatic 1.9.6/macOS checks cover metadata editing, registration/reprojection, astrometric transfer, MLT blending, StarX separation/Screen recombination and verified downloads. Full SPCC and a fresh solve were not completed in the 1.9.6 validation session. See docs/validation-pixinsight-1.9.6.md in the repository.
+Automated development checks in PixInsight 1.9.5 covered astrometric-solution handling, ImageSolver initialization and SPCC configuration/workflow integration. Native automatic 1.9.6/macOS checks cover metadata editing, registration/reprojection, astrometric transfer, MLT blending, StarX separation/Screen recombination and verified downloads. Full SPCC and a fresh solve were not completed in the 1.9.6 validation session. See docs/validation-pixinsight-1.9.6.md in the repository.

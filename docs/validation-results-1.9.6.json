@@ -196,11 +196,15 @@
     "results": "../tests/starx-validation-results.json",
     "exactInverseDiagnosticPassed": false
   },
-  "priorAuthorValidation": {
+  "priorAutomatedDevelopmentChecks": {
     "pixInsightVersion": "1.9.5",
-    "astrometricSolving": "tested",
-    "SPCC": "tested",
-    "evidenceType": "author-reported workflow validation",
-    "author": "Carlos Rincón"
+    "coverage": [
+      "astrometric-solution handling/propagation",
+      "ImageSolver initialization",
+      "SPCC configuration and workflow integration"
+    ],
+    "calibrationWorkflowMethod": "injected calibration callback as documented in the source/manual",
+    "catalogBackedSPCCExecutionVerifiedByTheseChecks": false,
+    "freshCatalogSolveVerifiedByTheseChecks": false
   }
 }

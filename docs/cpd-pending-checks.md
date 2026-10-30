@@ -1,6 +1,6 @@
 # Estado de la solicitud CPD
 
-**Validación previa del autor — PixInsight 1.9.5:** Carlos Rincón probó la resolución astrométrica con ImageSolver y la calibración de color con SPCC en PixInsight 1.9.5. Esta validación previa se distingue de las pruebas automáticas realizadas en 1.9.6.
+**Pruebas automáticas de desarrollo — PixInsight 1.9.5:** las comprobaciones automáticas cubrieron el manejo de soluciones astrométricas, la inicialización de ImageSolver y la configuración e integración de SPCC en el flujo. Se distinguen de los resultados nativos posteriores en 1.9.6.
 
 El paquete incluye cuatro scripts, iconos, manuales, protección compartida de rutas y hashes verificados. La presentación y las pruebas actuales figuran en [la descripción en inglés](cpd-scripts-en.md) y el [resumen de validación](validation-pixinsight-1.9.6.md).
 

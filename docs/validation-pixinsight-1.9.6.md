@@ -1,6 +1,6 @@
 # Crinconlab — PixInsight 1.9.6 validation summary
 
-**Previous author validation — PixInsight 1.9.5:** astrometric solving with ImageSolver and color calibration with SPCC were tested by Carlos Rincón in PixInsight 1.9.5. This records the author's prior workflow validation; it is separate from the automated 1.9.6 checks below.
+**Automated development checks — PixInsight 1.9.5:** astrometric-solution handling, ImageSolver initialization and SPCC configuration/workflow integration were covered by automated development checks. These are distinct from the subsequent native 1.9.6 results.
 
 **Four complementary tools for astronomical image processing, by Carlos Rincón.**
 
@@ -35,3 +35,6 @@ Native results apply to this macOS installation and the documented sample workfl
 - [Numerical results](../tests/starx-validation-results.json)
 
 The manifest and SHA256SUMS.txt identify the distributed files. Core product sources are unchanged by this editorial update. Updated 30 October 2026.
+
+## Earlier automated development methodology
+The 1.9.5 record covers astrometric metadata/solution propagation, ImageSolver initialization and SPCC settings/integration. The documented automated calibration workflow uses an injected calibration callback. These tests are not evidence of a completed catalog-backed SPCC calibration or a fresh catalog solve. The attribution is to automated development testing, not to a manual test by Carlos Rincón.

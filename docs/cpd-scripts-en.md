@@ -1,6 +1,6 @@
 # Crinconlab — product descriptions for CPD review
 
-**Previous author validation — PixInsight 1.9.5:** astrometric solving with ImageSolver and color calibration with SPCC were tested by Carlos Rincón in PixInsight 1.9.5. This records the author's prior workflow validation; it is separate from the automated 1.9.6 checks below.
+**Automated development checks — PixInsight 1.9.5:** astrometric-solution handling, ImageSolver initialization and SPCC configuration/workflow integration were covered by automated development checks. These are distinct from the subsequent native 1.9.6 results.
 
 **Author:** Carlos Rincón. **Requested developer identifier:** `Carlos_Rincon_Astrophoto`.
 

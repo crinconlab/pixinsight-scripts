@@ -1,6 +1,6 @@
 # Crinconlab — validación en PixInsight 1.9.6
 
-**Validación previa del autor — PixInsight 1.9.5:** Carlos Rincón probó la resolución astrométrica con ImageSolver y la calibración de color con SPCC en PixInsight 1.9.5. Esta validación previa se distingue de las pruebas automáticas realizadas en 1.9.6.
+**Pruebas automáticas de desarrollo — PixInsight 1.9.5:** las comprobaciones automáticas cubrieron el manejo de soluciones astrométricas, la inicialización de ImageSolver y la configuración e integración de SPCC en el flujo. Se distinguen de los resultados nativos posteriores en 1.9.6.
 
 **Cuatro herramientas complementarias para procesar imágenes astronómicas, creadas por Carlos Rincón.**
 
@@ -16,3 +16,6 @@ Las pruebas nativas en macOS confirman la edición FITS/XISF, copia de astrometr
 SPCC necesita Gaia DR3/SP accesible y un par RGB/Dual Band lineal y preparado. Resolver una imagen nueva requiere estrellas y los recursos de ImageSolver. **La calibración SPCC completa y una resolución nueva no se completaron en esta sesión.** Sí se verificaron la reutilización, reproyección, recorte y conservación de soluciones existentes.
 
 La validación nativa corresponde a PixInsight 1.9.6/macOS y a las muestras documentadas. El [informe en inglés](validation-pixinsight-1.9.6.md) enlaza las evidencias técnicas. La aprobación CPD corresponde a PTeam.
+
+## Método de las pruebas automáticas anteriores
+Las comprobaciones de desarrollo de 1.9.5 incluyen propagación de astrometría, inicialización de ImageSolver y configuración/integración de SPCC. El flujo automatizado de calibración documentado utiliza un callback de calibración inyectado. No acredita por sí mismo una calibración SPCC completa con catálogo real ni una resolución nueva con catálogo. La atribución corresponde a pruebas automáticas de desarrollo, no a una prueba manual de Carlos Rincón.
