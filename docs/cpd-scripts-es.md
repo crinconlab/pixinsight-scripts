@@ -1,8 +1,12 @@
 # Descripción de los cuatro scripts para la solicitud CPD
 
+**Validación previa del autor — PixInsight 1.9.5:** Carlos Rincón probó la resolución astrométrica con ImageSolver y la calibración de color con SPCC en PixInsight 1.9.5. Esta validación previa se distingue de las pruebas automáticas realizadas en 1.9.6.
+
 Autor: Carlos Rincón. Identificador solicitado: `Carlos_Rincon_Astrophoto`. Colección: Crinconlab.
 
-**Borrador basado en el código publicado**, con referencia inicial al commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. El 29 de octubre de 2026 se añade la descarga verificada de Focal Length Blend 0.11.7; RGB DualBand y Astrometric Solution Copy mantienen su implementación. El editor de cabeceras recibe la etiqueta 1.0.1 sin cambiar el procesamiento. PolyMask queda fuera de esta entrega. Las descripciones no suponen una certificación de seguridad ni una prueba completa de los componentes nativos.
+**Cuatro herramientas complementarias para PixInsight**, nacidas de necesidades prácticas de astrofotografía: metadatos por lotes, composición RGB/Dual Band, mezcla de detalle entre focales y transferencia de astrometría. Las pruebas nativas de 1.9.6/macOS incluyen StarX y descargas verificadas. [Resumen de validación](validation-pixinsight-1.9.6-es.md).
+
+PolyMask queda fuera de esta solicitud.
 
 ## 1. FITS / XISF Header Editor
 
@@ -59,9 +63,7 @@ La rama `cpd-review` contiene solo estos cuatro productos y sus recursos, junto 
 La dependencia de ImageSolver queda descrita como uso del componente oficial de PixInsight. El estado final figura en [cpd-pending-checks.md](cpd-pending-checks.md) y en el informe de validación: se distinguen las comprobaciones ejecutadas en 1.9.6 de la aceptación del autor por funcionamiento previo.
 
 
-WRITE-PATH PROTECTION — 29 OCTOBER 2026
-Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.7 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
 
+## Validación y distribución
 
-ACTUALIZACIÓN STARX — 30 OCTUBRE 2026
-Separación con StarXTerminator 2.6.10/modelo 11, mezcla MLT y recombinación Screen verificadas automáticamente en PixInsight 1.9.6/macOS con las muestras reales. Se conserva la astrometría y la imagen de estrellas de la base. La descomposición no se presenta como inversión exacta del original. Véase starx-validation-1.9.6.md.
+La instalación actual es manual. Se incluyen protección de rutas, manuales y hashes. Las funciones verificadas y las dos comprobaciones completas todavía no realizadas —SPCC y resolución nueva— se detallan en el resumen de validación. La solicitud CPD no se presenta como un aval de los productos.

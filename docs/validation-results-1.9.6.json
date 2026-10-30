@@ -195,5 +195,12 @@
     "report": "starx-validation-1.9.6.md",
     "results": "../tests/starx-validation-results.json",
     "exactInverseDiagnosticPassed": false
+  },
+  "priorAuthorValidation": {
+    "pixInsightVersion": "1.9.5",
+    "astrometricSolving": "tested",
+    "SPCC": "tested",
+    "evidenceType": "author-reported workflow validation",
+    "author": "Carlos Rincón"
   }
 }

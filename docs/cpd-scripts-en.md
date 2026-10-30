@@ -1,8 +1,12 @@
 # Crinconlab — product descriptions for CPD review
 
+**Previous author validation — PixInsight 1.9.5:** astrometric solving with ImageSolver and color calibration with SPCC were tested by Carlos Rincón in PixInsight 1.9.5. This records the author's prior workflow validation; it is separate from the automated 1.9.6 checks below.
+
 **Author:** Carlos Rincón. **Requested developer identifier:** `Carlos_Rincon_Astrophoto`.
 
-**Scope:** four products only; PolyMask is excluded. The source baseline is commit `31fed1d6b8b06624dd8456d537ee29d60ce9b2a8`. On 29 October 2026 Focal Length Blend 0.11.7 adds verified sample downloads; RGB DualBand and Astrometric Solution Copy retain their implementations. The header editor is now labelled 1.0.1 without changing processing. These descriptions identify direct I/O and installed dependencies. They do not declare CPD approval. Native PixInsight 1.9.6 results and author-accepted compatibility assumptions are recorded in [the validation report](validation-pixinsight-1.9.6.md).
+**Four complementary PixInsight tools**, developed from practical astrophotography workflows: batch metadata editing, RGB/dual-band composition, multi-focal detail blending and astrometric transfer. Native checks on PixInsight 1.9.6/macOS cover their principal processing and data-handling paths, including StarX separation/recombination and verified sample downloads. [Validation summary](validation-pixinsight-1.9.6.md).
+
+This submission includes the four products below. PolyMask is outside its scope.
 
 ## 1. FITS / XISF Header Editor
 
@@ -64,7 +68,7 @@ The optional Download Sample Images action requests acceptance of copyright/usag
 
 `https://github.com/crinconlab/pixinsight-scripts/releases/download/sample-images-v1.0/Crinconlab_Sample_Images.zip`
 
-The code invokes the system's `curl` through `ExternalProcess.execute`: `/usr/bin/curl`, or `curl.exe` for Windows/MSWindows platform identifiers. The executable is not bundled. Both initial requests and redirects are restricted to HTTPS with `--proto =https` and `--proto-redir =https`. Transfer errors and connection/transfer timeouts are handled; no certificate-verification bypass is requested. Asset redirects are managed by GitHub. Native executable availability remains part of platform testing.
+The code invokes the system's `curl` asynchronously through `ExternalProcess.start`: `/usr/bin/curl`, or `curl.exe` for Windows/MSWindows platform identifiers. The executable is not bundled. Both initial requests and redirects are restricted to HTTPS with `--proto =https` and `--proto-redir =https`. Transfer errors and connection/transfer timeouts are handled; no certificate-verification bypass is requested. Asset redirects are managed by GitHub. Native executable availability remains part of platform testing.
 
 The ZIP is intended to contain sample images and usage/settings documents. It is not automatically extracted and no code from it is executed. Before publication the script checks **85,376,365 bytes** and the pinned SHA-256 **`9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26`**. The expected digest was obtained from the GitHub release asset metadata and independently matched against the downloaded ZIP. It is embedded in the script, not accepted from a new remote checksum file at download time. Incremental SHA-256 is implemented in the script and uses bounded file reads; no external hash executable is required. A mismatch rejects the partial download before touching an existing destination. Changing the sample asset requires deliberately updating the pin.
 
@@ -86,16 +90,10 @@ The script does not perform a new catalogue solve, register/resample images or a
 
 No network connection, catalogue query, external executable invocation or automatic image-file save is implemented. It operates on open images using PixInsight functions. The user must save targets separately to persist copied metadata to disk. Status/results are shown in the interface and console; there is no dedicated on-disk log writer or script preference persistence in this source.
 
-## Scope and remaining work
+## Validation, installation and data protection
 
-The four own-source files contain no request for administrator privileges, self-installation into PixInsight, direct edit of security preferences, or network code downloader/executor found in this static review. This finding is limited to those files and is not a certification of every installed dependency's behaviour.
+The four tools integrate with installed PixInsight processes and PJSR libraries. Native checks cover interfaces, header I/O, astrometric transfer, registration/reprojection, cropping, MLT blending, StarX separation/Screen recombination and real SHA-256-verified downloads. The [validation summary](validation-pixinsight-1.9.6.md) identifies the tested scope and the two remaining end-to-end checks: full SPCC calibration and a fresh solve.
 
-The package is available as source for manual review; no active automatic-update repository or CPD signatures are included. Descriptions of direct I/O above are supported by the current source. Eleven download/hash tests passed outside PixInsight, including the actual published ZIP, same-size tampering, failed transfers, rollback and HTTPS-only arguments. Native file/hash verification, a real HTTPS download, the four interfaces, header I/O, astrometric copying, reprojection/crop and MLT blending have now been checked on PixInsight 1.9.6. SPCC and a fresh solve remain accepted by the author based on prior operation. StarXTerminator separation, MLT blending and Screen recombination were subsequently verified automatically on 1.9.6; see [the StarX report](starx-validation-1.9.6.md). The header editor is versioned 1.0.1. See [cpd-pending-checks.md](cpd-pending-checks.md). No application has been resubmitted on the author's behalf.
+The current package uses manual installation through standard PixInsight procedures. ProtectedPaths.jsh must remain beside the scripts; its shared validation protects the running installation and configuration directories from product disk writes. The downloader provides responsive progress and cancellation. Source files, resources and checksums are available for review. This submission does not yet activate signed automatic updates.
 
-
-WRITE-PATH PROTECTION — 29 OCTOBER 2026
-Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.7 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
-
-
-STARX FOLLOW-UP — 30 OCTOBER 2026
-Native StarXTerminator 2.6.10/model 11 separation and Screen recombination passed the real-sample automatic workflow in PixInsight 1.9.6/macOS. StarX is no longer an untested dependency in this environment. Exact recovery of every original pixel from the native decomposition is not claimed; numerical diagnostics and remaining limits are documented in docs/starx-validation-1.9.6.md.
+The descriptions above document network access, external utilities, storage locations and Settings use. No advertising, telemetry, code-download execution, administrator request or security-preference change is implemented in the four own-source files. Installed dependent components remain subject to their configurations and licenses. CPD identifies the developer; this candidate does not claim product endorsement by Pleiades Astrophoto.
