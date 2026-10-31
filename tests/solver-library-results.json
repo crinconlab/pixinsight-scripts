@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-31",
+  "core": "1.9.6 macOS",
+  "solverRGB": {
+    "product": "RGB",
+    "ok": true,
+    "solverVersion": "6.6.0",
+    "detectedVersion": "6.6.0",
+    "solverDialogRendered": true,
+    "resetNamespace": "Crinconlab/RGBHaBlend",
+    "sharedNamespace": "ImageSolver"
+  },
+  "solverFocal": {
+    "product": "Focal",
+    "ok": true,
+    "solverVersion": "6.6.0",
+    "detectedVersion": "6.6.0",
+    "solverDialogRendered": true,
+    "resetNamespace": "Crinconlab/FocalLengthBlend",
+    "sharedNamespace": "ImageSolver"
+  },
+  "interfaceRGB": {
+    "ok": true,
+    "title": "RGB Ha Blend \u00b7 v0.15.1"
+  },
+  "interfaceFocal": {
+    "ok": true,
+    "title": "Focal Length Blend \u00b7 0.11.9 \u00b7 local"
+  },
+  "downloadTests": {
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0,
+    "realArchiveHash": true,
+    "curlFunctionUnchanged": true
+  },
+  "stellarRegistration": [
+    {
+      "name": "Native star registration of real image translated 18 x 9 pixels",
+      "ok": true,
+      "crop": {
+        "x": 2,
+        "y": 2,
+        "width": 1478,
+        "height": 1487
+      }
+    }
+  ],
+  "focalGeometryAndMLT": [
+    {
+      "name": "Read real solved starless sample pair",
+      "ok": true,
+      "detail": {
+        "base": [
+          1500,
+          1500
+        ],
+        "detail": [
+          1500,
+          1021
+        ]
+      }
+    },
+    {
+      "name": "Real fixed-canvas astrometric geometry without StarX",
+      "ok": true,
+      "detail": {
+        "footprintVertices": 32,
+        "coverage": 0.05012088888888889
+      }
+    },
+    {
+      "name": "Mask editor and coverage on real registered image",
+      "ok": true,
+      "detail": {
+        "gain": 0.791972085766855,
+        "offset": 0.07159820885041843,
+        "reliable": true,
+        "count": 109,
+        "r2": 0.9624823801221563
+      }
+    },
+    {
+      "name": "MLT blend real samples, WCS and source preservation",
+      "ok": true,
+      "detail": {
+        "wcs": true,
+        "sourceSolutionRetained": true
+      }
+    }
+  ],
+  "rgbGeometry": [
+    {
+      "name": "Real star detection verifies an identical registered target",
+      "ok": true,
+      "detail": {
+        "detectedStars": 480,
+        "registration": {
+          "status": "Aligned",
+          "matches": 480,
+          "median": 0,
+          "p90": 0
+        },
+        "copy": {
+          "copied": 1,
+          "skipped": 0,
+          "errors": 0,
+          "canceled": false,
+          "items": [
+            {
+              "image": "RD_Input",
+              "status": "copied"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Unverified target is blocked without explicit confirmation",
+      "ok": true
+    },
+    {
+      "name": "RGB coordinate registration and common crop on real samples",
+      "ok": true,
+      "detail": {
+        "x": 649,
+        "y": 445,
+        "width": 148,
+        "height": 363
+      }
+    },
+    {
+      "name": "Real RGB red-channel composition retains cropped astrometry",
+      "ok": true
+    },
+    {
+      "name": "Real star registration and common crop",
+      "ok": false,
+      "error": "Error: Star registration failed. Images need stars and sufficient overlap. For solved starless images, select coordinate registration.",
+      "stack": "Error: Star registration failed. Images need stars and sufficient overlap. For solved starless images, select coordinate registration.\n    at RD_prepareInputs (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/cpd-optional-fixes/astro-rgb-real.js:12478:70)\n    at /Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/cpd-optional-fixes/astro-rgb-real.js:13126:65\n    at check (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/cpd-optional-fixes/astro-rgb-real.js:13118:38)\n    at /Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/cpd-optional-fixes/astro-rgb-real.js:13126:1"
+    }
+  ],
+  "additionalObservation": "The two focal-length samples did not yield a stellar match with default parameters; their coordinate registration passed. Stellar registration with a known translation of a real image passed. No alignment parameters or blending algorithms changed."
+}

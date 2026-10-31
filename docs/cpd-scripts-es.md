@@ -22,7 +22,7 @@ El modo inicial guarda copias en una carpeta elegida por el usuario y conserva l
 
 **Ubicaciones de escritura:** carpeta de destino elegida, inicialmente sugerida como `Headers_Metadata`; carpetas de origen al sobrescribir; `Metadata_Backups/<fecha-hora-identificador>/` dentro de cada carpeta de origen si se conserva copia; archivos temporales `.metadata_*` en las carpetas de trabajo y de origen. En simulación no crea archivos ni carpetas. Las copias se conservan hasta que el usuario las gestione; la limpieza de temporales se intenta al terminar cada operación.
 
-## 2. RGB Ha Blend — 0.15.0
+## 2. RGB Ha Blend — 0.15.1
 
 **Archivo:** `RGB_Ha_Blend.js`.
 
@@ -34,7 +34,7 @@ La composición añade al rojo de RGB la señal del canal rojo de la doble banda
 
 **Archivos y preferencias:** puede abrir imágenes seleccionadas por el usuario, pero no guarda automáticamente los resultados. La exportación opcional del manual escribe un `.txt` en la ubicación elegida. La opción de guardar valores SPCC predeterminados utiliza la API oficial `Settings`, con la clave `CarlosRincon/RGBDualBandSPCC/v1/defaults`. Lee los archivos instalados `filters.xspd` y `white-references.xspd` sin modificarlos. El proceso de previsualización desactiva la generación de gráficos, mapas de estrellas y archivos de texto de SPCC.
 
-## 3. Focal Length Blend — 0.11.8
+## 3. Focal Length Blend — 0.11.9
 
 **Archivo:** `Mezcla_Focales.js`.
 
@@ -60,7 +60,7 @@ No resuelve el campo mediante catálogos, no registra ni remuestrea imágenes y 
 
 ## Estado de la entrega
 
-La rama `cpd-review` contiene solo estos cuatro productos y sus recursos, junto con pruebas de desarrollo. El repositorio de actualizaciones automáticas todavía no forma parte de esta entrega. Solo Focal Length Blend cambia respecto a la referencia inicial para incorporar la descarga verificada 0.11.8; la combinación de imágenes no cambia.
+La rama `cpd-review` contiene solo estos cuatro productos y sus recursos, junto con pruebas de desarrollo. El repositorio de actualizaciones automáticas todavía no forma parte de esta entrega. Solo Focal Length Blend cambia respecto a la referencia inicial para incorporar la descarga verificada 0.11.9; la combinación de imágenes no cambia.
 
 La dependencia de ImageSolver queda descrita como uso del componente oficial de PixInsight. El estado final figura en [cpd-pending-checks.md](cpd-pending-checks.md) y en el informe de validación: se distinguen las comprobaciones ejecutadas en 1.9.6 de la aceptación del autor por funcionamiento previo.
 

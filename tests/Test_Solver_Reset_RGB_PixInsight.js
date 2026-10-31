@@ -13,6 +13,13 @@ function testResetIsolation(){
   var solver=new ImageSolver();
   solver.solverCfg.ResetSettings();
   if(Settings.read(sentinel,DataType_String)!=="keep")throw new Error("ImageSolver sentinel removed");
+  var entry=File.readTextFile(CoreApplication.baseDirPath+"/src/scripts/ImageSolver/ImageSolver.js");
+  var match=entry.match(new RegExp('#define\\s+'+'VER'+'SION\\s+"([^"]+)"'));
+  result.solverVersion=VERSION;result.detectedVersion=match?match[1]:null;
+  if(!match || VERSION!==match[1])throw new Error("Installed solver version mismatch");
+  var dialog=new ImageSolverDialog(solver.solverCfg,solver.metadata,true);
+  dialog.render().save(File.systemTempDirectory+"/Crinconlab_Solver_RGB.png");
+  result.solverVersion=VERSION;result.solverDialogRendered=true;
   result.ok=true;result.resetNamespace=SETTINGS_MODULE;result.sharedNamespace=SOLVER_SETTINGS_MODULE;
  }catch(e){result.error=String(e);}
  finally {Settings.remove(sentinel);}

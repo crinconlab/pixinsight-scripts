@@ -1,4 +1,4 @@
-# Focal Length Blend — 0.11.8, preliminary CPD review build
+# Focal Length Blend — 0.11.9, preliminary CPD review build
 
 MANUAL VALIDATION
 Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
@@ -259,3 +259,7 @@ Focal Length Blend 0.11.8 adds a responsive progress window, separate transfer/S
 
 STARX NATIVE FOLLOW-UP — 30 OCTOBER 2026
 The real with-stars samples passed native StarX 2.6.10/model 11 separation, MLT blending and Screen recombination in PixInsight 1.9.6/macOS. WCS and separate base stars were retained. This validates execution and the requested formula, not perfect inversion of every original pixel. See docs/starx-validation-1.9.6.md in cpd-review for the full diagnostic and test-launch configuration.
+
+## Changes in 0.11.9
+
+Uses the installed official ImageSolver library entry point, with its actual version and script-owned Reset namespace. The proven HTTPS/SHA-256 curl downloader is retained.

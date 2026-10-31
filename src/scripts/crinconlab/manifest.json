@@ -20,15 +20,15 @@
       "script": "Mezcla_Focales.js",
       "feature": "CrinconlabMezclaFocales : Crinconlab > Focal Length Blend",
       "icon": "icons/Mezcla_Focales_orange_v2.svg",
-      "sha256": "783ab743b73ae996ae4b00c9535a677ac06426a9b345f668b89041a46706a377",
-      "version": "0.11.8"
+      "sha256": "5206d88cfe6025205801719cf6cf69c67c3a77f5c10069d866d1d7d7cabbee01",
+      "version": "0.11.9"
     },
     {
       "script": "RGB_Ha_Blend.js",
       "feature": "CrinconlabRGBHaBlend : Crinconlab > RGB Ha Blend",
       "icon": "icons/rgb_dualband_orange_v2.svg",
-      "sha256": "d05f0de8c978761cc20779b961729ba6b917b8b99f241cf0ca4ac38b72b0dd78",
-      "version": "0.15.0"
+      "sha256": "676e5027bba8fe4d0c2566c78a29e6800318363f208efb934f6cb7e693989976",
+      "version": "0.15.1"
     }
   ],
   "scope": "Four-script CPD submission candidate; PolyMask excluded.",

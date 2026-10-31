@@ -9,8 +9,8 @@ Crinconlab is a collection of four complementary scripts by Carlos Rincón:
 | Tool | Version | Purpose |
 | --- | --- | --- |
 | FITS/XISF Header Editor | 1.0.1 | Inspect and edit metadata across files and folders, with verified copies and optional overwrite. |
-| RGB Ha Blend | 0.15.0 | Add dual-band Ha signal to RGB through a guided registration, crop and color-calibration workflow. |
-| Focal Length Blend | 0.11.8 | Combine the wide field of a shorter-focal image with selected detail from a longer-focal image. |
+| RGB Ha Blend | 0.15.1 | Add dual-band Ha signal to RGB through a guided registration, crop and color-calibration workflow. |
+| Focal Length Blend | 0.11.9 | Combine the wide field of a shorter-focal image with selected detail from a longer-focal image. |
 | Astrometric Solution Copy | 1.1 | Transfer an existing solution between registered images with stellar alignment checks. |
 
 Includes English manuals, matching icons, sample-image downloads in Focal Length Blend and protected write paths. PolyMask is outside this four-script submission.
@@ -36,4 +36,4 @@ Copyright © Carlos Rincón 2026.
 
 ## Current download
 
-[Download the corrected 2026-10-31 collection](https://github.com/crinconlab/pixinsight-scripts/releases/tag/collection-2026-10-31), including complete and four-script CPD packages, icons, English manuals and SHA-256 checksums. The obsolete 2026-10-26 ZIP has been withdrawn.
+[Download the corrected 2026-10-31 collection](https://github.com/crinconlab/pixinsight-scripts/releases/tag/collection-2026-10-31-r2), including complete and four-script CPD packages, icons, English manuals and SHA-256 checksums. The obsolete 2026-10-26 ZIP has been withdrawn.
