@@ -1,5 +1,8 @@
-FITS / XISF HEADER EDITOR — ENGLISH EDITION
+FITS / XISF HEADER EDITOR — VERSION 1.0.1 — ENGLISH EDITION
 Copyright © Carlos Rincón 2026
+
+MANUAL VALIDATION
+Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 
 OPEN AND INSPECT
 Run FITS_XISF_Header_Editor_EN.js with Script → Execute Script File….
@@ -136,7 +139,7 @@ Keep FITS_XISF_Header_Editor_EN.js in a permanent folder. Choose
 Script → Feature Scripts… → Add…, select its folder and click Done.
 Find it at Script → Crinconlab → FITS-XISF Header Editor.
 Replace that file in the same folder to update it.
-The Spanish edition remains in its previous menu category.
+This review package contains the English edition.
 
 TESTING
 The original implementation has been tested in PixInsight Core 1.9.5 for
@@ -146,3 +149,10 @@ overwrite modes with and without backup. English-edition checks additionally
 exercise the translated type labels and interface using synthetic fixtures.
 
 Copyright © Carlos Rincón 2026
+
+REVIEW PACKAGE — 29 OCTOBER 2026
+Version 1.0.1 identifies the existing implementation; this version-label change does not change processing. Native FITS/XISF copy, simulation, overwrite, readback and interface-state checks passed on PixInsight 1.9.6 x64/macOS. See docs/validation-pixinsight-1.9.6.md in the review repository for scope and limits.
+
+
+WRITE-PATH PROTECTION — 29 OCTOBER 2026
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.8 and RGB DualBand 0.15.0 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.

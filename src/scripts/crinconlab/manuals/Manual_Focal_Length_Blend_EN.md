@@ -1,4 +1,7 @@
-# Focal Length Blend — 0.11.4, local release
+# Focal Length Blend — 0.11.8, preliminary CPD review build
+
+MANUAL VALIDATION
+Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 
 Copyright © Carlos Rincón 2026
 
@@ -23,9 +26,9 @@ The script does not stretch images, remove gradients or calibrate color. The pre
 
 ## Install and update locally
 
-Keep the complete **Crinconlab** folder together with its four scripts, the four SVG files in **icons**, and **manuals**. Replace the previous complete folder, keeping any personal files separately. In PixInsight, open **Script → Feature Scripts…**, remove outdated entries pointing to other locations if necessary, then **Add…** the folder containing the four `.js` files and click **Done**.
+Keep the complete **Crinconlab** folder together with its scripts, the SVG files in **icons**, and **manuals**. Replace the previous complete folder, keeping any personal files separately. In PixInsight, open **Script → Feature Scripts…**, remove outdated entries pointing to other locations if necessary, then **Add…** the folder containing the `.js` files and click **Done**.
 
-Launch **Script → Crinconlab → Focal Length Blend**. The filename remains `Mezcla_Focales.js` so the replacement updates the existing script. Do not install both old and new copies in different folders. This is a local distribution; nothing has been published to GitHub.
+Launch **Script → Crinconlab → Focal Length Blend**. The filename remains `Mezcla_Focales.js` so the replacement updates the existing script. Do not install both old and new copies in different folders. The source is published in the cpd-review branch of this GitHub repository for manual installation and CPD evaluation. No automatic update repository is active.
 
 ## 1. Solve, separate stars and prepare geometry
 
@@ -175,7 +178,7 @@ Click **Download Sample Images** in setup. Before opening the download, an Engli
 >
 > Thank you for respecting the author’s work.
 
-**Agree and Download** lets you choose where to save the ZIP, then downloads it directly without opening a browser. **Cancel** or closing either dialog starts no download. The notice appears each time; consent is not remembered. Transfer failures are reported and incomplete downloads are removed. Unzip the downloaded file, then use its two workflows:
+**Agree and Download** lets you choose where to save the ZIP, then downloads it directly without opening a browser. **Cancel** or closing either dialog starts no download. The notice appears each time; consent is not remembered. Requests and redirects allow HTTPS only. The script checks the file size and a pinned SHA-256 before publishing the ZIP. Rejected partial downloads are removed when possible, and an existing destination is preserved during verification. During replacement it is temporarily stored beside the destination as a unique `.previous-*` recovery file, restored on failure when possible and removed after success; any retained recovery path is reported. Unzip the verified file, then use its two workflows:
 
 - **With_StarX:** Short_Focal_Length.xisf as Base and Long_Focal_Length.xisf as Detail. Leave StarXTerminator enabled. Both images contain stars and verified astrometry.
 - **Without_StarX:** Short_Focal_Length_Starless.xisf as Base and Long_Focal_Length_Starless.xisf as Detail. Disable star separation. These derivatives already have stars removed and preserve the same astrometric geometry as the with-stars counterparts.
@@ -230,7 +233,29 @@ Set default Relative detail gain to 0.50 (50%). The control continues displaying
 
 Enable Download Sample Images with an explicit copyright/usage notice and Agree and Download / Cancel actions. Use the verified GitHub Releases asset. Add a documented real-image sample package with English image names, with-stars/starless pairs and preserved astrometry. Fusion, gain defaults and mask navigation are unchanged.
 
+## Changes in 0.11.8
+
+Sample downloads are restricted to HTTPS, including redirects. Before publication the script checks 85,376,365 bytes and the pinned SHA-256 `9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26`. The SHA-256 is calculated incrementally inside the script, without an external hash executable. An altered file is rejected even if its size is unchanged. An existing destination is retained during verification and protected with a temporary recovery file during replacement. File/read/transfer errors clean the partial download when possible.
+
+Eleven standalone tests passed outside PixInsight, including the real published sample ZIP, known hash vectors, same-size tampering, failed transfers, replacement/rollback and HTTPS-only curl arguments. These tests use Node file adapters, not native PJSR bindings. Run `tests/Test_Sample_Download_PixInsight.js` for the native file/hash smoke test; that native test and a real HTTPS transfer passed on PixInsight 1.9.6/macOS. Reprojection, mask creation and MLT blending also passed. Fresh solving and optional StarX execution are accepted by the author based on prior operation; see docs/validation-pixinsight-1.9.6.md for the measured scope and limits. Image blending, astrometry, masks and gains are unchanged by this revision.
+
 
 Task progress
 -------------
 Task descriptions appear in blue, with a percentage bar below. Percentages describe processing stages rather than elapsed time. Native Image Solver, StarXTerminator, reprojection, mask and MLT operations may hold the same percentage until the operation returns. Each new calculation resets progress; 100% is shown only after successful completion.
+
+
+CPD REVIEW CANDIDATE — 29 OCTOBER 2026
+Current scope: four scripts, PolyMask excluded. See docs/validation-pixinsight-1.9.6.md in the cpd-review repository for newly executed checks and author-accepted continuity assumptions. Earlier validation notes in this manual describe earlier work, not additional 1.9.6 results.
+
+
+WRITE-PATH PROTECTION — 29 OCTOBER 2026
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.8 and RGB DualBand 0.15.0 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
+
+
+SAMPLE DOWNLOAD UPDATE — 30 OCTOBER 2026
+Focal Length Blend 0.11.8 adds a responsive progress window, separate transfer/SHA-256 percentages and Cancel, blocks duplicate clicks and accelerates native bounded file hashing. Two consecutive real button-callback downloads passed in PixInsight 1.9.6/macOS. HTTPS, the pinned SHA-256 and protected destinations remain enforced. See docs/sample-download-ui-1.9.6.md in cpd-review.
+
+
+STARX NATIVE FOLLOW-UP — 30 OCTOBER 2026
+The real with-stars samples passed native StarX 2.6.10/model 11 separation, MLT blending and Screen recombination in PixInsight 1.9.6/macOS. WCS and separate base stars were retained. This validates execution and the requested formula, not perfect inversion of every original pixel. See docs/starx-validation-1.9.6.md in cpd-review for the full diagnostic and test-launch configuration.

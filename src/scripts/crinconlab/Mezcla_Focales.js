@@ -1,16 +1,19 @@
 // Copyright © Carlos Rincón 2026
+// Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 #feature-id CrinconlabMezclaFocales : Crinconlab > Focal Length Blend
 #feature-icon icons/Mezcla_Focales_orange_v2.svg
-#feature-info Astrometric preparation, StarXTerminator separation and selectable native MLT detail injection on a fixed short-focal canvas. Local version 0.11.4. Copyright &copy; Carlos Rinc&oacute;n 2026.
+#feature-info Astrometric preparation, StarXTerminator separation and selectable native MLT detail injection on a fixed short-focal canvas. Version 0.11.8. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 #engine v8
+#include "ProtectedPaths.jsh"
 #include <pjsr/StdIcon.jsh>
 #include <pjsr/StdButton.jsh>
 #include <pjsr/ButtonCodes.jsh>
+#include <pjsr/DataType.jsh>
 CoreApplication.ensureMinimumVersion(1,9,5);
 #define VERSION "6.5.0"
 #define TITLE "ImageSolver"
 #define SOLVER_SETTINGS_MODULE "ImageSolver"
-#define SETTINGS_MODULE "ImageSolver"
+#define SETTINGS_MODULE "Crinconlab/FocalLengthBlend"
 #include <pjsr/astrometry/AstrometricMetadata.js>
 #include <pjsr/astrometry/AstronomicalCatalogs.js>
 #include <pjsr/astrometry/SearchCoordinatesDialog.js>
@@ -32,7 +35,7 @@ CoreApplication.ensureMinimumVersion(1,9,5);
  * Default: inject selected native MLT detail layers. Gaussian-band replacement
  * remains available as an alternative.
  */
-var MF_VERSION = "0.11.4";
+var MF_VERSION = "0.11.8";
 
 function MF_clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
 function MF_number(value, name, low, high)
@@ -752,6 +755,128 @@ function MF_nextStep(message,title)
    return new MessageBox(message,title,StdIcon_Information,StdButton_Ok).execute();
 }
 var MF_SAMPLE_DOWNLOAD_URL = "https://github.com/crinconlab/pixinsight-scripts/releases/download/sample-images-v1.0/Crinconlab_Sample_Images.zip";
+// Pinned from the release asset metadata and checked against the downloaded ZIP.
+// Update this digest only when deliberately publishing a new sample asset.
+var MF_SAMPLE_BYTES = 85376365;
+var MF_SAMPLE_SHA256 = "9c6f0f434deeb7427002a081256ac56602202af2c9de0d5842a09e25b1a77f26";
+
+// Streaming SHA-256 (FIPS 180-4). Kept in this script: no downloaded
+// implementation, external hash program or whole-file allocation is required.
+function MF_SHA256()
+{
+   this.state=new Uint32Array([0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,
+      0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]);
+   this.block=new Uint8Array(64);this.words=new Uint32Array(64);
+   this.used=0;this.bytes=0;this.result=null;
+}
+MF_SHA256.K=new Uint32Array([
+   0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+   0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+   0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+   0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+   0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+   0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+   0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+   0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2]);
+MF_SHA256.prototype.compress=function()
+{
+   var w=this.words,b=this.block,h=this.state,k=MF_SHA256.K;
+   function r(x,n){return (x>>>n)|(x<<(32-n));}
+   for(var i=0;i<16;++i)w[i]=((b[4*i]<<24)|(b[4*i+1]<<16)|(b[4*i+2]<<8)|b[4*i+3])>>>0;
+   for(var j=16;j<64;++j)
+   {
+      var x=w[j-15],y=w[j-2];
+      w[j]=(w[j-16]+(r(x,7)^r(x,18)^(x>>>3))+w[j-7]+(r(y,17)^r(y,19)^(y>>>10)))>>>0;
+   }
+   var a=h[0],c=h[2],d=h[3],e=h[4],f=h[5],g=h[6],v=h[7],bb=h[1];
+   for(var n=0;n<64;++n)
+   {
+      var t1=(v+(r(e,6)^r(e,11)^r(e,25))+((e&f)^(~e&g))+k[n]+w[n])>>>0;
+      var t2=((r(a,2)^r(a,13)^r(a,22))+((a&bb)^(a&c)^(bb&c)))>>>0;
+      v=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=bb;bb=a;a=(t1+t2)>>>0;
+   }
+   var add=[a,bb,c,d,e,f,g,v];
+   for(var z=0;z<8;++z)h[z]=(h[z]+add[z])>>>0;
+};
+MF_SHA256.prototype.update=function(data,count)
+{
+   if(this.result!==null)throw new Error("SHA-256 has already been finalized.");
+   if(count===undefined)count=data.length;
+   if(!Number.isSafeInteger(count) || count<0 || !Number.isSafeInteger(this.bytes+count))
+      throw new Error("Invalid SHA-256 input length.");
+   this.bytes+=count;
+   // PJSR ByteArray exposes at(); typed arrays/arrays can use indexed access.
+   var nativeBytes=!(data instanceof Uint8Array) && typeof data.at==="function";
+   for(var i=0;i<count;++i)
+   {
+      this.block[this.used++]=nativeBytes?data.at(i):data[i];
+      if(this.used===64){this.compress();this.used=0;}
+   }
+   return this;
+};
+MF_SHA256.prototype.hex=function()
+{
+   if(this.result!==null)return this.result;
+   var low=(this.bytes*8)>>>0,high=Math.floor(this.bytes/0x20000000)>>>0;
+   this.block[this.used++]=0x80;
+   if(this.used>56){while(this.used<64)this.block[this.used++]=0;this.compress();this.used=0;}
+   while(this.used<56)this.block[this.used++]=0;
+   for(var i=0;i<4;++i){this.block[56+i]=(high>>>(24-8*i))&255;this.block[60+i]=(low>>>(24-8*i))&255;}
+   this.compress();
+   var out="";for(var j=0;j<8;++j)out+=("00000000"+this.state[j].toString(16)).slice(-8);
+   this.result=out;return out;
+};
+function MF_fileSHA256(path,observer)
+{
+   var file=new File,hash=new MF_SHA256;
+   try
+   {
+      file.openForReading(path);var size=file.size;
+      while(file.position<size)
+      {
+         MF_sampleCheckCanceled(observer);
+         var position=file.position,count=Math.min(1048576,size-position);
+         var block=file.read(DataType_ByteArray,count);
+         if(file.position!==position+count)throw new Error("The file changed while verifying its SHA-256.");
+         if(typeof block.toUint8Array==="function")block=block.toUint8Array();
+         hash.update(block,count);
+         if(observer && observer.progress)observer.progress("verify",file.position,size);
+         CoreApplication.processEvents();MF_sampleCheckCanceled(observer);
+      }
+      MF_sampleCheckCanceled(observer);
+      if(file.size!==size)throw new Error("The file changed while verifying its SHA-256.");
+      return hash.hex();
+   }
+   finally{if(file.isOpen)file.close();}
+}
+function MF_sampleTemporaryPath(path,kind)
+{
+   var name;
+   do{name=path+"."+kind+"-"+Date.now()+"-"+Math.floor(Math.random()*1000000000);}
+   while(File.exists(name)||File.directoryExists(name));
+   return name;
+}
+function MF_publishSampleZip(partial,path)
+{
+   partial=CR_assertUserWritePath(partial);path=CR_assertUserWritePath(path);
+   var backup=null;
+   if(File.exists(path))
+   {
+      backup=MF_sampleTemporaryPath(path,"previous");
+      File.moveFile(backup,path);
+   }
+   try{File.moveFile(path,partial);}
+   catch(e)
+   {
+      if(backup)
+      {
+         try{File.moveFile(path,backup);}
+         catch(restoreError){throw new Error("Could not install the verified ZIP. The previous file is preserved at: "+backup+". "+String(restoreError));}
+      }
+      throw e;
+   }
+   if(backup)try{File.remove(backup);}catch(e){console.warningln("The verified ZIP was saved, but the previous file remains at: "+backup);}
+}
 var MF_SAMPLE_TERMS = "These images are shared for personal testing of the Crinconlab Focal Length Blend script only.\n\nPlease do not redistribute or publish the supplied images or any results created from them without prior permission from Carlos Rincón.\n\nThank you for respecting the author’s work.";
 class MF_SampleTermsDialog extends Dialog
 {
@@ -771,48 +896,122 @@ constructor()
 }
 }
 // Transfer directly: never open a modal web browser from the processing workflow.
-function MF_saveSampleZip(path,transfer)
+function MF_sampleCheckCanceled(observer)
 {
-   var partial=path+".download-"+Date.now(),completed=false;
+   if(console.abortRequested || (observer && observer.isCanceled && observer.isCanceled()))throw new Error("Sample download or verification canceled.");
+}
+function MF_sampleTransfer(partial,observer)
+{
+   var program=/^(MS)?Windows$/i.test(CoreApplication.platform)?"curl.exe":"/usr/bin/curl";
+   var args=["--fail","--location","--proto","=https","--proto-redir","=https","--silent","--show-error","--connect-timeout","30","--max-time","900","--speed-time","30","--speed-limit","1024","--output",partial,MF_SAMPLE_DOWNLOAD_URL];
+   var process=new ExternalProcess,errors="";
+   function drain(){errors=(errors+process.standardOutput.utf8ToString()).slice(-4000);}
    try
    {
-      var program=CoreApplication.platform==="Windows"?"curl.exe":"/usr/bin/curl";
-      var code=transfer?transfer(partial):ExternalProcess.execute(program,
-         ["--fail","--location","--silent","--show-error","--connect-timeout","30","--max-time","900","--output",partial,MF_SAMPLE_DOWNLOAD_URL]);
+      MF_sampleCheckCanceled(observer);process.start(program,args);
+      if(!process.waitForStarted(1500))throw new Error("Could not start the system curl utility. "+process.standardOutput.utf8ToString());
+      while(process.isRunning || process.isStarting)
+      {
+         process.waitForFinished(50);
+         var info=new FileInfo(partial);
+         if(observer && observer.progress)observer.progress("download",info.exists?info.size:0,MF_SAMPLE_BYTES);
+         CoreApplication.processEvents();MF_sampleCheckCanceled(observer);drain();
+      }
+      drain();MF_sampleCheckCanceled(observer);
+      if(process.exitCode!==0)throw new Error("Sample transfer failed (curl "+process.exitCode+"). "+errors);
+      return process.exitCode;
+   }
+   finally
+   {
+      if(process.isRunning || process.isStarting)
+      {
+         process.terminate();if(!process.waitForFinished(1000)){process.kill();if(!process.waitForFinished(3000))throw new Error("The sample transfer could not be stopped. Its temporary file may remain at: "+partial);}
+      }
+   }
+}
+class MF_DownloadDialog extends Dialog
+{
+constructor()
+{
+   super();var self=this;this.cancelRequested=false;this.working=true;this.windowTitle="Download sample images";
+   this.status=MF_taskLabel(this,"Connecting to GitHub…");this.progressBar=new MF_Progress(this);
+   this.progressBar.onPaint=function(){var g=new Graphics(this);try{g.fillRect(0,0,this.width,this.height,new Brush(0xffe5eaf0));g.fillRect(0,0,Math.round(this.width*this.value/100),this.height,new Brush(0xff78b6f0));g.pen=new Pen(0xff14283c);g.font=this.font;g.drawText(8,this.height-7,this.value+" %");}finally{g.end();}};
+   this.cancelButton=new PushButton(this);this.cancelButton.text="Cancel";
+   this.cancelButton.onClick=function(){self.cancelRequested=true;self.cancelButton.enabled=false;self.status.text="Canceling…";self.status.repaint();};
+   this.onClose=function(){if(!self.working)return true;self.cancelButton.onClick();return false;};
+   this.sizer=new VerticalSizer;this.sizer.margin=14;this.sizer.spacing=10;this.sizer.add(this.status);this.sizer.add(this.progressBar);this.sizer.add(this.cancelButton);
+   this.setScaledMinWidth(550);this.adjustToContents();
+}
+updateProgress(phase,done,total)
+{
+   this.progressBar.setValue(total?Math.min(100,100*done/total):0);
+   this.status.text=(phase==="verify"?"Verifying SHA-256: ":"Downloading: ")+(done/1048576).toFixed(1)+" / "+(total/1048576).toFixed(1)+" MiB";
+   this.status.repaint();
+}
+}
+function MF_saveSampleZip(path,transfer,observer)
+{
+   path=CR_assertUserWritePath(path);
+   var partial=CR_assertUserWritePath(MF_sampleTemporaryPath(path,"download")),completed=false;
+   try
+   {
+      MF_sampleCheckCanceled(observer);
+      var code=transfer?transfer(partial):MF_sampleTransfer(partial,observer);
+      MF_sampleCheckCanceled(observer);
       if(code!==0)throw new Error("Sample download failed (transfer code "+code+"). Please check your internet connection.");
       var file=new File;
-      try{file.openForReading(partial);if(file.size!==85376365)throw new Error("The downloaded ZIP is incomplete or unexpected. Please retry.");}
+      try{file.openForReading(partial);if(file.size!==MF_SAMPLE_BYTES)throw new Error("The downloaded ZIP is incomplete or unexpected. Please retry.");}
       finally{if(file.isOpen)file.close();}
-      if(File.exists(path))File.remove(path);
-      File.move(partial,path);completed=true;
+      console.writeln("Verifying the sample ZIP (SHA-256)...");
+      if(MF_fileSHA256(partial,observer)!==MF_SAMPLE_SHA256)
+         throw new Error("Sample ZIP SHA-256 mismatch. The download was rejected; any previous destination file has been preserved.");
+      MF_sampleCheckCanceled(observer);
+      MF_publishSampleZip(partial,path);completed=true;
       return true;
    }
    finally
    {
-      if(!completed && File.exists(partial))File.remove(partial);
+      if(!completed && File.exists(partial))try{File.remove(partial);}catch(e){console.warningln("Could not remove the rejected partial download: "+partial);}
    }
 }
-function MF_downloadSampleFile()
+function MF_downloadSampleFile(owner,services)
 {
    var save=new SaveFileDialog;
    save.caption="Save Crinconlab sample images";
    save.filters=[["ZIP archives","*.zip"]];
    save.initialPath="Crinconlab_Sample_Images.zip";
    save.overwritePrompt=true;
-   if(!save.execute())return false;
-   console.hide();console.writeln("Downloading sample images (81.4 MiB)...");
-   MF_saveSampleZip(save.fileName);
-   new MessageBox("Download completed.\n\n"+save.fileName+"\n\nUnzip this file to use the sample images.","Sample images",StdIcon_Information,StdButton_Ok).execute();
+   services=services || {};
+   var chosen;
+   if(services.chooseFile){chosen=services.chooseFile(save);if(!chosen)return false;}
+   else{if(!save.execute())return false;chosen=save.filePath || save.fileName;}
+   var path=CR_assertUserWritePath(chosen),dialog=new MF_DownloadDialog,wasEnabled=owner?owner.enabled:true;
+   console.hide();
+   try
+   {
+      dialog.show();dialog.bringToFront();if(owner)owner.enabled=false;CoreApplication.processEvents();
+      MF_saveSampleZip(path,null,{isCanceled:function(){return dialog.cancelRequested;},progress:function(phase,done,total){dialog.updateProgress(phase,done,total);if(services.progress)services.progress(phase,done,total,dialog);}});
+   }
+   finally{dialog.working=false;dialog.hide();if(owner)owner.enabled=wasEnabled;console.hide();}
+   if(services.completed)services.completed(path);
+   else new MessageBox("Download completed and SHA-256 verified.\n\n"+path+"\n\nUnzip this file to use the sample images.","Sample images",StdIcon_Information,StdButton_Ok).execute();
    return true;
 }
-function MF_downloadSamples(openBrowser,showTerms)
+var MF_sampleDownloadBusy=false;
+function MF_downloadSamples(openBrowser,showTerms,owner)
 {
-   var agreed=false;
-   if(showTerms)agreed=showTerms();
-   else{var dialog=new MF_SampleTermsDialog;agreed=dialog.execute() && dialog.agreed;}
-   if(!agreed)return false;
-   var opened=openBrowser?openBrowser(MF_SAMPLE_DOWNLOAD_URL):MF_downloadSampleFile();
-   return opened!==false;
+   if(MF_sampleDownloadBusy)return false;
+   MF_sampleDownloadBusy=true;
+   try
+   {
+      var agreed=false;
+      if(showTerms)agreed=showTerms();
+      else{var dialog=new MF_SampleTermsDialog;agreed=dialog.execute() && dialog.agreed;}
+      if(!agreed)return false;
+      var opened=openBrowser?openBrowser(MF_SAMPLE_DOWNLOAD_URL):MF_downloadSampleFile(owner);
+      return opened!==false;
+   }
+   finally{MF_sampleDownloadBusy=false;}
 }
 class MF_ZoomWarning extends Dialog
 {
@@ -872,7 +1071,10 @@ MF_Camera.prototype.pan=function(dx,dy,w,h)
 };
 
 var MF_HELP = [
-   "# Focal Length Blend \u2014 0.11.4, local release",
+   "# Focal Length Blend \u2014 0.11.8, preliminary release",
+   "",
+   "MANUAL VALIDATION",
+   "Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.",
    "",
    "Copyright \u00a9 Carlos Rinc\u00f3n 2026",
    "",
@@ -897,9 +1099,9 @@ var MF_HELP = [
    "",
    "## Install and update locally",
    "",
-   "Keep the complete **Crinconlab** folder together with its four scripts, the four SVG files in **icons**, and **manuals**. Replace the previous complete folder, keeping any personal files separately. In PixInsight, open **Script \u2192 Feature Scripts\u2026**, remove outdated entries pointing to other locations if necessary, then **Add\u2026** the folder containing the four `.js` files and click **Done**.",
+   "Keep the complete **Crinconlab** folder together with its scripts, the SVG files in **icons**, and **manuals**. Replace the previous complete folder, keeping any personal files separately. In PixInsight, open **Script \u2192 Feature Scripts\u2026**, remove outdated entries pointing to other locations if necessary, then **Add\u2026** the folder containing the `.js` files and click **Done**.",
    "",
-   "Launch **Script \u2192 Crinconlab \u2192 Focal Length Blend**. The filename remains `Mezcla_Focales.js` so the replacement updates the existing script. Do not install both old and new copies in different folders. This is a local distribution; nothing has been published to GitHub.",
+   "Launch **Script \u2192 Crinconlab \u2192 Focal Length Blend**. The filename remains `Mezcla_Focales.js` so the replacement updates the existing script. Do not install both old and new copies in different folders. Source is published on GitHub for manual installation; the automatic update repository is not active.",
    "",
    "## 1. Solve, separate stars and prepare geometry",
    "",
@@ -1049,7 +1251,7 @@ var MF_HELP = [
    ">",
    "> Thank you for respecting the author\u2019s work.",
    "",
-   "**Agree and Download** lets you choose where to save the ZIP, then downloads it directly without opening a browser. **Cancel** or closing either dialog starts no download. The notice appears each time; consent is not remembered. Transfer failures are reported and incomplete downloads are removed. Unzip the downloaded file, then use its two workflows:",
+   "**Agree and Download** lets you choose where to save the ZIP, then downloads it directly without opening a browser. A separate progress window shows Downloading and Verifying SHA-256 with percentage and MiB; Cancel stops the operation while preserving any previous destination. Wait for the verified completion message; duplicate clicks are blocked. **Cancel** or closing either dialog starts no download. The notice appears each time; consent is not remembered. Requests and redirects allow HTTPS only. The script checks the file size and a pinned SHA-256 before publishing the ZIP. Rejected partial downloads are removed when possible, and an existing destination is preserved during verification. During replacement it is temporarily stored beside the destination as a unique .previous-* recovery file, restored on failure when possible and removed after success; any retained recovery path is reported. Unzip the verified file, then use its two workflows:",
    "",
    "- **With_StarX:** Short_Focal_Length.xisf as Base and Long_Focal_Length.xisf as Detail. Leave StarXTerminator enabled. Both images contain stars and verified astrometry.",
    "- **Without_StarX:** Short_Focal_Length_Starless.xisf as Base and Long_Focal_Length_Starless.xisf as Detail. Disable star separation. These derivatives already have stars removed and preserve the same astrometric geometry as the with-stars counterparts.",
@@ -1465,7 +1667,7 @@ class MF_SetupDialog extends Dialog
 constructor()
 {
    super();
-   var self=this;this.maskWork=new MF_Work;this.geometry=null;this.geometryBusy=false;this.onClose=function(){return !self.geometryBusy;};
+   var self=this;this.maskWork=new MF_Work;this.geometry=null;this.geometryBusy=false;this.onClose=function(){return !self.geometryBusy && !self.downloadBusy;};
    this.windowTitle="Focal Length Blend · "+MF_VERSION+" · local";
    this.base=new ViewList(this); this.detail=new ViewList(this); this.mask=new ViewList(this);
    this.base.toolTip="Select the short-focal-length, wide-field base. Its dimensions, pixel scale, color and stars define the final result.";
@@ -1561,7 +1763,7 @@ constructor()
    this.downloadButton=new PushButton(this);this.downloadButton.text="Download Sample Images";
    this.downloadButton.enabled=true;
    this.downloadButton.toolTip="Download the sample ZIP with with-stars/starless pairs, verified astrometry and Image Solver settings. Copyright and usage conditions must be accepted first.";
-   this.downloadButton.onClick=function(){try{MF_downloadSamples();}catch(e){new MessageBox(String(e),"Sample images",StdIcon_Warning,StdButton_Ok).execute();}};
+   this.downloadButton.onClick=function(){if(self.downloadBusy || self.geometryBusy)return;self.downloadBusy=true;self.downloadButton.enabled=false;try{MF_downloadSamples(null,null,self);}catch(e){new MessageBox(String(e),"Sample images",StdIcon_Warning,StdButton_Ok).execute();}finally{self.downloadBusy=false;self.downloadButton.enabled=true;}};
    var refresh=this.refreshButton=new PushButton(this); refresh.text="Refresh lists";refresh.toolTip="Refresh the available main images while preserving selections where possible."; refresh.onClick=refreshViews;
    var run=this.runButton=new PushButton(this); run.text="3. Prepare comparison";run.toolTip="Prepare lightness and the effective mask, then open the full-resolution comparison with selectable MLT layers.";
    run.onClick=function()

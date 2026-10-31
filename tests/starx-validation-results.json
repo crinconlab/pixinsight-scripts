@@ -1,0 +1,188 @@
+{
+  "date": "2026-10-30",
+  "runtime": "PixInsight Core 1.9.6 Lockhart x64/macOS",
+  "sourceCommit": "b5d6d720502ecc772168781b8caee93081a74e6e",
+  "scriptVersion": "Focal Length Blend 0.11.8",
+  "starXVersion": "2.6.10",
+  "modelVersion": 11,
+  "backend": "GPU (reported by native module)",
+  "moduleLoading": "installed module explicitly loaded through documented --module startup argument in an automation instance; preferences not saved",
+  "functionalChecks": [
+    {
+      "name": "Load real solved samples and installed native StarX",
+      "ok": true,
+      "seconds": 0.576,
+      "detail": {
+        "base": [
+          1500,
+          1500
+        ],
+        "detail": [
+          1500,
+          1021
+        ]
+      }
+    },
+    {
+      "name": "Production StarX separation of both real inputs and fixed-canvas astrometric geometry",
+      "ok": true,
+      "seconds": 8.325,
+      "detail": {
+        "starsMaximum": 1,
+        "canvas": [
+          1500,
+          1500
+        ],
+        "baseSkyOffsetArcsec": 0
+      }
+    },
+    {
+      "name": "Real MLT blending and comparison with retained StarX stars",
+      "ok": true,
+      "seconds": 5.728,
+      "detail": {
+        "contrastFit": {
+          "gain": 0.791972085766855,
+          "offset": 0.07159820885041843,
+          "reliable": true,
+          "count": 109,
+          "r2": 0.9624823801221563
+        }
+      }
+    },
+    {
+      "name": "Retain blended output and recombine actual StarX star image",
+      "ok": true,
+      "seconds": 0.642,
+      "detail": {
+        "maximumScreenError": 0,
+        "skyOffsetArcsec": 0
+      }
+    },
+    {
+      "name": "Base stars retained separately and original source pixels unchanged",
+      "ok": true,
+      "seconds": 0.011,
+      "detail": {
+        "unchangedSampleValues": 363,
+        "starsId": "CR_MF_EstrellasBase"
+      }
+    }
+  ],
+  "savedResultReadback": {
+    "hasAstrometry": true,
+    "width": 1500,
+    "height": 1500,
+    "ok": true
+  },
+  "reconstructionDiagnostic": {
+    "original": {
+      "maximum": 1,
+      "minimum": 0,
+      "mean": 0.16704173268911182
+    },
+    "starless": {
+      "maximum": 0.6660249829292297,
+      "minimum": 0,
+      "mean": 0.15786116110671616
+    },
+    "stars": {
+      "maximum": 1,
+      "minimum": 0,
+      "mean": 0.011086720514462581
+    },
+    "reconstructionError": {
+      "maximum": 0.013096660375595093,
+      "minimum": 0,
+      "mean": 1.5891096472893558e-05
+    },
+    "starlessAboveOriginal": {
+      "maximum": 1,
+      "minimum": 0,
+      "mean": 0.029779703703703704
+    },
+    "errorWhereStarlessNotAboveOriginal": {
+      "maximum": 0.0005342960357666016,
+      "minimum": 0,
+      "mean": 4.719386331702547e-08
+    },
+    "starsWhereStarlessAboveOriginal": {
+      "maximum": 0,
+      "minimum": 0,
+      "mean": 0
+    },
+    "ok": true
+  },
+  "strictExactOriginalInverseAssertionPassed": false,
+  "diagnosticScope": "Screen formula correctness is tested separately and passed exactly. Exact recovery of every original pixel was an additional stronger diagnostic, not a property promised by the script. Its failed strict assertion is retained here rather than reported as a pass.",
+  "repeatableHarnessSecondRun": [
+    {
+      "name": "Load real solved samples and installed native StarX",
+      "ok": true,
+      "seconds": 0.584,
+      "detail": {
+        "base": [
+          1500,
+          1500
+        ],
+        "detail": [
+          1500,
+          1021
+        ]
+      }
+    },
+    {
+      "name": "Production StarX separation of both real inputs and fixed-canvas astrometric geometry",
+      "ok": true,
+      "seconds": 8.086,
+      "detail": {
+        "starsMaximum": 1,
+        "canvas": [
+          1500,
+          1500
+        ],
+        "baseSkyOffsetArcsec": 0
+      }
+    },
+    {
+      "name": "Native decomposition reconstruction diagnostic (not a compatibility requirement)",
+      "kind": "diagnostic",
+      "detail": {
+        "maximumAbsoluteError": 0.013096660375595093,
+        "exactInverseAtTolerance1e5": false
+      }
+    },
+    {
+      "name": "Real MLT blending and comparison with retained StarX stars",
+      "ok": true,
+      "seconds": 5.333,
+      "detail": {
+        "contrastFit": {
+          "gain": 0.791972085766855,
+          "offset": 0.07159820885041843,
+          "reliable": true,
+          "count": 109,
+          "r2": 0.9624823801221563
+        }
+      }
+    },
+    {
+      "name": "Retain blended output and recombine actual StarX star image",
+      "ok": true,
+      "seconds": 0.599,
+      "detail": {
+        "maximumScreenError": 0,
+        "skyOffsetArcsec": 0
+      }
+    },
+    {
+      "name": "Base stars retained separately and original source pixels unchanged",
+      "ok": true,
+      "seconds": 0.011,
+      "detail": {
+        "unchangedSampleValues": 363,
+        "starsId": "CR_MF_EstrellasBase"
+      }
+    }
+  ]
+}

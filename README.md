@@ -1,15 +1,17 @@
 # Crinconlab PixInsight Scripts
 
-Latest complete collection: **2026-10-26**, for manual installation.
+Current four reviewed products: Header Editor 1.0.1, RGB Ha Blend 0.15.0, Focal Length Blend 0.11.8 and Astrometric Solution Copy 1.1. PolyMask is provided separately from the CPD review scope.
 
-[Download the complete collection](https://github.com/crinconlab/pixinsight-scripts/releases/tag/collection-2026-10-26)
+The previous 2026-10-26 collection is superseded. Install the current source folder from this branch, including icons, manuals and ProtectedPaths.jsh. A refreshed complete download will be linked after publication.
+
+[CPD correction details](docs/cpd-review-corrections.md) · [Reviewed four-script branch](https://github.com/crinconlab/pixinsight-scripts/tree/cpd-review)
 
 The ZIP includes all five current scripts, five orange icons, and English manuals. Extract the complete Crinconlab folder, preserving its icons and manuals subfolders. In PixInsight, use Script > Feature Scripts > Add to register that folder. Remove registrations pointing to older copies if duplicate entries appear.
 
 | Script | File |
 | --- | --- |
 | FITS / XISF Header Editor | [FITS_XISF_Header_Editor_EN.js](src/scripts/crinconlab/FITS_XISF_Header_Editor_EN.js) |
-| RGB + Dual Band, Image Solver and SPCC | [RGB_DualBand_Solver_SPCC_EN.js](src/scripts/crinconlab/RGB_DualBand_Solver_SPCC_EN.js) |
+| RGB Ha Blend | [RGB_Ha_Blend.js](src/scripts/crinconlab/RGB_Ha_Blend.js) |
 | Focal Length Blend | [Mezcla_Focales.js](src/scripts/crinconlab/Mezcla_Focales.js) |
 | Astrometric Solution Copy | [Astrometric_Solution_Copy_EN.js](src/scripts/crinconlab/Astrometric_Solution_Copy_EN.js) |
 | PolyMask | [PolyMask_EN.js](src/scripts/crinconlab/PolyMask_EN.js) |

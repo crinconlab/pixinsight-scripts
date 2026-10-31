@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-31",
+  "core": "PixInsight 1.9.6/macOS",
+  "resetRGB": {
+    "product": "RGB",
+    "ok": true,
+    "resetNamespace": "Crinconlab/RGBHaBlend",
+    "sharedNamespace": "ImageSolver"
+  },
+  "resetFocal": {
+    "product": "Focal",
+    "ok": true,
+    "resetNamespace": "Crinconlab/FocalLengthBlend",
+    "sharedNamespace": "ImageSolver"
+  },
+  "interfaceRGB": {
+    "ok": true,
+    "title": "RGB Ha Blend \u00b7 v0.15.0"
+  },
+  "interfaceFocal": {
+    "ok": true,
+    "title": "Focal Length Blend \u00b7 0.11.8 \u00b7 local"
+  },
+  "downloadNode": {
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0,
+    "realSampleArchivePin": true
+  }
+}
