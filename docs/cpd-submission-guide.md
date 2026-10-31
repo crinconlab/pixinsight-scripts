@@ -16,7 +16,7 @@ Identificador solicitado en la documentación anterior: `Carlos_Rincon_Astrophot
 
 ## Texto en inglés para acompañar la solicitud
 
-Crinconlab is a collection of four complementary PixInsight tools by Carlos Rincón: FITS/XISF Header Editor 1.0.1, RGB Ha Blend 0.15.0, Focal Length Blend 0.11.8 and Astrometric Solution Copy 1.1.
+Crinconlab is a collection of four complementary PixInsight tools by Carlos Rincón: FITS/XISF Header Editor 1.0.1, RGB Ha Blend 0.15.1, Focal Length Blend 0.11.9 and Astrometric Solution Copy 1.1.
 
 The cpd-review branch provides the source code, matching icons, English manuals, technical disclosures and SHA-256 checksums. Native testing on PixInsight 1.9.6/macOS confirms metadata editing, registration and reprojection, astrometric transfer, MLT blending, native StarX separation and Screen recombination, protected output paths, and responsive sample downloads with SHA-256 verification and cancellation.
 

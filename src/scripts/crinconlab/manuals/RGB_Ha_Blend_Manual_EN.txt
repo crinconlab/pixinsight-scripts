@@ -1,4 +1,4 @@
-RGB HA BLEND — VERSION 0.15.0
+RGB HA BLEND — VERSION 0.15.1
 Copyright © Carlos Rincón 2026
 
 MANUAL VALIDATION
@@ -25,7 +25,7 @@ B = RGB[2]
 The red channel is used for color Dual Band, or the single channel for mono. k ranges from 1 to 5, including intermediate values. No continuum subtraction or input brightness normalization is performed. Floating-point PixelMath output is not clipped or rescaled. SPCC may change all channels. Standard RGB SPCC settings do not guarantee rigorously photometric colors after adding narrowband signal.
 
 SPCC
-PixInsight 1.9.5 and ImageSolver 6.5.0 are required, with configured GaiaDR3SP data for SPCC. Configure the RGB filter responses, QE, white reference, limiting magnitude and background neutralization. Save as defaults preserves the exposed settings; background reference views are session-dependent. Preview suppresses graph/star-map/text outputs. Real SPCC depends on your installed catalog and equipment configuration.
+PixInsight 1.9.5 or later and its bundled ImageSolver are required, with configured GaiaDR3SP data for SPCC. Configure the RGB filter responses, QE, white reference, limiting magnitude and background neutralization. Save as defaults preserves the exposed settings; background reference views are session-dependent. Preview suppresses graph/star-map/text outputs. Real SPCC depends on your installed catalog and equipment configuration.
 
 STATUS AND CONSOLE
 Blue text describes the task. The bar gives processing-stage percentages, not time estimates, and may remain fixed during native operations. Input controls are disabled during updates. The script does not explicitly open the process console and hides it at stage boundaries; native processes may still bring it forward. Technical messages remain available for troubleshooting.
@@ -44,4 +44,4 @@ Current scope: four scripts, PolyMask excluded. See docs/validation-pixinsight-1
 
 
 WRITE-PATH PROTECTION — 29 OCTOBER 2026
-Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.8 and RGB DualBand 0.15.0 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.9 and RGB DualBand 0.15.1 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.

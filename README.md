@@ -1,6 +1,6 @@
 # Crinconlab PixInsight Scripts
 
-Current four reviewed products: Header Editor 1.0.1, RGB Ha Blend 0.15.0, Focal Length Blend 0.11.8 and Astrometric Solution Copy 1.1. PolyMask is provided separately from the CPD review scope.
+Current four reviewed products: Header Editor 1.0.1, RGB Ha Blend 0.15.1, Focal Length Blend 0.11.9 and Astrometric Solution Copy 1.1. PolyMask is provided separately from the CPD review scope.
 
 The previous 2026-10-26 collection is superseded. Install the current source folder from this branch, including icons, manuals and ProtectedPaths.jsh. The corrected complete collection is linked below.
 
@@ -84,4 +84,4 @@ Copyright © Carlos Rincón 2026.
 
 ## Current download
 
-[Download the corrected 2026-10-31 collection](https://github.com/crinconlab/pixinsight-scripts/releases/tag/collection-2026-10-31), including complete and four-script CPD packages, icons, English manuals and SHA-256 checksums. The obsolete 2026-10-26 ZIP has been withdrawn.
+[Download the corrected 2026-10-31 collection](https://github.com/crinconlab/pixinsight-scripts/releases/tag/collection-2026-10-31-r2), including complete and four-script CPD packages, icons, English manuals and SHA-256 checksums. The obsolete 2026-10-26 ZIP has been withdrawn.

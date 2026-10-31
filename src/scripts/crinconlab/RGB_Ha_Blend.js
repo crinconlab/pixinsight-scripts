@@ -1,8 +1,5 @@
 // Copyright © Carlos Rincón 2026
 // Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
-#feature-id CrinconlabRGBHaBlend : Crinconlab > RGB Ha Blend
-#feature-icon icons/rgb_dualband_orange_v2.svg
-#feature-info RGB + Dual Band composition, Image Solver and SPCC. Version 0.15.0. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 #engine v8
 #include "ProtectedPaths.jsh"
 #include <pjsr/StdIcon.jsh>
@@ -10,25 +7,17 @@
 #include <pjsr/PropertyType.jsh>
 #include <pjsr/PropertyAttribute.jsh>
 CoreApplication.ensureMinimumVersion(1,9,5);
-#define VERSION "6.5.0"
-#define TITLE "ImageSolver"
-#define SOLVER_SETTINGS_MODULE "ImageSolver"
 #define SETTINGS_MODULE "Crinconlab/RGBHaBlend"
-#include <pjsr/astrometry/AstrometricMetadata.js>
-#include <pjsr/astrometry/AstronomicalCatalogs.js>
-#include <pjsr/astrometry/SearchCoordinatesDialog.js>
-#include <pjsr/astrometry/CatalogDownloaderDialog.js>
-#include <pjsr/astrometry/ProjectionConfigurationDialog.js>
-#include <pjsr/astrometry/UtilityControls.js>
-#include <pjsr/astrometry/VizierMirrorDialog.js>
+#define USE_SOLVER_LIBRARY
+#include <../src/scripts/ImageSolver/ImageSolver.js>
 #include <pjsr/astrometry/ImageReprojection.js>
-#include <pjsr/controls/DateTimeEditor.js>
-#include <pjsr/controls/GeodeticCoordinatesEditor.js>
-#include <../src/scripts/ImageSolver/ImageSolverDialog.js>
-#include <../src/scripts/ImageSolver/ImageSolverEngine.js>
+#feature-id CrinconlabRGBHaBlend : Crinconlab > RGB Ha Blend
+#feature-icon icons/rgb_dualband_orange_v2.svg
+#feature-info RGB + Dual Band composition, Image Solver and SPCC. Version 0.15.1. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+
 
 var RD_HELP_TEXT=[
-   "RGB HA BLEND \u2014 VERSION 0.15.0",
+   "RGB HA BLEND \u2014 VERSION 0.15.1",
    "Copyright \u00a9 Carlos Rinc\u00f3n 2026",
    "",
    "MANUAL VALIDATION",
@@ -55,7 +44,7 @@ var RD_HELP_TEXT=[
    "The red channel is used for color Dual Band, or the single channel for mono. k ranges from 1 to 5, including intermediate values. No continuum subtraction or input brightness normalization is performed. Floating-point PixelMath output is not clipped or rescaled. SPCC may change all channels. Standard RGB SPCC settings do not guarantee rigorously photometric colors after adding narrowband signal.",
    "",
    "SPCC",
-   "PixInsight 1.9.5 and ImageSolver 6.5.0 are required, with configured GaiaDR3SP data for SPCC. Configure the RGB filter responses, QE, white reference, limiting magnitude and background neutralization. Save as defaults preserves the exposed settings; background reference views are session-dependent. Preview suppresses graph/star-map/text outputs. Real SPCC depends on your installed catalog and equipment configuration.",
+   "PixInsight 1.9.5 or later and its bundled ImageSolver are required, with configured GaiaDR3SP data for SPCC. Configure the RGB filter responses, QE, white reference, limiting magnitude and background neutralization. Save as defaults preserves the exposed settings; background reference views are session-dependent. Preview suppresses graph/star-map/text outputs. Real SPCC depends on your installed catalog and equipment configuration.",
    "",
    "STATUS AND CONSOLE",
    "Blue text describes the task. The bar gives processing-stage percentages, not time estimates, and may remain fixed during native operations. Input controls are disabled during updates. The script does not explicitly open the process console and hides it at stage boundaries; native processes may still bring it forward. Technical messages remain available for troubleshooting.",
@@ -71,7 +60,7 @@ class RD_HelpDialog extends Dialog
 {
 constructor()
 {
-   super();var self=this;this.windowTitle="Help and instructions · RGB Ha Blend · v0.15.0";
+   super();var self=this;this.windowTitle="Help and instructions · RGB Ha Blend · v0.15.1";
    this.manual=new TextBox(this);this.manual.readOnly=true;this.manual.text=RD_HELP_TEXT;
    this.manual.setScaledMinSize(700,460);
    this.exportButton=new PushButton(this);this.exportButton.text="Save manual .txt...";
@@ -422,7 +411,7 @@ class RD_PreviewDialog extends Dialog
 constructor(config,services)
 {
    super();var self=this;this.busy=false;this.onClose=function(){return !self.busy;};this.config=config;this.services=services;this.state={reference:null,result:null,accepted:false};
-   this.windowTitle="SPCC-calibrated preview · v0.15.0";
+   this.windowTitle="SPCC-calibrated preview · v0.15.1";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function pane()
    {
@@ -640,7 +629,7 @@ class RD_Dialog extends Dialog
 constructor()
 {
    super();var self=this;
-   this.windowTitle="RGB Ha Blend · v0.15.0";
+   this.windowTitle="RGB Ha Blend · v0.15.1";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function choose(list)
    {
