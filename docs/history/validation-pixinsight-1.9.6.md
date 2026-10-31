@@ -17,7 +17,7 @@ The final candidate adds the header editor's 1.0.0 version label and updates doc
 | FITS/XISF Header Editor 1.0.0 | Interface, simulation, new FITS/XISF fields, copy/readback, unchanged source pixels, existing-destination skip and overwrite with/without backup passed on owned synthetic fixtures. Progress reset/search/read/re-enable states passed. The 1.0.0 label identifies the tested implementation. |
 | Astrometric Solution Copy 1.1 | Real detection and registered-copy verification passed with 480 matched stars and zero median/p90 displacement. Native solution transfer and blocking of an unauthorized target passed. |
 | Focal Length Blend 0.11.5 | Production HTTPS download, astrometric reprojection of real solved starless samples, fixed 1500 × 1500 canvas, coverage/polygon mask, MLT blending, comparison dialog and Create Blended Image passed. Saved XISF reopened with astrometry. |
-| RGB Ha Blend 0.14.2 | Interface/SPCC response selectors, real coordinate reprojection/crop, red-channel composition and WCS propagation passed. A real image translated 18 × 9 pixels passed production StarAlignment and common crop. SPCC completion remains an accepted assumption. |
+| RGB DualBand Solver SPCC 0.14.2 | Interface/SPCC response selectors, real coordinate reprojection/crop, red-channel composition and WCS propagation passed. A real image translated 18 × 9 pixels passed production StarAlignment and common crop. SPCC completion remains an accepted assumption. |
 
 ## Native download verification
 
@@ -52,4 +52,4 @@ These limitations do not block the author's decision to submit. They must not be
 
 
 ## Subsequent write-path safety update
-The candidate was updated to Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.15.0 with ProtectedPaths.jsh. This adds disk-write protection, not image-algorithm changes. New native guard/I/O regression checks passed on PixInsight 1.9.6. See [path-write-safety.md](../path-write-safety.md). Earlier processing results retain their original tested snapshot.
+The candidate was updated to Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.14.3 with ProtectedPaths.jsh. This adds disk-write protection, not image-algorithm changes. New native guard/I/O regression checks passed on PixInsight 1.9.6. See [path-write-safety.md](../path-write-safety.md). Earlier processing results retain their original tested snapshot.

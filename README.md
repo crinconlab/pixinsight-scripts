@@ -33,3 +33,7 @@ Native 1.9.6/macOS checks confirm metadata editing, registration/reprojection, a
 The package is distributed manually while the CPD application is reviewed. It does not activate an automatic-update repository. ImageSolver, SPCC/catalog resources and optional StarXTerminator are supplied by the user's PixInsight installation. Versioned source hashes are in the manifest and SHA256SUMS.txt.
 
 Copyright © Carlos Rincón 2026.
+
+## Current download
+
+[Download the corrected 2026-10-31 collection](https://github.com/crinconlab/pixinsight-scripts/releases/tag/collection-2026-10-31), including complete and four-script CPD packages, icons, English manuals and SHA-256 checksums. The obsolete 2026-10-26 ZIP has been withdrawn.
