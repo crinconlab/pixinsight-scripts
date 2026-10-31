@@ -3,8 +3,8 @@ Copyright © Carlos Rincón 2026
 
 PRODUCTS INCLUDED
 FITS / XISF Header Editor 1.0.1 — FITS_XISF_Header_Editor_EN.js
-RGB Ha Blend 0.15.0 — RGB_Ha_Blend.js
-Focal Length Blend 0.11.8 — Mezcla_Focales.js
+RGB Ha Blend 0.15.1 — RGB_Ha_Blend.js
+Focal Length Blend 0.11.9 — Mezcla_Focales.js
 Astrometric Solution Copy 1.1 — Astrometric_Solution_Copy_EN.js
 
 PolyMask is included in this collection, outside the four-script CPD application.

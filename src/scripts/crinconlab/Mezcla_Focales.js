@@ -1,8 +1,5 @@
 // Copyright © Carlos Rincón 2026
 // Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
-#feature-id CrinconlabMezclaFocales : Crinconlab > Focal Length Blend
-#feature-icon icons/Mezcla_Focales_orange_v2.svg
-#feature-info Astrometric preparation, StarXTerminator separation and selectable native MLT detail injection on a fixed short-focal canvas. Version 0.11.8. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 #engine v8
 #include "ProtectedPaths.jsh"
 #include <pjsr/StdIcon.jsh>
@@ -10,21 +7,13 @@
 #include <pjsr/ButtonCodes.jsh>
 #include <pjsr/DataType.jsh>
 CoreApplication.ensureMinimumVersion(1,9,5);
-#define VERSION "6.5.0"
-#define TITLE "ImageSolver"
-#define SOLVER_SETTINGS_MODULE "ImageSolver"
 #define SETTINGS_MODULE "Crinconlab/FocalLengthBlend"
-#include <pjsr/astrometry/AstrometricMetadata.js>
-#include <pjsr/astrometry/AstronomicalCatalogs.js>
-#include <pjsr/astrometry/SearchCoordinatesDialog.js>
-#include <pjsr/astrometry/CatalogDownloaderDialog.js>
-#include <pjsr/astrometry/ProjectionConfigurationDialog.js>
-#include <pjsr/astrometry/UtilityControls.js>
-#include <pjsr/astrometry/VizierMirrorDialog.js>
-#include <pjsr/controls/DateTimeEditor.js>
-#include <pjsr/controls/GeodeticCoordinatesEditor.js>
-#include <../src/scripts/ImageSolver/ImageSolverDialog.js>
-#include <../src/scripts/ImageSolver/ImageSolverEngine.js>
+#define USE_SOLVER_LIBRARY
+#include <../src/scripts/ImageSolver/ImageSolver.js>
+#feature-id CrinconlabMezclaFocales : Crinconlab > Focal Length Blend
+#feature-icon icons/Mezcla_Focales_orange_v2.svg
+#feature-info Astrometric preparation, StarXTerminator separation and selectable native MLT detail injection on a fixed short-focal canvas. Version 0.11.9. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+
 
 #include <pjsr/astrometry/ImageReprojection.js>
 
@@ -35,7 +24,7 @@ CoreApplication.ensureMinimumVersion(1,9,5);
  * Default: inject selected native MLT detail layers. Gaussian-band replacement
  * remains available as an alternative.
  */
-var MF_VERSION = "0.11.8";
+var MF_VERSION = "0.11.9";
 
 function MF_clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
 function MF_number(value, name, low, high)
@@ -1071,7 +1060,7 @@ MF_Camera.prototype.pan=function(dx,dy,w,h)
 };
 
 var MF_HELP = [
-   "# Focal Length Blend \u2014 0.11.8, preliminary release",
+   "# Focal Length Blend \u2014 0.11.9, preliminary release",
    "",
    "MANUAL VALIDATION",
    "Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.",
