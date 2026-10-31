@@ -1,4 +1,4 @@
-# Focal Length Blend 0.11.5 — sample ZIP verification
+# Focal Length Blend 0.11.8 — sample ZIP verification
 
 The optional sample download remains a data download, not a code installer or updater. The user must accept the usage terms and choose the output path before it starts.
 
@@ -28,4 +28,12 @@ CR_MF_SAMPLE_ZIP=/path/to/Crinconlab_Sample_Images.zip node --test tests/sample-
 
 Eleven tests passed, with no skipped tests when the real sample path was supplied. They cover known empty/abc/million-a vectors; binary padding boundaries and incremental input; native-style ByteArray access through file adapters; the complete published ZIP; same-size changes; truncation/transfer failures; replacement; rollback and failed rollback; read failures/cancellation; and HTTPS-only curl arguments on the supported platform identifiers. Without `CR_MF_SAMPLE_ZIP`, only the real-archive check is skipped; the tests make no network requests.
 
-These results run the production JavaScript logic with Node-backed file adapters. They do not claim a native PJSR execution. Run `tests/Test_Sample_Download_PixInsight.js` from the PixInsight script editor for native file/hash tests, then check a real HTTPS download and the full workflow on PixInsight 1.9.6. That native execution has not been performed here.
+The eleven Node results exercise production JavaScript with file adapters. Subsequently, the original `tests/Test_Sample_Download_PixInsight.js` passed in PixInsight Core 1.9.6 x64 on macOS. A real production HTTPS transfer through `MF_saveSampleZip` also passed size and SHA-256 verification, followed by a second native hash and independent Python SHA-256/ZIP CRC checks. The 85,376,365-byte archive matched the pinned digest above. Transfer plus both native hashes took 52.552 seconds. ByteArray.at() produced a deprecation warning without failing the test. Windows and Linux native transfer execution was not tested in this session. See [the native validation report](validation-pixinsight-1.9.6.md) for the broader workflow and its limits.
+
+
+WRITE-PATH PROTECTION — 29 OCTOBER 2026
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.8 and RGB DualBand 0.15.0 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
+
+
+SAMPLE DOWNLOAD UPDATE — 30 OCTOBER 2026
+Focal Length Blend 0.11.8 adds a responsive progress window, separate transfer/SHA-256 percentages and Cancel, blocks duplicate clicks and accelerates native bounded file hashing. Two consecutive real button-callback downloads passed in PixInsight 1.9.6/macOS. HTTPS, the pinned SHA-256 and protected destinations remain enforced. See docs/sample-download-ui-1.9.6.md in cpd-review.

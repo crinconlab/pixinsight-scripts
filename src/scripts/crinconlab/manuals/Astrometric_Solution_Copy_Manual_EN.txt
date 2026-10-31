@@ -1,6 +1,9 @@
 CRINCONLAB — ASTROMETRIC SOLUTION COPY — VERSION 1.1
 Copyright © Carlos Rincón 2026
 
+MANUAL VALIDATION
+Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+
 PURPOSE AND REQUIREMENTS
 Copy an existing native PixInsight astrometric solution from a solved reference
 to other open main images. RGB and monochrome images are supported.
@@ -92,9 +95,9 @@ native transfer. No image files are saved automatically.
 
 HELP AND LOCAL INSTALLATION
 Help displays this manual without needing any images.
-Keep Astrometric_Solution_Copy_EN.js and icons/astrometric_copy.svg together.
+Keep Astrometric_Solution_Copy_EN.js and icons/astrometric_copy_orange_v2.svg together.
 Place them alongside your other Crinconlab scripts, merging the icons folder
-so that header_editor.svg and rgb_dualband.svg remain available.
+so that header_editor_orange_v2.svg and rgb_dualband_orange_v2.svg remain available.
 Add the folder through Script → Feature Scripts… → Add….
 Find the script at Script → Crinconlab → Astrometric Solution Copy.
 To update an already registered copy, replace its .js file in the same folder.
@@ -107,3 +110,11 @@ misaligned targets, per-image manual authorization, preserved pixels/selections,
 and UI controls. Pure matching tests also cover scale changes and 180° rotation.
 These checks are a starting point; behavior with real fields and your filters
 still needs validation. The full-resolution analysis adds processing time.
+
+
+CPD REVIEW CANDIDATE — 29 OCTOBER 2026
+Current scope: four scripts, PolyMask excluded. See docs/validation-pixinsight-1.9.6.md in the cpd-review repository for newly executed checks and author-accepted continuity assumptions. Earlier validation notes in this manual describe earlier work, not additional 1.9.6 results.
+
+
+WRITE-PATH PROTECTION — 29 OCTOBER 2026
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.8 and RGB DualBand 0.15.0 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.

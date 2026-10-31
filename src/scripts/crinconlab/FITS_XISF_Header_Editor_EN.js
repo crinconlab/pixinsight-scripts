@@ -1,12 +1,14 @@
 // Copyright © Carlos Rincón 2026
+// Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 #feature-id CarlosRinconHeaderEditorEN : Crinconlab > FITS-XISF Header Editor
 #feature-icon icons/header_editor_orange_v2.svg
-#feature-info FITS keyword and XISF metadata editor, with simulation, recursive selection and save modes. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026.
+#feature-info FITS keyword and XISF metadata editor, with simulation, recursive selection and save modes. Version 1.0.1. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 
 /* FITS_XISF_Header_Editor_EN.js — PixInsight PJSR. Default: save copies; simulation is optional.
  * Output: Sesion_1/Lights_Metadata (sibling of Lights_OK).
  * Single-image XISF/FITS. Existing outputs and symbolic links are skipped.
  */
+#include "ProtectedPaths.jsh"
 #include <pjsr/PropertyType.jsh>
 #include <pjsr/SampleType.jsh>
 #include <pjsr/DataType.jsh>
@@ -99,6 +101,7 @@ function verifyMetadata( reader, config )
 // Remove CHECKSUM because it covers the changed header; DATASUM remains valid.
 function writeFitsMetadataCopy( input, output, config )
 {
+   output=CR_assertUserWritePath(output);
    var changed = {}, newCards = [];
    for(var i=0;i<config.changes.length;++i)
    {
@@ -184,6 +187,7 @@ function runMetadata( config, progress, shouldStop )
    var overwrite = config.overwrite === true;
    var keepBackup = config.keepBackup !== false;
    var src = clean( config.inputDir ), dst = overwrite ? src : clean( config.outputDir );
+   dst=CR_assertUserWritePath(dst);
    if ( !File.directoryExists( src ) ) throw new Error( "Input directory not found: " + src );
    if ( !overwrite && src.toLowerCase() == dst.toLowerCase() )
       throw new Error( "To use the source folder, select Overwrite originals." );
@@ -229,6 +233,8 @@ function runMetadata( config, progress, shouldStop )
    {
       if(shouldStop && shouldStop())break;
       var input = src + "/" + files[i], output = dst + "/" + files[i];
+      output=CR_assertUserWritePath(output);
+      if(overwrite)CR_assertUserWritePath(input);
       var reader = null, writer = null, verifier = null, image = null, temp = "", ownTemp = false;
       try
       {
@@ -281,6 +287,7 @@ function runMetadata( config, progress, shouldStop )
          // Save under a unique temporary XISF name, reopen and verify before publishing.
          do { temp = dst + "/.metadata_" + Date.now() + "_" + Math.floor( Math.random()*1000000000 ) + suffix; }
          while ( exists( temp ) );
+         temp=CR_assertUserWritePath(temp);
          ownTemp = true;
          if ( !isXisf ) writeFitsMetadataCopy( input, temp, config );
          else
@@ -349,6 +356,8 @@ function runMetadata( config, progress, shouldStop )
                while(exists(backup));
             }
             // Move only after the replacement is complete, closed and verified.
+            backup=CR_assertUserWritePath(backup);
+            CR_assertUserWritePath(input);CR_assertUserWritePath(output);
             File.moveFile(backup,input);
             try { File.moveFile(output,temp); }
             catch(publishError)
@@ -524,7 +533,7 @@ function HeaderEditorDialog()
    this.__base__=Dialog;this.__base__();
    var self=this;
    this.paths=[];this.inputRoot=null;this.snapshots=[];this.changes=[];this.visibleRows=[];this.config=null;
-   this.windowTitle="FITS / XISF Header Editor";
+   this.windowTitle="FITS / XISF Header Editor · v1.0.1";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function button(text,callback){var b=new PushButton(self);b.text=text;b.onClick=callback;return b;}
    function row(controls){var r=new HorizontalSizer;r.spacing=6;for(var i=0;i<controls.length;++i)r.add(controls[i],controls[i] instanceof Edit?1:0);return r;}
@@ -646,6 +655,7 @@ function HeaderEditorDialog()
    this.busy=false;this.stopRequested=false;this.onClose=function(){return !self.busy;};
    this.batchControls=[this.select,this.selectDirectory,this.fileCombo,this.search,this.headers,this.nameEdit,this.typeCombo,this.valueEdit,this.commentEdit,this.add,this.newButton,this.pending,this.remove,this.scope,this.modeCombo,this.folderEdit,this.browseButton,this.simulation,this.runButton];
    this.copyrightLabel=label("Copyright © Carlos Rincón 2026");
+   this.copyrightLabel.toolTip="Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.";
    this.sizer=new VerticalSizer;this.sizer.margin=10;this.sizer.spacing=5;
    var items=[this.intro,this.sourceButtons,this.fileCombo,row([label("Search:"),this.search]),this.headers,this.detail,this.editRow,this.commentRow,this.editButtons,
               this.pendingLabel,this.pending,this.remove,this.scopeRow,this.outputRow,this.destination,this.notice,this.taskStatus,this.countStatus,this.progressBar,this.bottom,this.copyrightLabel];

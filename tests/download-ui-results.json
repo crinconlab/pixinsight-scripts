@@ -1,0 +1,40 @@
+{
+  "native": [
+    {
+      "name": "First real Download button click completes with responsive UI and no reentrant transfer",
+      "ok": true,
+      "details": {
+        "seconds": 9.449,
+        "phaseTicks": {
+          "download": 113,
+          "verify": 78
+        },
+        "reentrantAttempts": 3
+      }
+    },
+    {
+      "name": "Second real Download button click completes and replaces the first valid archive",
+      "ok": true,
+      "details": {
+        "seconds": 8.135
+      }
+    },
+    {
+      "name": "Cancel during native verification preserves an existing destination",
+      "ok": true
+    },
+    {
+      "name": "Progress dialog cancellation control works",
+      "ok": true
+    }
+  ],
+  "cancelRealTransfer": {
+    "message": "Error: Sample download or verification canceled.",
+    "ok": true
+  },
+  "nodeTests": {
+    "passed": 14,
+    "failed": 0,
+    "realZipIncluded": true
+  }
+}

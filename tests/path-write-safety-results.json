@@ -1,0 +1,104 @@
+{
+  "nativeGuard": [
+    {
+      "name": "Installation child, root, case alias and dot traversal blocked",
+      "ok": true
+    },
+    {
+      "name": "Core configuration protected",
+      "ok": true
+    },
+    {
+      "name": "Sibling prefix is not mistaken for protected directory",
+      "ok": true
+    },
+    {
+      "name": "Regular user text output and replacement work",
+      "ok": true
+    },
+    {
+      "name": "macOS temporary directory alias resolves safely",
+      "ok": true
+    },
+    {
+      "name": "Symlink into installation blocked; allowed folder alias resolved",
+      "ok": true
+    },
+    {
+      "name": "File hard-link alias rejected",
+      "ok": true
+    },
+    {
+      "name": "Download is rejected before transfer into protected root",
+      "ok": true
+    },
+    {
+      "name": "Publication refuses protected target without moving source",
+      "ok": true
+    },
+    {
+      "name": "Native hash/download replacement regression",
+      "ok": true
+    }
+  ],
+  "legacyHeaderGuard": [
+    {
+      "name": "Legacy runtime protects core configuration",
+      "ok": true
+    },
+    {
+      "name": "Header copy refuses installation destination before writing",
+      "ok": true
+    },
+    {
+      "name": "Header overwrite refuses installation source",
+      "ok": true
+    },
+    {
+      "name": "Low-level FITS writer rejects protected destination",
+      "ok": true
+    }
+  ],
+  "headerIO": [
+    {
+      "name": "Write test fixtures FITS and XISF",
+      "ok": true
+    },
+    {
+      "name": "Simulation writes no outputs",
+      "ok": true
+    },
+    {
+      "name": "Add new headers to FITS and XISF copies with readback",
+      "ok": true
+    },
+    {
+      "name": "Existing destinations are skipped",
+      "ok": true
+    },
+    {
+      "name": "Overwrite with backup on owned fixtures",
+      "ok": true
+    },
+    {
+      "name": "Overwrite without backup on owned fixtures",
+      "ok": true
+    },
+    {
+      "name": "Header editor initializes after file I/O",
+      "ok": true
+    }
+  ],
+  "rgbInterfaces": [
+    {
+      "name": "RGBDualBand",
+      "ok": true,
+      "title": "RGB + Dual Band \u2192 Image Solver \u2192 SPCC \u00b7 v0.15.0"
+    },
+    {
+      "name": "SPCCSettings",
+      "ok": true,
+      "title": "Configure SPCC"
+    }
+  ]
+}

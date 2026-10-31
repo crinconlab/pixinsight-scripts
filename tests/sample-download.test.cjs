@@ -23,6 +23,7 @@ class PJSRFile {
     return {at:i=>bytes[i]}; // Native ByteArray path, deliberately no [] indexing.
   }
   close(){fs.closeSync(this.fd);this.fd=null;opened.delete(this);}
+  static fullPath(name){return path.resolve(name);}
   static exists(name){return fs.existsSync(name)&&fs.statSync(name).isFile();}
   static directoryExists(name){return fs.existsSync(name)&&fs.statSync(name).isDirectory();}
   static remove(name){events.push(['remove',name]);fs.unlinkSync(name);}
@@ -37,9 +38,12 @@ class PJSRFile {
 beforeEach(()=>{
   dir=fs.mkdtempSync(path.join(os.tmpdir(),'cr-mf-hash-'));events=[];opened=new Set();fail=null;downloadBytes=Buffer.from('abc');
   ctx=vm.createContext({Dialog:class{},Control:class{},File:PJSRFile,DataType_ByteArray:0,
-    CoreApplication:{platform:'MacOSX',ensureMinimumVersion(){},processEvents(){}},
-    ExternalProcess:{execute(program,args){events.push(['curl',program,args]);fs.writeFileSync(args[args.indexOf('--output')+1],downloadBytes);return 0;}},
+    FileInfo:class{constructor(name){let st;try{st=fs.lstatSync(name);}catch(e){if(e.code!=='ENOENT' && e.code!=='ENOTDIR')throw e;}this.isSymbolicLink=!!st?.isSymbolicLink();this.symbolicLinkTarget=this.isSymbolicLink?fs.readlinkSync(name):'';this.isFile=!!st?.isFile();this.numberOfHardLinks=st?.nlink||0;this.exists=!!st;this.size=st?.size||0;}},
+    CoreApplication:{baseDirPath:path.join(dir,'PixInsight'),configDirPath:path.join(dir,'CoreConfig'),platform:'MacOSX',ensureMinimumVersion(){},processEvents(){}},
+    ExternalProcess:class{constructor(){this.isRunning=false;this.isStarting=false;this.exitCode=0;}start(program,args){events.push(['curl',program,args]);fs.writeFileSync(args[args.indexOf('--output')+1],downloadBytes);}waitForStarted(){return true;}waitForFinished(){return true;}get standardOutput(){return{utf8ToString(){return '';}};}},
     console:{abortRequested:false,writeln(){},warningln(){}}});
+  const guard=fs.readFileSync(path.join(path.dirname(script),'ProtectedPaths.jsh'),'utf8').replace(/^#.*$/gm,'');
+  vm.runInContext(guard,ctx,{filename:'ProtectedPaths.jsh'});
   vm.runInContext(source,ctx,{filename:script});
 });
 afterEach(()=>{assert.equal(opened.size,0,'file descriptors must be closed');fs.rmSync(dir,{recursive:true,force:true});});
@@ -124,4 +128,15 @@ test('curl uses HTTPS-only requests and redirects for both Windows identifiers a
     assert.equal(args[args.indexOf('--proto-redir')+1],'=https');assert.equal(args.includes('--insecure'),false);
   }
   noPartials();
+});
+
+test('protected installation and configuration reject downloads before transfer',()=>{
+ let called=false;for(const p of [path.join(ctx.CoreApplication.baseDirPath,'sample.zip'),path.join(ctx.CoreApplication.configDirPath,'sample.zip')])assert.throws(()=>ctx.MF_saveSampleZip(p,()=>{called=true;return 0;}),/Protected PixInsight/);assert.equal(called,false);
+});
+
+test('download reentrancy is blocked and guard resets after cancellation/error',()=>{
+ let count=0;assert.equal(ctx.MF_downloadSamples(()=>{count++;assert.equal(ctx.MF_downloadSamples(()=>{count++;},()=>true),false);return true;},()=>true),true);assert.equal(count,1);assert.equal(ctx.MF_sampleDownloadBusy,false);assert.throws(()=>ctx.MF_downloadSamples(()=>{throw Error('injected');},()=>true),/injected/);assert.equal(ctx.MF_sampleDownloadBusy,false);assert.equal(ctx.MF_downloadSamples(()=>true,()=>false),false);assert.equal(ctx.MF_sampleDownloadBusy,false);
+});
+test('canceling verification preserves the old destination and removes partial data',()=>{
+ const output=small();fs.writeFileSync(output,'previous archive');let cancel=false;assert.throws(()=>ctx.MF_saveSampleZip(output,transfer(Buffer.from('abc')),{isCanceled(){return cancel;},progress(phase){if(phase==='verify')cancel=true;}}),/canceled/);assert.equal(fs.readFileSync(output,'utf8'),'previous archive');noPartials();
 });
