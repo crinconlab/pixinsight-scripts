@@ -6,7 +6,7 @@ Historical review snapshot. Current status: [validation summary](../validation-p
 
 ## Preparación completada
 
-- FITS/XISF Header Editor identificado como 1.0.1; RGB DualBand 0.14.3, Focal Length Blend 0.11.7 y Astrometric Solution Copy 1.1.
+- FITS/XISF Header Editor identificado como 1.0.1; RGB DualBand 0.15.0, Focal Length Blend 0.11.8 y Astrometric Solution Copy 1.1.
 - Documentación y versiones coherentes, manifiesto con los cuatro SHA-256 y SHA256SUMS.txt del contenido final.
 - Prueba nativa de descarga ejecutada primero en PixInsight 1.9.6; descarga real HTTPS verificada por tamaño y SHA-256.
 - Interfaces, FITS/XISF I/O, copia WCS, reproyección, recorte y mezcla MLT comprobados. Consulte [el informe en inglés](../validation-pixinsight-1.9.6.md).
@@ -29,4 +29,4 @@ Los enlaces y el texto de acompañamiento están en [cpd-submission-guide.md](..
 
 
 WRITE-PATH PROTECTION — 29 OCTOBER 2026
-Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.7 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.8 and RGB DualBand 0.15.0 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.

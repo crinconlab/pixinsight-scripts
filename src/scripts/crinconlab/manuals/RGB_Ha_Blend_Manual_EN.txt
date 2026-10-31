@@ -1,4 +1,4 @@
-RGB + DUAL BAND — VERSION 0.14.3
+RGB HA BLEND — VERSION 0.15.0
 Copyright © Carlos Rincón 2026
 
 MANUAL VALIDATION
@@ -31,7 +31,7 @@ STATUS AND CONSOLE
 Blue text describes the task. The bar gives processing-stage percentages, not time estimates, and may remain fixed during native operations. Input controls are disabled during updates. The script does not explicitly open the process console and hides it at stage boundaries; native processes may still bring it forward. Technical messages remain available for troubleshooting.
 
 INSTALLATION
-Replace the complete Crinconlab folder, keeping icons/. Update Script > Feature Scripts and launch RGB DualBand Solver SPCC. Help works before selecting images; Save manual .txt exports these instructions.
+Replace the complete Crinconlab folder, keeping icons/. Update Script > Feature Scripts and launch RGB Ha Blend. Help works before selecting images; Save manual .txt exports these instructions.
 
 VALIDATION LIMITS
 Native tests use synthetic stars, real registration masks and astrometric coordinate comparisons after cropping. Automated calibration tests inject a calibration callback: validate a complete run with your installed SPCC catalog and real astrophotography data.
@@ -44,4 +44,4 @@ Current scope: four scripts, PolyMask excluded. See docs/validation-pixinsight-1
 
 
 WRITE-PATH PROTECTION — 29 OCTOBER 2026
-Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.7 and RGB DualBand 0.14.3 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.
+Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.8 and RGB DualBand 0.15.0 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.

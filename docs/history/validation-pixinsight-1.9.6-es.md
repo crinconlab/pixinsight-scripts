@@ -15,7 +15,7 @@ Solo cuatro scripts. PolyMask excluido. Las fuentes descargadas coinciden por ha
 | FITS-XISF Header Editor | Interfaz; simulación; alta de FILTER, CREATOR y TESTNUM; lectura posterior; copias; destino existente; sobrescritura con y sin respaldo | Correcto con archivos sintéticos FITS y XISF |
 | Astrometric Solution Copy 1.1 | Detección real; verificación del mismo campo; transferencia a copia sin solución; bloqueo de destino sin autorización | Correcto: 480 estrellas coincidentes, desplazamiento mediano y p90 de 0 píxeles |
 | Focal Length Blend 0.11.5 | Descarga, geometría real, cobertura, máscara, MLT, interfaz de comparación, botón Create Blended Image y escritura XISF | Correcto con muestras starless ya resueltas; lienzo final 1500 × 1500 |
-| RGB DualBand Solver SPCC 0.14.2 | Interfaz, selección de respuestas SPCC, reproyección real por coordenadas, recorte, composición roja y transferencia WCS; registro estelar de copia desplazada | Geometría correcta. Calibración SPCC aceptada por continuidad; no comprobada en 1.9.6 |
+| RGB Ha Blend 0.14.2 | Interfaz, selección de respuestas SPCC, reproyección real por coordenadas, recorte, composición roja y transferencia WCS; registro estelar de copia desplazada | Geometría correcta. Calibración SPCC aceptada por continuidad; no comprobada en 1.9.6 |
 
 ## Primera prueba: descarga/verificación nativa
 
@@ -64,4 +64,4 @@ Los resultados agregados sin rutas locales privadas están en [validation-result
 
 
 ## Subsequent write-path safety update
-The candidate was updated to Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.14.3 with ProtectedPaths.jsh. This adds disk-write protection, not image-algorithm changes. New native guard/I/O regression checks passed on PixInsight 1.9.6. See [path-write-safety.md](../path-write-safety.md). Earlier processing results retain their original tested snapshot.
+The candidate was updated to Header Editor 1.0.1, Focal Length Blend 0.11.6 and RGB DualBand 0.15.0 with ProtectedPaths.jsh. This adds disk-write protection, not image-algorithm changes. New native guard/I/O regression checks passed on PixInsight 1.9.6. See [path-write-safety.md](../path-write-safety.md). Earlier processing results retain their original tested snapshot.

@@ -9,8 +9,8 @@
 Las pruebas nativas en macOS confirman la edición FITS/XISF, copia de astrometría, registro y reproyección, recorte de campo común, máscaras poligonales, mezcla MLT, separación StarX y recombinación Screen, y descarga con verificación SHA-256.
 
 - **Header Editor 1.0.1:** lectura y escritura verificadas, simulación, copias, sobrescritura con y sin respaldo y protección de rutas.
-- **RGB DualBand 0.14.3:** interfaces y ajustes SPCC, geometría, registro controlado, recorte, composición y conservación de astrometría comprobados.
-- **Focal Length Blend 0.11.7:** flujo con muestras reales y StarX, conservación de estrellas, mezcla, recombinación y guardado con astrometría comprobados. Descargas consecutivas, progreso y cancelación correctos.
+- **RGB DualBand 0.15.0:** interfaces y ajustes SPCC, geometría, registro controlado, recorte, composición y conservación de astrometría comprobados.
+- **Focal Length Blend 0.11.8:** flujo con muestras reales y StarX, conservación de estrellas, mezcla, recombinación y guardado con astrometría comprobados. Descargas consecutivas, progreso y cancelación correctos.
 - **Astrometric Solution Copy 1.1:** detección de 480 estrellas coincidentes y transferencia WCS verificadas.
 
 ## Requisitos y alcance

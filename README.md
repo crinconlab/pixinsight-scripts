@@ -9,8 +9,8 @@ Crinconlab is a collection of four complementary scripts by Carlos Rincón:
 | Tool | Version | Purpose |
 | --- | --- | --- |
 | FITS/XISF Header Editor | 1.0.1 | Inspect and edit metadata across files and folders, with verified copies and optional overwrite. |
-| RGB DualBand Solver SPCC | 0.14.3 | Add dual-band Ha signal to RGB through a guided registration, crop and color-calibration workflow. |
-| Focal Length Blend | 0.11.7 | Combine the wide field of a shorter-focal image with selected detail from a longer-focal image. |
+| RGB Ha Blend | 0.15.0 | Add dual-band Ha signal to RGB through a guided registration, crop and color-calibration workflow. |
+| Focal Length Blend | 0.11.8 | Combine the wide field of a shorter-focal image with selected detail from a longer-focal image. |
 | Astrometric Solution Copy | 1.1 | Transfer an existing solution between registered images with stellar alignment checks. |
 
 Includes English manuals, matching icons, sample-image downloads in Focal Length Blend and protected write paths. PolyMask is outside this four-script submission.

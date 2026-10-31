@@ -1,8 +1,8 @@
 // Copyright © Carlos Rincón 2026
 // Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
-#feature-id CarlosRinconRGBDualBandEN : Crinconlab > RGB DualBand Solver SPCC
+#feature-id CrinconlabRGBHaBlend : Crinconlab > RGB Ha Blend
 #feature-icon icons/rgb_dualband_orange_v2.svg
-#feature-info RGB + Dual Band composition, Image Solver and SPCC. Version 0.14.3. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+#feature-info RGB + Dual Band composition, Image Solver and SPCC. Version 0.15.0. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 #engine v8
 #include "ProtectedPaths.jsh"
 #include <pjsr/StdIcon.jsh>
@@ -13,7 +13,7 @@ CoreApplication.ensureMinimumVersion(1,9,5);
 #define VERSION "6.5.0"
 #define TITLE "ImageSolver"
 #define SOLVER_SETTINGS_MODULE "ImageSolver"
-#define SETTINGS_MODULE "ImageSolver"
+#define SETTINGS_MODULE "Crinconlab/RGBHaBlend"
 #include <pjsr/astrometry/AstrometricMetadata.js>
 #include <pjsr/astrometry/AstronomicalCatalogs.js>
 #include <pjsr/astrometry/SearchCoordinatesDialog.js>
@@ -28,7 +28,7 @@ CoreApplication.ensureMinimumVersion(1,9,5);
 #include <../src/scripts/ImageSolver/ImageSolverEngine.js>
 
 var RD_HELP_TEXT=[
-   "RGB + DUAL BAND \u2014 VERSION 0.14.3",
+   "RGB HA BLEND \u2014 VERSION 0.15.0",
    "Copyright \u00a9 Carlos Rinc\u00f3n 2026",
    "",
    "MANUAL VALIDATION",
@@ -61,7 +61,7 @@ var RD_HELP_TEXT=[
    "Blue text describes the task. The bar gives processing-stage percentages, not time estimates, and may remain fixed during native operations. Input controls are disabled during updates. The script does not explicitly open the process console and hides it at stage boundaries; native processes may still bring it forward. Technical messages remain available for troubleshooting.",
    "",
    "INSTALLATION",
-   "Replace the complete Crinconlab folder, keeping icons/. Update Script > Feature Scripts and launch RGB DualBand Solver SPCC. Help works before selecting images; Save manual .txt exports these instructions.",
+   "Replace the complete Crinconlab folder, keeping icons/. Update Script > Feature Scripts and launch RGB Ha Blend. Help works before selecting images; Save manual .txt exports these instructions.",
    "",
    "VALIDATION LIMITS",
    "Native tests use synthetic stars, real registration masks and astrometric coordinate comparisons after cropping. Automated calibration tests inject a calibration callback: validate a complete run with your installed SPCC catalog and real astrophotography data.",
@@ -71,14 +71,14 @@ class RD_HelpDialog extends Dialog
 {
 constructor()
 {
-   super();var self=this;this.windowTitle="Help and instructions · RGB + Dual Band · v0.14.3";
+   super();var self=this;this.windowTitle="Help and instructions · RGB Ha Blend · v0.15.0";
    this.manual=new TextBox(this);this.manual.readOnly=true;this.manual.text=RD_HELP_TEXT;
    this.manual.setScaledMinSize(700,460);
    this.exportButton=new PushButton(this);this.exportButton.text="Save manual .txt...";
    this.exportButton.onClick=function()
    {
       var picker=new SaveFileDialog;picker.caption="Save instructions";
-      picker.filters=[["Text file",".txt"]];picker.initialPath="RGB_DualBand_Solver_SPCC_Manual_EN.txt";
+      picker.filters=[["Text file",".txt"]];picker.initialPath="RGB_Ha_Blend_Manual_EN.txt";
       if(picker.execute())try{CR_writeUserText(picker.fileName,RD_HELP_TEXT);}
       catch(e){new MessageBox(String(e),"Could not save the manual",StdIcon_Error,StdButton_Ok).execute();}
    };
@@ -422,7 +422,7 @@ class RD_PreviewDialog extends Dialog
 constructor(config,services)
 {
    super();var self=this;this.busy=false;this.onClose=function(){return !self.busy;};this.config=config;this.services=services;this.state={reference:null,result:null,accepted:false};
-   this.windowTitle="SPCC-calibrated preview · v0.14.3";
+   this.windowTitle="SPCC-calibrated preview · v0.15.0";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function pane()
    {
@@ -640,7 +640,7 @@ class RD_Dialog extends Dialog
 constructor()
 {
    super();var self=this;
-   this.windowTitle="RGB + Dual Band → Image Solver → SPCC · v0.14.3";
+   this.windowTitle="RGB Ha Blend · v0.15.0";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function choose(list)
    {
@@ -743,7 +743,7 @@ try
 {
    console.hide();var result=null;
    if(RD_startupNotice())result=RD_workflow(new RD_Dialog);
-   if(result)new MessageBox("Calibrated result: "+result.mainView.id+"\nThe image you just reviewed is retained without rerunning SPCC. Save it when you want to keep it.","RGB + Dual Band",StdIcon_Information,StdButton_Ok).execute();
+   if(result)new MessageBox("Calibrated result: "+result.mainView.id+"\nThe image you just reviewed is retained without rerunning SPCC. Save it when you want to keep it.","RGB Ha Blend",StdIcon_Information,StdButton_Ok).execute();
 }
-catch(e){console.criticalln(String(e));new MessageBox(String(e),"RGB + Dual Band: error",StdIcon_Error,StdButton_Ok).execute();}
+catch(e){console.criticalln(String(e));new MessageBox(String(e),"RGB Ha Blend: error",StdIcon_Error,StdButton_Ok).execute();}
 #endif

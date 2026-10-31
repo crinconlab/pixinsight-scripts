@@ -13,8 +13,8 @@ Native checks on PixInsight Core 1.9.6 x64/macOS confirm metadata editing, astro
 | Product | Current version | Verified operation |
 | --- | --- | --- |
 | FITS/XISF Header Editor | 1.0.1 | FITS/XISF field creation and editing, simulation, copies, readback, overwrite with/without backups and progress controls. |
-| RGB DualBand Solver SPCC | 0.14.3 | Setup and SPCC configuration interfaces, coordinate reprojection, common-field cropping, controlled stellar registration, red-channel composition and WCS propagation. |
-| Focal Length Blend | 0.11.7 | Fixed-canvas reprojection, polygon masks, contrast estimation, native MLT blending, comparison, output creation, StarX separation, retained base stars and Screen recombination. |
+| RGB Ha Blend | 0.15.0 | Setup and SPCC configuration interfaces, coordinate reprojection, common-field cropping, controlled stellar registration, red-channel composition and WCS propagation. |
+| Focal Length Blend | 0.11.8 | Fixed-canvas reprojection, polygon masks, contrast estimation, native MLT blending, comparison, output creation, StarX separation, retained base stars and Screen recombination. |
 | Astrometric Solution Copy | 1.1 | Real stellar detection and alignment verification, native WCS transfer and protection against unauthorized or unverified targets. |
 
 ## Confirmed results

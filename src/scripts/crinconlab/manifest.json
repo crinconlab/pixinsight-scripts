@@ -20,19 +20,19 @@
       "script": "Mezcla_Focales.js",
       "feature": "CrinconlabMezclaFocales : Crinconlab > Focal Length Blend",
       "icon": "icons/Mezcla_Focales_orange_v2.svg",
-      "sha256": "5c4f1ccc4e3a9feb3e1ab45d7674c322dea36f7ed7e043b5f2b1594157b6c205",
-      "version": "0.11.7"
+      "sha256": "783ab743b73ae996ae4b00c9535a677ac06426a9b345f668b89041a46706a377",
+      "version": "0.11.8"
     },
     {
-      "script": "RGB_DualBand_Solver_SPCC_EN.js",
-      "feature": "CarlosRinconRGBDualBandEN : Crinconlab > RGB DualBand Solver SPCC",
+      "script": "RGB_Ha_Blend.js",
+      "feature": "CrinconlabRGBHaBlend : Crinconlab > RGB Ha Blend",
       "icon": "icons/rgb_dualband_orange_v2.svg",
-      "sha256": "013084459d23e96677cb747cc0eaf2ed181cdd27e4593c7bbe15a4d1d0c45529",
-      "version": "0.14.3"
+      "sha256": "d05f0de8c978761cc20779b961729ba6b917b8b99f241cf0ca4ac38b72b0dd78",
+      "version": "0.15.0"
     }
   ],
   "scope": "Four-script CPD submission candidate; PolyMask excluded.",
-  "reviewDate": "2026-10-30",
+  "reviewDate": "2026-10-31",
   "distribution": "manual; unsigned; no active update repository",
   "resources": [
     {

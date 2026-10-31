@@ -3,8 +3,8 @@ Copyright © Carlos Rincón 2026
 
 PRODUCTS INCLUDED
 FITS / XISF Header Editor 1.0.1 — FITS_XISF_Header_Editor_EN.js
-RGB DualBand Solver SPCC 0.14.3 — RGB_DualBand_Solver_SPCC_EN.js
-Focal Length Blend 0.11.7 — Mezcla_Focales.js
+RGB Ha Blend 0.15.0 — RGB_Ha_Blend.js
+Focal Length Blend 0.11.8 — Mezcla_Focales.js
 Astrometric Solution Copy 1.1 — Astrometric_Solution_Copy_EN.js
 
 PolyMask is not included in this review branch or package.
@@ -27,7 +27,7 @@ docs/cpd-pending-checks.md for outstanding documentation and validation work.
 
 DEPENDENCIES
 The scripts use installed PixInsight processes and PJSR libraries.
-RGB DualBand Solver SPCC and Focal Length Blend reference installed ImageSolver
+RGB Ha Blend and Focal Length Blend reference installed ImageSolver
 components. The former also requires the user's configured SPCC/GaiaDR3SP data.
 Focal Length Blend can invoke an installed, activated StarXTerminator module;
 it can also work with already-starless inputs that retain valid astrometry.

@@ -1,6 +1,6 @@
 # StarXTerminator — native automatic validation in PixInsight 1.9.6
 
-30 October 2026. Tested source: `b5d6d720502ecc772168781b8caee93081a74e6e`, Focal Length Blend 0.11.7. Runtime: PixInsight Core 1.9.6 Lockhart x64/macOS. Native module: **StarXTerminator 2.6.10, ML version 11**, GPU execution reported by the module.
+30 October 2026. Tested source: `b5d6d720502ecc772168781b8caee93081a74e6e`, Focal Length Blend 0.11.8. Runtime: PixInsight Core 1.9.6 Lockhart x64/macOS. Native module: **StarXTerminator 2.6.10, ML version 11**, GPU execution reported by the module.
 
 ## Availability issue resolved for the tests
 

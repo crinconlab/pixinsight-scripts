@@ -36,9 +36,9 @@ The script implements no network client, file upload, server synchronization or 
 
 Replacement is performed per file, not as an atomic whole-batch transaction. A later failure does not undo earlier successful replacements. No default/script preference persistence or separate log-file writer is implemented in this source; progress and errors are reported through the interface and PixInsight console.
 
-## 2. RGB DualBand Solver SPCC — 0.14.3
+## 2. RGB Ha Blend — 0.15.0
 
-**File:** `RGB_DualBand_Solver_SPCC_EN.js`.
+**File:** `RGB_Ha_Blend.js`.
 
 ### Purpose and operation
 
@@ -54,7 +54,7 @@ The script uses the official ImageSolver included with PixInsight and its instal
 
 Input files may be opened at the user's request. Working and accepted images remain in the workspace; image files are not automatically saved. Optional manual export writes a text file to a user-selected path. SPCC defaults are persisted only when the user selects Save as defaults, through the official Settings API at `CarlosRincon/RGBDualBandSPCC/v1/defaults`; the physical settings location is managed by PixInsight. Installed `filters.xspd` and `white-references.xspd` are read from `CoreApplication.libraryDirPath` and are not modified. Preview calibration explicitly suppresses native graph, star-map and text-file generation. Native catalogue/solver cache handling is delegated to the installed official components.
 
-## 3. Focal Length Blend — 0.11.7
+## 3. Focal Length Blend — 0.11.8
 
 **File:** `Mezcla_Focales.js`.
 
