@@ -2,11 +2,25 @@
 
 Current four reviewed products: Header Editor 1.0.1, RGB Ha Blend 0.15.1, Focal Length Blend 0.11.9 and Astrometric Solution Copy 1.1. PolyMask is provided separately from the CPD review scope.
 
+## Signed update repository
+
+The first signed four-product distribution is **2026.11.01**, targeting **PixInsight 1.9.6**. It contains Header Editor 1.0.1, Astrometric Solution Copy 1.1, RGB Ha Blend 0.15.1 and Focal Length Blend 0.11.9, with their signatures, the shared ProtectedPaths library, icons and English manuals. PolyMask remains separate.
+
+In PixInsight, select **Resources > Updates > Manage Repositories > Add** and enter:
+
+```text
+https://raw.githubusercontent.com/crinconlab/pixinsight-scripts/main/repository/
+```
+
+Then use **Resources > Updates > Check for Updates** and follow the installation/restart prompts. Signature recognition requires the certified-developer database update containing `Carlos_Rincon_Astrophoto`, as announced by PTeam. The first native installation of this distribution is being validated; see [distribution checks](docs/distribution-2026-11-01.json).
+
+For manual installations, avoid registering a second copy of the same script through Feature Scripts. Keep the full script folder and its resources together.
+
 The previous 2026-10-26 collection is superseded. Install the current source folder from this branch, including icons, manuals and ProtectedPaths.jsh. The corrected complete collection is linked below.
 
 [CPD correction details](docs/cpd-review-corrections.md) · [Reviewed four-script branch](https://github.com/crinconlab/pixinsight-scripts/tree/cpd-review)
 
-The ZIP includes all five current scripts, five orange icons, and English manuals. Extract the complete Crinconlab folder, preserving its icons and manuals subfolders. In PixInsight, use Script > Feature Scripts > Add to register that folder. Remove registrations pointing to older copies if duplicate entries appear.
+The manual-installation collection ZIP linked below includes all five current scripts, five orange icons, and English manuals. Extract the complete Crinconlab folder, preserving its icons and manuals subfolders. In PixInsight, use Script > Feature Scripts > Add to register that folder. Remove registrations pointing to older copies if duplicate entries appear.
 
 | Script | File |
 | --- | --- |
@@ -18,7 +32,7 @@ The ZIP includes all five current scripts, five orange icons, and English manual
 
 [English manuals](src/scripts/crinconlab/manuals) · [Collection instructions](src/scripts/crinconlab/README_EN.txt) · [Version manifest](src/scripts/crinconlab/manifest.json)
 
-PolyMask 0.1.0 is preliminary: 26 native programmatic checks passed in PixInsight 1.9.5; user testing with real images and mouse interaction remains pending. The collection is published as a preliminary manual-installation release. This does not activate the PixInsight automatic update repository.
+PolyMask 0.1.0 is preliminary: 26 native programmatic checks passed in PixInsight 1.9.5; user testing with real images and mouse interaction remains pending. PolyMask is distributed through the preliminary manual-installation collection; it is not included in the four-product automatic update package.
 
 Copyright © Carlos Rincón 2026.
 
@@ -28,7 +42,7 @@ Copyright © Carlos Rincón 2026.
 
 Scripts para PixInsight de crinconlab y preparación de su repositorio de actualizaciones.
 
-**Estado: desarrollo. Los scripts son provisionales; todavía no hay una versión publicada mediante el gestor de actualizaciones.**
+**Estado: primera distribución firmada publicada, versión 2026.11.01 para PixInsight 1.9.6. La prueba de instalación mediante el gestor de actualizaciones está pendiente. PolyMask sigue en desarrollo y fuera de ese paquete.**
 
 ## Estructura
 
@@ -38,26 +52,26 @@ Scripts para PixInsight de crinconlab y preparación de su repositorio de actual
 | `tools/build_release.py` | Preparación local del ZIP y del índice `updates.xri` |
 | `release.example.json` | Plantilla de metadatos para una publicación |
 | `build/` | Resultados locales, pendientes de firma y comprobación; ignorados por Git |
-| `repository/` | Paquetes e índice definitivos, cuando se publique la primera versión |
+| `repository/` | ZIP de instalación e índice `updates.xri` firmados |
 | `docs/publicacion.md` | Procedimiento de firma, empaquetado y actualización |
 
 ## Próximo paso
 
-Trabajar sobre los scripts provisionales, revisar sus dependencias y comprobarlos en PixInsight antes de preparar la primera versión firmada. Véase [Estado de desarrollo](docs/desarrollo.md). Las claves `.xssk` y su contraseña permanecen fuera del repositorio.
+Comprobar el reconocimiento de la identidad CPD y la instalación de la distribución 2026.11.01 en PixInsight 1.9.6. La configuración del paquete de cuatro productos está en [release.cpd.json](release.cpd.json). Las claves `.xssk` y su contraseña permanecen fuera del repositorio.
 
 La guía [Publicar una versión](docs/publicacion.md) explica el procedimiento. El empaquetador requiere Python 3.9 o posterior y solo utiliza la biblioteca estándar.
 
-## Dirección prevista para PixInsight
+## Dirección del repositorio para PixInsight
 
 ```text
 https://raw.githubusercontent.com/crinconlab/pixinsight-scripts/main/repository/
 ```
 
-Esta dirección se podrá añadir al gestor de actualizaciones cuando contenga el primer `updates.xri` y su paquete comprobado. No es necesario activar GitHub Pages para este alojamiento.
+Esta dirección contiene el índice firmado y el paquete de la distribución 2026.11.01. No es necesario activar GitHub Pages para este alojamiento.
 
 ## Validación pendiente
 
-Las comprobaciones del empaquetador no ejecutan PixInsight ni verifican criptográficamente las firmas. Antes de la primera entrega hay que comprobar la firma, una instalación nueva y una actualización desde una versión anterior dentro de PixInsight.
+Las comprobaciones del empaquetador no ejecutan PixInsight ni verifican criptográficamente las firmas. Queda comprobar el reconocimiento criptográfico de las firmas y una instalación nueva de esta distribución dentro de PixInsight. Las futuras distribuciones requerirán también una prueba de actualización desde la anterior.
 
 ## Probar la mezcla de focales
 

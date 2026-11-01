@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xri version="1.0">
+   <description>
+      <p>PixInsight scripts — crinconlab</p>
+   </description>
+   <platform os="all" arch="noarch" version="1.9.6:1.9.6">
+      <package fileName="crinconlab-scripts-2026.11.01-b2f27fb5730b072c.zip" sha1="4d3bb91b11b97cb113d80791e34a42467aca8b48" type="script" releaseDate="20261101">
+         <title>Crinconlab Scripts 2026.11.01</title>
+         <description>
+            <p>FITS-XISF Header Editor; Astrometric Solution Copy 1.1; RGB Ha Blend 0.15.1; Focal Length Blend 0.11.9. Includes CPD script signatures, the shared ProtectedPaths library, icons and English manuals. Distribution target: PixInsight 1.9.6.</p>
+         </description>
+      </package>
+   </platform>
+</xri>
+<Signature developerId="Carlos_Rincon_Astrophoto" timestamp="2026-11-01T17:43:15.323Z" encoding="Base64">p2xMHdF2CULgdr8+QKOTP6KDjPXtKtoteypjM3g04oRfqZpUPnta9Aq1a6iD8V+3BbLCS1zDiAVQy6QqsdZmBg==</Signature>
