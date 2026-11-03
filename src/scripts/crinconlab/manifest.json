@@ -20,8 +20,8 @@
       "script": "Mezcla_Focales.js",
       "feature": "CrinconlabMezclaFocales : Crinconlab > Focal Length Blend",
       "icon": "icons/Mezcla_Focales_orange_v2.svg",
-      "sha256": "5206d88cfe6025205801719cf6cf69c67c3a77f5c10069d866d1d7d7cabbee01",
-      "version": "0.11.9"
+      "sha256": "f4be31391fc0dd05db2c387abaa9d907d6fad1b0bd97fe8ed6e53bc0c37330ba",
+      "version": "0.11.10"
     },
     {
       "script": "RGB_Ha_Blend.js",

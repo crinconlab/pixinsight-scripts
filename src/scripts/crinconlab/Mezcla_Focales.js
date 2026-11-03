@@ -6,13 +6,14 @@
 #include <pjsr/StdButton.jsh>
 #include <pjsr/ButtonCodes.jsh>
 #include <pjsr/DataType.jsh>
+#include <pjsr/UndoFlag.jsh>
 CoreApplication.ensureMinimumVersion(1,9,5);
 #define SETTINGS_MODULE "Crinconlab/FocalLengthBlend"
 #define USE_SOLVER_LIBRARY
 #include <../src/scripts/ImageSolver/ImageSolver.js>
 #feature-id CrinconlabMezclaFocales : Crinconlab > Focal Length Blend
 #feature-icon icons/Mezcla_Focales_orange_v2.svg
-#feature-info Astrometric preparation, StarXTerminator separation and selectable native MLT detail injection on a fixed short-focal canvas. Version 0.11.9. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+#feature-info Astrometric preparation, StarXTerminator separation and selectable native MLT detail injection on a fixed short-focal canvas. Version 0.11.10. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
 
 
 #include <pjsr/astrometry/ImageReprojection.js>
@@ -24,7 +25,7 @@ CoreApplication.ensureMinimumVersion(1,9,5);
  * Default: inject selected native MLT detail layers. Gaussian-band replacement
  * remains available as an alternative.
  */
-var MF_VERSION = "0.11.9";
+var MF_VERSION = "0.11.10";
 
 function MF_clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
 function MF_number(value, name, low, high)
@@ -456,14 +457,67 @@ function MF_polygonMask(reference,vertices,work)
 }
 // Shared mask-preview and final-blend calculation. Keep support hard-edged;
 // apply the inward transition exactly once.
+// Exact squared Euclidean distance to the nearest black support pixel.
+// Horizontal nearest-site scan, then the lower envelope of column parabolas.
+// Virtual exterior pixels make canvas boundaries behave like other edges.
+function MF_inwardDistances(image)
+{
+   var w=image.width,h=image.height,field=new Float32Array(w*h);
+   var row=new Float32Array(w),n=Math.max(w,h);
+   var f=new Float64Array(n),v=new Int32Array(n),z=new Float64Array(n+1);
+   for(var y=0;y<h;++y)
+   {
+      image.getSamples(row,new Rect(0,y,w,y+1),0);
+      var last=-1,offset=y*w;
+      for(var x=0;x<w;++x){if(row[x]<=0.5)last=x;field[offset+x]=(x-last)*(x-last);}
+      last=w;
+      for(var x=w-1;x>=0;--x){if(row[x]<=0.5)last=x;field[offset+x]=Math.min(field[offset+x],(last-x)*(last-x));}
+      if((y&127)===0)CoreApplication.processEvents();
+   }
+   for(var x=0;x<w;++x)
+   {
+      for(var y=0;y<h;++y)f[y]=field[y*w+x];
+      var k=0;v[0]=0;z[0]=-Infinity;z[1]=Infinity;
+      for(var q=1;q<h;++q)
+      {
+         var s;
+         do{s=((f[q]+q*q)-(f[v[k]]+v[k]*v[k]))/(2*(q-v[k]));if(s<=z[k])--k;else break;}while(k>=0);
+         ++k;v[k]=q;z[k]=s;z[k+1]=Infinity;
+      }
+      k=0;
+      for(var y=0;y<h;++y)
+      {
+         while(z[k+1]<y)++k;
+         var dy=y-v[k];
+         field[y*w+x]=Math.min(dy*dy+f[v[k]],(y+1)*(y+1),(h-y)*(h-y));
+      }
+      if((x&127)===0)CoreApplication.processEvents();
+   }
+   return field;
+}
 function MF_effectiveMask(support,sigma,work)
 {
    sigma=MF_number(sigma,"Coverage transition",0,256);
-   if (sigma===0) return support;
-   var blurred=MF_blur(support,sigma,work,"Transicion");
-   var effective=MF_math(support.mainView.id+"*min(1,max(0,("+blurred.mainView.id+"-0.5)*2))",
-      support.mainView,work,"MascaraFinal",false);
-   work.close(blurred);
+   if(sigma===0)return support;
+   var image=support.mainView.image,w=image.width,h=image.height;
+   var distances=MF_inwardDistances(image),row=new Float32Array(w);
+   var effective=MF_clone(support.mainView,work,"MascaraFinal");
+   effective.mainView.beginProcess(UndoFlag_NoSwapFile);
+   try
+   {
+      for(var y=0;y<h;++y)
+      {
+         for(var x=0;x<w;++x)
+         {
+            // Pixel centers are half a pixel inside the support boundary.
+            var d=Math.max(0,Math.sqrt(distances[y*w+x])-0.5);
+            row[x]=1-Math.exp(-d*d/(2*sigma*sigma));
+         }
+         effective.mainView.image.setSamples(row,new Rect(0,y,w,y+1),0);
+         if((y&127)===0)CoreApplication.processEvents();
+      }
+   }
+   finally{effective.mainView.endProcess();}
    return effective;
 }
 function MF_renderCoverage(reference,vertices,sigma,coverage)
@@ -1060,12 +1114,15 @@ MF_Camera.prototype.pan=function(dx,dy,w,h)
 };
 
 var MF_HELP = [
-   "# Focal Length Blend \u2014 0.11.9, preliminary release",
+   "# Focal Length Blend \u2014 0.11.10, preliminary release",
    "",
    "MANUAL VALIDATION",
    "Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.",
    "",
    "Copyright \u00a9 Carlos Rinc\u00f3n 2026",
+   "",
+   "## Version 0.11.10",
+   "Inward distance-based feathering prevents clipped notches on concave polygon boundaries. Preview and final blending share this calculation. Shift + left drag remains the pan gesture.",
    "",
    "## Before you start",
    "",
@@ -1150,7 +1207,7 @@ var MF_HELP = [
    "",
    "**Close polygon** connects the last vertex to the first. **Undo** first reopens a closed polygon, then removes its last vertex. **Clear contour** starts over. **Back** returns to the initial setup without accepting the mask being edited. Prepared geometry and any previously selected mask are retained. The Full canvas option has been removed.",
    "",
-   "Set **Transition (px)** and click **Preview transition**. The right panel displays the effective mask: white adds detail, gray blends partially, and black preserves the base. Transition is an inward Gaussian feather, expressed as sigma in pixels. Zero keeps hard edges. The initial 32 pixels can be excessive for small fields.",
+   "Set **Transition (px)** and click **Preview transition**. The right panel displays the effective mask: white adds detail, gray blends partially, and black preserves the base. Transition uses inward Euclidean distance with a Gaussian-shaped falloff, expressed as sigma in pixels. It stays inside the polygon and valid astrometric coverage, including concave boundaries. Zero keeps hard edges. The initial 32 pixels can be excessive for small fields.",
    "",
    "**Create and select mask** selects a hidden temporary hard-edged mask in setup. A **Go to Prepare Comparison** notice asks you to click OK and proceeds to comparison preparation. The transition is applied once during blending, not baked into the support mask. Set it **only in the mask editor**; setup displays its value as information.",
    "",
@@ -1396,7 +1453,7 @@ constructor(reference,feather,background,coverage,footprint)
    }
    this.vertexX.onValueUpdated=coordinateChanged; this.vertexY.onValueUpdated=coordinateChanged;
    this.feather=new SpinBox(this); this.feather.minValue=0; this.feather.maxValue=256; this.feather.value=feather;
-   this.feather.toolTip="Width of the inward transition, expressed as Gaussian sigma in pixels. Increase to soften the seam; 0 preserves hard edges.";
+   this.feather.toolTip="Width of the inward distance-based transition, expressed as Gaussian falloff sigma in pixels. Increase to soften the seam; 0 preserves hard edges.";
    this.feather.onValueUpdated=function() { self.invalidate(); };
    var coordinates=new HorizontalSizer; coordinates.spacing=6;
    coordinates.add(MF_label(this,"Vertex:")); coordinates.add(this.vertex);

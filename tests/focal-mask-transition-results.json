@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Euclidean transform matches brute force, including concave notches",
+    "passed": true
+  },
+  {
+    "name": "Mask remains bounded and exactly black outside support",
+    "passed": true
+  },
+  {
+    "name": "Every output sample follows inward distance falloff",
+    "passed": true
+  },
+  {
+    "name": "Concave transition has no abrupt adjacent-pixel jumps",
+    "passed": true
+  },
+  {
+    "name": "Zero transition preserves original hard support",
+    "passed": true
+  },
+  {
+    "name": "Increasing sigma widens inward transition",
+    "passed": true
+  },
+  {
+    "name": "Astrometric coverage boundary is also feathered inward",
+    "passed": true
+  },
+  {
+    "name": "Preview runs the same effective-mask pipeline",
+    "passed": true
+  },
+  {
+    "name": "Six-megapixel mask has smooth canvas boundaries and full-strength center",
+    "passed": true
+  },
+  {
+    "metric": "sixMegapixelMilliseconds",
+    "value": 919
+  },
+  {
+    "name": "Shift-only panning retained",
+    "passed": true
+  }
+]
