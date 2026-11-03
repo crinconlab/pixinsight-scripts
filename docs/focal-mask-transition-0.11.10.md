@@ -12,4 +12,4 @@ Run `tests/Test_Focal_Mask_Transition_PixInsight.js` from the repository checkou
 
 ## Distribution
 
-This commit updates source code and the local test package. The old adjacent `Mezcla_Focales.xsgn` signature is removed because it does not match the changed source. The already-signed 0.11.9 ZIP and `repository/updates.xri` are unchanged and still form a matching distribution. Version 0.11.10 must be signed again and packaged with a newly signed update index before it can be delivered through PixInsight's automatic updates. No private signing keys are used or committed.
+The 2026.11.03 update package includes Focal Length Blend 0.11.10 and its newly supplied script signature. The new ZIP and the author's signed `updates.xri` are published together. The earlier 0.11.9 ZIP is retained. Content and checksum checks passed; native cryptographic trust verification remains limited by the test installation's unrecognized CPD identity. See [distribution report](distribution-2026-11-03.json).

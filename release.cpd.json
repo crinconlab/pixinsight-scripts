@@ -1,8 +1,8 @@
 {
   "package_id": "crinconlab-scripts",
-  "version": "2026.11.01",
+  "version": "2026.11.03",
   "title": "Crinconlab Scripts",
-  "description": "FITS-XISF Header Editor; Astrometric Solution Copy 1.1; RGB Ha Blend 0.15.1; Focal Length Blend 0.11.9. Includes CPD script signatures, the shared ProtectedPaths library, icons and English manuals. Distribution target: PixInsight 1.9.6.",
+  "description": "FITS-XISF Header Editor; Astrometric Solution Copy 1.1; RGB Ha Blend 0.15.1; Focal Length Blend 0.11.10. Includes CPD script signatures, the shared ProtectedPaths library, icons and English manuals. Distribution target: PixInsight 1.9.6.",
   "pixinsight_versions": "1.9.6:1.9.6",
   "files": [
     "scripts/crinconlab/Astrometric_Solution_Copy_EN.js",

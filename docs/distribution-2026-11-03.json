@@ -1,0 +1,31 @@
+{
+  "distribution": "2026.11.03",
+  "pixinsight": "1.9.6",
+  "scripts": {
+    "Focal Length Blend": "0.11.10",
+    "RGB Ha Blend": "0.15.1",
+    "FITS-XISF Header Editor": "1.0.1",
+    "Astrometric Solution Copy": "1.1"
+  },
+  "package": "crinconlab-scripts-2026.11.03-2806ce53075e0d90.zip",
+  "sha256": "2806ce53075e0d90f0bf0ed4da2d55ad1c0f2b4d282b5d89a9f469329c380273",
+  "sha1": "e9e3139be07e46cbb01acd7d362ed1c96a08d4f3",
+  "checks": {
+    "zipIntegrity": true,
+    "entryCount": 22,
+    "polyMaskExcluded": true,
+    "signedIndexPayloadMatchesPreparedIndex": true,
+    "indexChecksumMatchesZip": true,
+    "focalSourceMatchesAuthorSignedCopy": true,
+    "scriptAndIndexDeveloper": "Carlos_Rincon_Astrophoto"
+  },
+  "signatureVerification": {
+    "status": "not verified",
+    "reason": "Native Security.getScriptSignature/getCodeSignature reported Unknown code signing identity Carlos_Rincon_Astrophoto on the test installation. No private keys were accessed."
+  },
+  "maskTests": {
+    "nativeCore": "1.9.6",
+    "passed": 10,
+    "sixMegapixelMilliseconds": 919
+  }
+}
