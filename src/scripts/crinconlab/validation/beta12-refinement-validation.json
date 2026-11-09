@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Manual Update Preview button is hidden",
+    "passed": true
+  },
+  {
+    "name": "Idle changes automatically produce a full-resolution preview",
+    "passed": true
+  },
+  {
+    "name": "Pressing a slider cancels pending refinement",
+    "passed": true
+  },
+  {
+    "name": "Live updates remain reduced while slider is held",
+    "passed": true
+  },
+  {
+    "name": "Releasing the slider automatically refines at full size",
+    "passed": true
+  },
+  {
+    "name": "A fresh adjustment postpones refinement and applies the latest value",
+    "passed": true
+  },
+  {
+    "name": "Turning live dragging off still refines automatically",
+    "passed": true
+  },
+  {
+    "name": "Created mask matches the automatic refined preview",
+    "passed": true
+  },
+  {
+    "name": "Closing the editor stops both preview timers",
+    "passed": true
+  }
+]

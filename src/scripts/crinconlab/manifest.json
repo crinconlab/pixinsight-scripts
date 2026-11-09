@@ -3,13 +3,6 @@
   "local": true,
   "scripts": [
     {
-      "script": "Astrometric_Solution_Copy_EN.js",
-      "feature": "CrinconlabAstrometricCopyEN : Crinconlab > Astrometric Solution Copy",
-      "icon": "icons/astrometric_copy_orange_v2.svg",
-      "sha256": "c38b2a6440686307ffe80b34e22290d3e9e2e1fa658c94ae7fde31e1679cb3e6",
-      "version": "1.1"
-    },
-    {
       "script": "FITS_XISF_Header_Editor_EN.js",
       "feature": "CarlosRinconHeaderEditorEN : Crinconlab > FITS-XISF Header Editor",
       "icon": "icons/header_editor_orange_v2.svg",
@@ -34,17 +27,21 @@
       "script": "PolyMask_EN.js",
       "feature": "CrinconlabPolyMask : Crinconlab > PolyMask",
       "icon": "icons/polymask_orange.svg",
-      "version": "0.1.0",
-      "sha256": "f0938204a43451d4b2b3195c7df0cdd6eff5dd06db980de9b7019fe8505f3f91"
+      "version": "0.3.0-beta.12",
+      "sha256": "98ed908fd3144273d4968621530a0c8256be9bad9025f635a134a95f4b1eb0d6"
     }
   ],
-  "scope": "Collection with four reviewed scripts and the branch-specific PolyMask version.",
+  "scope": "Active development collection; Astrometric Solution Copy temporarily archived.",
   "reviewDate": "2026-10-31",
-  "distribution": "manual; unsigned; no active update repository",
+  "distribution": "Development sources; no new signatures or update package issued.",
   "resources": [
     {
       "file": "ProtectedPaths.jsh",
       "sha256": "0c508d65cf27be6e2848545681c52f75aa6012c946488bcdc37ecc0e61d1dbdc"
+    },
+    {
+      "file": "PolyMaskProjects.jsh",
+      "sha256": "269ebef164361e49864c9367cf78a389e387b80fad46146bb033585fe8c7feec"
     }
   ],
   "manualValidationNote": {

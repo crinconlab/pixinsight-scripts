@@ -1,0 +1,32 @@
+NOTAS PARA EL FUTURO TUTORIAL DE POLYMASK
+
+1. Suavidad del contorno
+El feather suaviza el borde del polígono hacia dentro y hacia fuera. No decide
+qué brillos o colores se seleccionan dentro de esa región.
+
+2. Selección de luminancia
+Min y Max definen el intervalo de selección completa. Transition incorpora
+gradualmente los brillos próximos, fuera de sus extremos. No es una exclusión
+estricta cuando la transición tiene un valor mayor que cero.
+
+3. El desenfoque se aplica al final
+Primero combinamos las regiones con sus selecciones de color y luminancia.
+Después desenfocamos la máscara completa para suavizar sus transiciones.
+El desenfoque puede extender grises hacia zonas próximas que estaban excluidas.
+Esos grises permiten una aplicación parcial del procesado; no son blancos de
+selección completa. Mostrar en el vídeo el mismo borde ampliado antes y después.
+Invertir máscara final se aplica después de este desenfoque.
+
+4. Crominancia
+La opción Chrominance usa normalización automática limitada para obtener una
+máscara visible y útil. La intensidad sigue siendo ajustable con Strength.
+Revisar colores poco presentes: la normalización no distingue señal de ruido.
+La opción Lightness conserva la ponderación por brillo de la versión anterior.
+
+5. Vista rápida y refinado automático
+Mientras arrastramos un control vemos una aproximación rápida de la máscara.
+Al soltar, la vista se refina automáticamente con los píxeles a resolución completa.
+Ya no hay que pulsar Update Preview: ese botón se ha eliminado.
+La casilla Live preview while dragging solo controla la vista durante el arrastre;
+el refinado posterior es automático en ambos casos. Los cálculos completos en
+imágenes grandes pueden tardar; mostrar la línea azul de estado y la barra.

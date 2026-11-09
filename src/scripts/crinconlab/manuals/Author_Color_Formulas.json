@@ -1,0 +1,8 @@
+{
+  "Green": "iif(CIEh($T)<0.2778,0,iif(CIEh($T)<=0.4111,~mtf((CIEh($T)-0.2778)/0.1333,0)*CIEc($T),iif(CIEh($T)<=0.5444,~mtf((0.5444-CIEh($T))/0.1333,0)*CIEc($T),0)))",
+  "Cyan": "iif(CIEh($T)<0.375,0,iif(CIEh($T)<=0.6041,~mtf((CIEh($T)-0.375)/0.2291,0)*CIEc($T),iif(CIEh($T)<=0.8334,~mtf((0.8334-CIEh($T))/0.2291,0)*CIEc($T),0)))",
+  "Blue": "iif(CIEh($T)<0.5444,0,iif(CIEh($T)<=0.7375,~mtf((CIEh($T)-0.5444)/0.1930,0)*CIEc($T),iif(CIEh($T)<=0.9305,~mtf((0.9305-CIEh($T))/0.1930,0)*CIEc($T),0)))",
+  "Magenta": "iif(CIEh($T)<=0.1,~mtf((0.1-CIEh($T))/0.1333,0)*CIEc($T),iif(CIEh($T)<0.8333,0,iif(CIEh($T)<=0.9666,~mtf((CIEh($T)-0.8333)/0.1333,0)*CIEc($T),~mtf((1+0.1-CIEh($T))/0.1333,0)*CIEc($T))))",
+  "Red": "iif(CIEh($T)<=0.104,~mtf((CIEh($T)+1-0.930)/0.1736,0)*CIEc($T),iif(CIEh($T)<=0.277,~mtf((0.277-CIEh($T))/0.1736,0)*CIEc($T),iif(CIEh($T)<0.9305,0,~mtf((CIEh($T)-0.930)/0.173,0)*CIEc($T))))",
+  "Yellow": "iif(CIEh($T)<0.1,0,iif(CIEh($T)<=0.2375,~mtf((CIEh($T)-0.1)/0.1375,0)*CIEc($T),iif(CIEh($T)<=0.375,~mtf((0.375-CIEh($T))/0.1375,0)*CIEc($T),0)))"
+}

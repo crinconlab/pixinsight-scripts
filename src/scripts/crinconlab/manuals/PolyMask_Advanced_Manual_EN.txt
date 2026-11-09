@@ -1,0 +1,121 @@
+POLYMASK ADVANCED 0.3.0-beta.12
+Copyright Carlos Rincón 2026
+Requires PixInsight 1.9.6. Local beta.
+
+Select an already-open working image in the dropdown and choose Open editor.
+This edition focuses on creating masks. The left sidebar has Shape, Selection
+and Output tabs. Both previews remain on the right. Combining existing masks is
+temporarily hidden; its processing code is retained for future development.
+The polygons you draw are still united into one mask.
+Fit/100%/zoom and output actions remain in the sidebar.
+Normally use a stretched RGB or monochrome image. No astrometry is needed.
+
+DRAWING
+Freehand (default): hold the left mouse button and trace an area, then release
+to close it. The trace is simplified to at most 64 editable vertices. Crossing
+contours are rejected and the previous polygon is preserved. Drawing away from
+vertices replaces the selected polygon; Undo restores it. Drag a vertex to refine.
+By points: click to place vertices, then click the first point or Close polygon.
+Click a closed edge to insert a vertex; right click for contour actions.
+Numeric vertex coordinates and Invert this region are under Advanced region
+controls in Shape. Invert final mask remains visible below the sidebar tabs.
+Add region creates another polygon. Name the selected region using the field
+below the dropdown. The sidebar and image caption show which region is being
+edited. Purple thick outlines and [EDITING] identify the active region; other
+regions are cyan. Click another region border or select it in the dropdown,
+including while Freehand mode is active. Region filters are kept independently.
+Wheel zooms; Shift-drag pans.
+
+LIGHTNESS: Long Min and Max sliders choose a CIE L* interval (0–100); endpoints
+cannot cross. Each has a second Fine slider with 0.1 L* steps, ±1 L* around the
+coarse value. Moving the coarse slider resets its fine adjustment; saved values
+retain one decimal place when switching regions. Transition softens the interval boundaries. Feather sigma softens
+polygon edges. Strength adjusts mask weight. STF affects display only.
+
+FINAL: Final blur is applied after combination; final inversion follows blur.
+Live preview is a reduced approximation. Slider preview updates during dragging, reusing unchanged regions; only the latest pending value is retained. The first update after a geometry or color change can take longer. Full-resolution refinement starts automatically after release or a short pause. The live checkbox controls only updates during dragging; refinement remains automatic when it is off. After release or a short pause, the preview refines automatically at full resolution. There is no Update Preview button. Unchecking Live preview while dragging only disables the quick updates during dragging; automatic refinement still runs.
+Create Mask always creates a full-resolution grayscale output; save it manually.
+Apply Mask attaches a fresh output to the selected target image; it must share
+the dimensions and registered grid. It replaces that target's mask attachment.
+Create Separate Masks creates one output per polygon in drawing mode only.
+
+COLOR MASKS
+Select Red, Green, Blue, Cyan, Magenta or Yellow. If the contour is empty,
+selecting a color automatically creates a full-image region. Existing polygons
+are retained, so the selected color remains restricted to their interior. Weight selects the author's
+E1 mode: Chrominance (CIEc, automatically normalized) or Lightness (CIEL, unchanged). Chrominance normalization preserves zero, uses the 99.5th percentile of positive sampled values, caps gain at 250 and does not boost a percentile below 0.001. It cannot distinguish genuine weak signal from noise; review the result. Color settings are kept
+independently for each polygon. Full image region creates the color mask over the
+whole working RGB image; other polygons restrict it to their interior.
+The color mask is multiplied by polygon strength and optional L* selection.
+Formula constants and mtf arguments are preserved as supplied. E2 was declared
+but unused in those equations; Mask strength (%) controls the region's intensity.
+Color masks require RGB input and produce grayscale outputs. Save created color masks manually in PixInsight.
+Invert final mask complements the completed combined result after final blur,
+including color and lightness restrictions: M becomes 1-M. Preview includes it.
+
+INSTALL: Keep icons/ and manuals/ beside PolyMask_EN.js. Use Script > Feature
+Scripts > Add, select this folder, then Crinconlab > PolyMask Advanced (beta).
+Alternatively use Script > Execute Script File and choose PolyMask_EN.js.
+Back returns to image selection; created outputs remain open.
+
+PREVIEW SCOPE
+Preview active region only isolates the selected region for display. Other
+region contours remain visible so you can identify and switch them. The right
+caption explicitly marks ACTIVE REGION ONLY. Both draft and full-size preview
+can be isolated. A complete final output requires all regions to be closed.
+Create Mask and Apply Mask always calculate the complete result, even if the
+last preview was isolated. After creation the right caption says Complete output
+mask; a subsequent edit resumes the selected preview scope.
+
+BOUNDARY SOFTNESS AND FINAL MASK BLUR
+Boundary softness smooths each polygon edge before regions are combined.
+Final mask blur is in Output and is applied LAST to the combined polygon, color
+and lightness selections. It can spread gray into nearby excluded areas. Gray
+means partial processing, not an untouched or strictly excluded area. The lightness
+transition also extends outside Min/Max, as before; it is not a hard exclusion.
+Use zero final blur to inspect the selection before spatial smoothing. Final inversion is applied last.
+
+EXISTING-MASK COMBINATION — TEMPORARILY HIDDEN
+This local edition does not expose operations between existing masks. Projects
+saved in Create mode remain compatible. A beta-7 project saved in Combine mode
+is rejected with an explanatory message, rather than loaded with altered meaning.
+Use beta 7 to continue that combination project.
+
+SAVE AND LOAD PROJECTS
+Save project writes a local .pmp.json file containing region names, contours,
+per-region selections and strengths, global blur/inversion and open-view
+identifiers. Unfinished contours can be saved. It does not include image files,
+output masks or undo history. Open the reference image in PixInsight before Load
+project. Missing mask/target images are reported; the script does not open files
+automatically or substitute another image.
+
+Dimensions or channel-count differences prevent restoration: select the original
+reference. Different image names/paths or changed reference pixel samples require
+your confirmation. Sparse pixel samples help detect changes; they are not proof
+that images are registered or identical. No automatic scaling is performed.
+Invalid project data is rejected before replacing the current editor state.
+Project writes cannot target PixInsight installation/configuration directories.
+
+INSTALLATION NOTE
+Keep ProtectedPaths.jsh and PolyMaskProjects.jsh beside PolyMask_EN.js, together
+with icons/ and manuals/. This is still a local beta and is not published.
+
+BETA 12 — AUTOMATIC REFINEMENT
+A reduced preview is used during dragging. After release or a short pause,
+the preview refines at full resolution automatically. Pending refinement is
+postponed by a new adjustment. Large images can take longer to refine; the blue
+status describes this phase. The Update Preview button has been removed.
+
+BETA 11 — LIVE PREVIEW, CHROMINANCE NORMALIZATION AND FINAL BLUR
+Live calculations use cached reduced geometry, color maps and lightness.
+Unchanged regions are reused. Only the latest requested settings are pending.
+Full-size preview and output are still calculated at original resolution.
+Both-sides feather remains unchanged.
+
+BETA 10 — BOTH-SIDES FEATHER ONLY
+Boundary softness is always a symmetric Gaussian blur extending inside and
+outside each polygon. There is no direction selector. Zero softness keeps
+hard edges. Draft preview, full preview and output use this same rule.
+Final mask blur remains a separate optional blur of the complete output.
+An old project using inward feathering prompts for confirmation before its
+regions are converted to both-sides feathering. Review the changed boundaries.

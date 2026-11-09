@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Freehand is visible default; six color formulas available",
+    "ok": true
+  },
+  {
+    "name": "Mouse drag closes a freehand contour",
+    "ok": true
+  },
+  {
+    "name": "Freehand vertices remain editable",
+    "ok": true
+  },
+  {
+    "name": "Undo restores previous freehand geometry",
+    "ok": true
+  },
+  {
+    "name": "Dense strokes simplify to at most 64 vertices",
+    "ok": true
+  },
+  {
+    "name": "Crossing stroke is rejected without changing existing mask",
+    "ok": true
+  },
+  {
+    "name": "By-points drawing remains available",
+    "ok": true
+  },
+  {
+    "name": "Selecting color without a contour creates full-image region",
+    "ok": true
+  }
+]

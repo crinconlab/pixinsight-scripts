@@ -1,0 +1,22 @@
+{
+  "product": "PolyMask Advanced",
+  "version": "0.3.0-beta.12",
+  "minimumPixInsight": "1.9.6",
+  "entryPoint": "PolyMask_EN.js",
+  "fix": "Automatic full-resolution refinement after release; Update Preview button removed; new adjustments postpone pending refinement",
+  "validation": "9 native automatic-refinement checks passed in PixInsight 1.9.6. Beta11 baseline reports retained separately.",
+  "colorFormulaStatus": "Original hue formulas retained; Chrominance has bounded normalization, Lightness unchanged",
+  "drawing": "Freehand by default; point-by-point optional",
+  "distribution": "GitHub development beta; unsigned; not in automatic updates",
+  "layout": "Left sidebar with Shape/Selection/Output; two previews on right",
+  "lightness": "Long coarse sliders with additional ±1 L* fine sliders, 0.1 L* steps",
+  "regions": "Named regions, active labels, purple active contour, cyan inactive contours; border click selects in Freehand mode",
+  "workflows": [
+    "Create a mask"
+  ],
+  "projects": "JSON schema 1, .pmp.json; reference validation; no full image files included",
+  "previewScope": "Active-region preview never limits final output",
+  "combination": "Hidden from UI and disabled in pipeline; engine retained for future development",
+  "livePreview": "Reduced while dragging; automatic full-resolution refinement after release or a short pause, even with live dragging disabled",
+  "baseline": "0.3.0-beta.11: chrominance normalization, cached live preview, symmetric feather and final blur retained"
+}

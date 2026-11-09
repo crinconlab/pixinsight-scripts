@@ -1,0 +1,91 @@
+{
+  "scenarios": [
+    {
+      "source": "Synthetic RGB",
+      "sourceWidth": 4096,
+      "sourceHeight": 3072,
+      "regions": 1,
+      "warmupMs": 938,
+      "updateMs": [
+        49,
+        142,
+        105,
+        83
+      ],
+      "coreMs": [
+        45,
+        140,
+        103,
+        80
+      ],
+      "draftWidth": 640,
+      "draftHeight": 480
+    },
+    {
+      "source": "Synthetic RGB",
+      "sourceWidth": 4096,
+      "sourceHeight": 3072,
+      "regions": 8,
+      "warmupMs": 3056,
+      "updateMs": [
+        51,
+        69,
+        65,
+        66
+      ],
+      "coreMs": [
+        49,
+        66,
+        63,
+        64
+      ],
+      "draftWidth": 640,
+      "draftHeight": 480
+    },
+    {
+      "source": "Synthetic RGB",
+      "sourceWidth": 4096,
+      "sourceHeight": 3072,
+      "regions": 32,
+      "warmupMs": 6485,
+      "updateMs": [
+        49,
+        64,
+        61,
+        62
+      ],
+      "coreMs": [
+        46,
+        61,
+        60,
+        61
+      ],
+      "draftWidth": 640,
+      "draftHeight": 480
+    },
+    {
+      "source": "Real astronomical sample",
+      "sourceWidth": 1500,
+      "sourceHeight": 1500,
+      "regions": 8,
+      "warmupMs": 2128,
+      "updateMs": [
+        47,
+        66,
+        93,
+        116
+      ],
+      "coreMs": [
+        45,
+        64,
+        84,
+        113
+      ],
+      "draftWidth": 640,
+      "draftHeight": 640,
+      "createdFullResolution": true,
+      "outputMaximum": 0.9675201773643494
+    }
+  ],
+  "error": null
+}

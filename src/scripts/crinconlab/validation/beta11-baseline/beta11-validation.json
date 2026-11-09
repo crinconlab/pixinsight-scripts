@@ -1,0 +1,115 @@
+[
+  {
+    "name": "Chrominance normalization keeps zero and does not boost numerical neutral/very weak samples",
+    "passed": true
+  },
+  {
+    "name": "Low saturation chrominance becomes usable and keeps excluded pixels black",
+    "passed": true
+  },
+  {
+    "name": "Color Red: zero support preserved, bounded normalized output",
+    "passed": true
+  },
+  {
+    "name": "Color Green: zero support preserved, bounded normalized output",
+    "passed": true
+  },
+  {
+    "name": "Color Blue: zero support preserved, bounded normalized output",
+    "passed": true
+  },
+  {
+    "name": "Color Cyan: zero support preserved, bounded normalized output",
+    "passed": true
+  },
+  {
+    "name": "Color Magenta: zero support preserved, bounded normalized output",
+    "passed": true
+  },
+  {
+    "name": "Color Yellow: zero support preserved, bounded normalized output",
+    "passed": true
+  },
+  {
+    "name": "Lightness color weighting is unchanged",
+    "passed": true
+  },
+  {
+    "name": "Cold preparation reports progress; warm updates do not repeat it",
+    "passed": true
+  },
+  {
+    "name": "Cached luminance, normalized color and union match full pipeline",
+    "passed": true
+  },
+  {
+    "name": "Changing luminance rebuilds only changed region and preserves union",
+    "passed": true
+  },
+  {
+    "name": "Changing active region invalidates the other-region aggregate",
+    "passed": true
+  },
+  {
+    "name": "Geometry and feather changes invalidate geometry cache",
+    "passed": true
+  },
+  {
+    "name": "Color/weight switch replaces cached color map correctly",
+    "passed": true
+  },
+  {
+    "name": "Per-region inversion remains compatible with cached filtering",
+    "passed": true
+  },
+  {
+    "name": "Final inversion follows final blur",
+    "passed": true
+  },
+  {
+    "name": "Large transition below minimum uses an unambiguous negative constant",
+    "passed": true
+  },
+  {
+    "name": "Final blur is applied once after luminance and may extend outside selection",
+    "passed": true
+  },
+  {
+    "name": "Editor retains previous display while a new live preview is pending",
+    "passed": true
+  },
+  {
+    "name": "Slider drag sends live requests before release",
+    "passed": true
+  },
+  {
+    "name": "Live-disabled controls do not calculate while dragging",
+    "passed": true
+  },
+  {
+    "name": "Project saves new version and warns on older chrominance projects",
+    "passed": true
+  },
+  {
+    "name": "Project reload clears reduced caches",
+    "passed": true
+  },
+  {
+    "name": "Full-resolution create output is fresh after live updates",
+    "passed": true
+  },
+  {
+    "name": "Integrated live timing",
+    "passed": true,
+    "requests": 50,
+    "frames": 11,
+    "framesDuringDrag": 9,
+    "maximumMs": 91,
+    "medianMs": 87
+  },
+  {
+    "name": "Live event burst stays bounded and reaches latest value in actual editor dialog",
+    "passed": true
+  }
+]
