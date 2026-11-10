@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Red Chrominance",
+    "ok": true
+  },
+  {
+    "name": "Red Lightness",
+    "ok": true
+  },
+  {
+    "name": "Green Chrominance",
+    "ok": true
+  },
+  {
+    "name": "Green Lightness",
+    "ok": true
+  },
+  {
+    "name": "Blue Chrominance",
+    "ok": true
+  },
+  {
+    "name": "Blue Lightness",
+    "ok": true
+  },
+  {
+    "name": "Cyan Chrominance",
+    "ok": true
+  },
+  {
+    "name": "Cyan Lightness",
+    "ok": true
+  },
+  {
+    "name": "Magenta Chrominance",
+    "ok": true
+  },
+  {
+    "name": "Magenta Lightness",
+    "ok": true
+  },
+  {
+    "name": "Yellow Chrominance",
+    "ok": true
+  },
+  {
+    "name": "Yellow Lightness",
+    "ok": true
+  },
+  {
+    "name": "Final inversion complements color mask after blur",
+    "ok": true
+  },
+  {
+    "name": "Color settings survive region switching",
+    "ok": true
+  },
+  {
+    "name": "Color selection rejects monochrome input",
+    "ok": true
+  }
+]

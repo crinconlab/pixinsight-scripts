@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Repeated refinement returns identical pixels",
+    "passed": true
+  },
+  {
+    "name": "Unchanged regions skip geometry, color and filtering",
+    "passed": true
+  },
+  {
+    "name": "Changed lightness matches uncached pipeline",
+    "passed": true
+  },
+  {
+    "name": "Lightness change reuses geometry/color and filters only active region",
+    "passed": true
+  },
+  {
+    "name": "Edited geometry and final inversion match uncached pipeline",
+    "passed": true
+  },
+  {
+    "name": "Only edited geometry is rebuilt",
+    "passed": true
+  },
+  {
+    "name": "Inverted region color restriction matches uncached pipeline",
+    "passed": true
+  },
+  {
+    "name": "Reordering regions preserves current combination order",
+    "passed": true
+  },
+  {
+    "name": "Retained subtraction engine agrees with uncached pipeline",
+    "passed": true
+  },
+  {
+    "name": "LRU cache remains within configured retention budget",
+    "passed": true
+  },
+  {
+    "name": "Eviction/disposal closes owned temporary images",
+    "passed": true
+  },
+  {
+    "name": "Editor full refinement succeeds",
+    "passed": true
+  },
+  {
+    "name": "Editor uses full-resolution cache",
+    "passed": true
+  },
+  {
+    "name": "Project reload disposes full-resolution cache",
+    "passed": true
+  },
+  {
+    "metric": "800x600 four-region refinement milliseconds",
+    "cold": 1878,
+    "warm": 220
+  }
+]

@@ -30,3 +30,11 @@ Ya no hay que pulsar Update Preview: ese botón se ha eliminado.
 La casilla Live preview while dragging solo controla la vista durante el arrastre;
 el refinado posterior es automático en ambos casos. Los cálculos completos en
 imágenes grandes pueden tardar; mostrar la línea azul de estado y la barra.
+
+INVERSION / INVERSIÓN — beta 13
+Shape: Invert region area invierte el área antes de seleccionar color y luminancia.
+Output: Invert final mask invierte el resultado completo después del desenfoque final.
+
+BETA 14: se reutilizan geometría, color y regiones sin cambios a resolución
+completa. El primer refinado requiere el cálculo completo; las actualizaciones
+posteriores pueden ser más rápidas. No reduce la resolución final.

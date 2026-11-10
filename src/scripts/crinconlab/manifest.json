@@ -1,53 +1,28 @@
 {
-  "collection": "Crinconlab",
-  "local": true,
+  "collection": "C_Rinconlab",
+  "version": "2026.11.10",
+  "targetPixInsight": "1.9.6",
+  "status": "frozen sources awaiting signatures",
   "scripts": [
     {
       "script": "FITS_XISF_Header_Editor_EN.js",
-      "feature": "CarlosRinconHeaderEditorEN : Crinconlab > FITS-XISF Header Editor",
-      "icon": "icons/header_editor_orange_v2.svg",
-      "sha256": "7ee0e2555602c2383dd6177b31989ef187569c3d8ecb2856718eed79439a7ae1",
-      "version": "1.0.1"
-    },
-    {
-      "script": "Mezcla_Focales.js",
-      "feature": "CrinconlabMezclaFocales : Crinconlab > Focal Length Blend",
-      "icon": "icons/Mezcla_Focales_orange_v2.svg",
-      "sha256": "f4be31391fc0dd05db2c387abaa9d907d6fad1b0bd97fe8ed6e53bc0c37330ba",
-      "version": "0.11.10"
+      "version": "1.0.1",
+      "sha256": "7ee0e2555602c2383dd6177b31989ef187569c3d8ecb2856718eed79439a7ae1"
     },
     {
       "script": "RGB_Ha_Blend.js",
-      "feature": "CrinconlabRGBHaBlend : Crinconlab > RGB Ha Blend",
-      "icon": "icons/rgb_dualband_orange_v2.svg",
-      "sha256": "676e5027bba8fe4d0c2566c78a29e6800318363f208efb934f6cb7e693989976",
-      "version": "0.15.1"
+      "version": "0.15.6",
+      "sha256": "87ad207e18563ea3f4391ced8c4f4243fcccad94bf453761ce3b5c106549696d"
+    },
+    {
+      "script": "Mezcla_Focales.js",
+      "version": "0.11.13",
+      "sha256": "011cc522a45efdc6a0c4015847e17c4e3bf636abf533dee4a0223b9e83047db2"
     },
     {
       "script": "PolyMask_EN.js",
-      "feature": "CrinconlabPolyMask : Crinconlab > PolyMask",
-      "icon": "icons/polymask_orange.svg",
-      "version": "0.3.0-beta.12",
-      "sha256": "98ed908fd3144273d4968621530a0c8256be9bad9025f635a134a95f4b1eb0d6"
+      "version": "0.3.0-beta.14",
+      "sha256": "c17e5018ae9a358b99bca6ab26ffe6fb331b755745017d866d7842bbc086904c"
     }
-  ],
-  "scope": "Active development collection; Astrometric Solution Copy temporarily archived.",
-  "reviewDate": "2026-10-31",
-  "distribution": "Development sources; no new signatures or update package issued.",
-  "resources": [
-    {
-      "file": "ProtectedPaths.jsh",
-      "sha256": "0c508d65cf27be6e2848545681c52f75aa6012c946488bcdc37ecc0e61d1dbdc"
-    },
-    {
-      "file": "PolyMaskProjects.jsh",
-      "sha256": "269ebef164361e49864c9367cf78a389e387b80fad46146bb033585fe8c7feec"
-    }
-  ],
-  "manualValidationNote": {
-    "scope": "all four script workflows",
-    "result": "repeated manually with satisfactory results",
-    "tester": "Carlos Rincon",
-    "evidence": "author confirmation"
-  }
+  ]
 }

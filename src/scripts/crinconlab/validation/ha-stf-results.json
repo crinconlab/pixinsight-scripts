@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Native synthetic linear test image generated",
+    "passed": true
+  },
+  {
+    "name": "STF exactly matches native full-resolution AutoSTF",
+    "passed": true
+  },
+  {
+    "name": "Preview resized independently from full-resolution statistics",
+    "passed": true
+  },
+  {
+    "name": "Preview pixels match native applyDisplayFunction rendering",
+    "passed": true
+  },
+  {
+    "name": "STF rendering leaves original linear pixels unchanged",
+    "passed": true
+  },
+  {
+    "name": "Native STF array assigned directly to accepted view",
+    "passed": true
+  },
+  {
+    "name": "RGB channels share linked STF",
+    "passed": true
+  },
+  {
+    "name": "Unlinked mode exactly matches native per-channel AutoSTF",
+    "passed": true
+  },
+  {
+    "name": "Linked RGB checkbox is enabled by default",
+    "passed": true
+  },
+  {
+    "name": "Checkbox refreshes display without changing source pixels",
+    "passed": true
+  }
+]

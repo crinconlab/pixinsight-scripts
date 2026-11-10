@@ -1,0 +1,6 @@
+scripts/crinconlab/FITS_XISF_Header_Editor_EN.js
+scripts/crinconlab/RGB_Ha_Blend.js
+scripts/crinconlab/Mezcla_Focales.js
+scripts/crinconlab/PolyMask_EN.js
+scripts/crinconlab/ProtectedPaths.jsh
+scripts/crinconlab/PolyMaskProjects.jsh

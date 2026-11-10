@@ -1,12 +1,14 @@
-# Focal Length Blend — 0.11.10, preliminary release
+# Focal Length Blend — 0.11.13, preliminary release
 
-MANUAL VALIDATION
-Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+VALIDATION
+Earlier workflows were manually validated by Carlos Rincon. The coverage-ramp change in 0.11.13 requires confirmation with the affected real image.
 
 Copyright © Carlos Rincón 2026
 
-## Version 0.11.10
-Inward distance-based feathering prevents clipped notches on concave polygon boundaries. Preview and final blending share this calculation. Shift + left drag remains the pan gesture.
+## Version 0.11.13
+The coverage safety ramp is now derived from Gaussian-smoothed coverage with a smoothstep mapping, avoiding diagonal ridges produced by nearest-edge distance. The output stays exactly zero outside valid coverage. Polygon feathering remains symmetric. Keep the polygon away from registration edges; a wide transition near the footprint can still be shaped by the footprint.
+
+Symmetric Gaussian feathering extends inside and outside each polygon. The created mask now matches its preview and is used without a second blur. Comparison starts after its dialog opens, restores controls after errors, and caches native MLT layers while intensity and gain change. Valid astrometric coverage is still protected. Shift + left drag remains the pan gesture.
 
 ## Before you start
 
@@ -91,7 +93,7 @@ Move vertices inward to exclude registration or interpolation edges. **A softly 
 
 **Close polygon** connects the last vertex to the first. **Undo** first reopens a closed polygon, then removes its last vertex. **Clear contour** starts over. **Back** returns to the initial setup without accepting the mask being edited. Prepared geometry and any previously selected mask are retained. The Full canvas option has been removed.
 
-Set **Transition (px)** and click **Preview transition**. The right panel displays the effective mask: white adds detail, gray blends partially, and black preserves the base. Transition uses inward Euclidean distance with a Gaussian-shaped falloff, expressed as sigma in pixels. It stays inside the polygon and valid astrometric coverage, including concave boundaries. Zero keeps hard edges. The initial 32 pixels can be excessive for small fields.
+Set **Transition (px)** and click **Preview transition**. The right panel displays the effective mask: white adds detail, gray blends partially, and black preserves the base. Transition uses a symmetric Gaussian blur across both sides of the polygon, expressed as sigma in pixels. It extends beyond the polygon but is smoothly limited to valid astrometric coverage. Keep the polygon and its transition well inside the purple footprint. Zero keeps hard edges. The initial 32 pixels can be excessive for small fields.
 
 **Create and select mask** selects a hidden temporary hard-edged mask in setup. A **Go to Prepare Comparison** notice asks you to click OK and proceeds to comparison preparation. The transition is applied once during blending, not baked into the support mask. Set it **only in the mask editor**; setup displays its value as information.
 
@@ -152,7 +154,7 @@ Disable MLT in setup to use the earlier Gaussian-band replacement. Only then do 
 
 Large images require substantial memory and processing time, even though the output dimensions do not grow. Several 32-bit images and screen bitmaps are held temporarily. Selecting larger layers requires more work.
 
-High-frequency injection can amplify noise, halos and oversharpening. Large layers can pick up the black reprojection boundary; move the mask inward, increase the inward transition or omit overly large layers if edge artifacts appear. The final lightness is limited to 0–1; inspect highlights and shadows.
+High-frequency injection can amplify noise, halos and oversharpening. Large layers can pick up the black reprojection boundary; move the mask inward, increase the symmetric transition or omit overly large layers if edge artifacts appear. The final lightness is limited to 0–1; inspect highlights and shadows.
 
 Astrometric reprojection depends on accurate input solutions. There is no subsequent StarAlignment refinement or automatic compensation for differences in PSF, filters, noise or processing artifacts. Inspect structures and alignment yourself. This script is not a replacement for those checks.
 

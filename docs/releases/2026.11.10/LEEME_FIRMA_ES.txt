@@ -1,0 +1,14 @@
+C_Rinconlab 2026.11.10 — fuentes definitivas para firmar
+
+1. Extrae este paquete en una carpeta estable del Mac con PixInsight 1.9.6.
+2. Firma los cuatro .js y las dos bibliotecas .jsh de SIGNING_FILES.txt
+   con tu identidad Carlos_Rincon_Astrophoto en la herramienta de firma
+   de código de PixInsight. Guarda cada .xsgn junto a su archivo original.
+3. No edites los archivos después de firmarlos. No incluyas tu clave privada.
+4. Devuélveme la carpeta con los seis .xsgn para verificar y empaquetar.
+5. Después se generará el ZIP de actualización y updates.xri; deberás firmar
+   también ese índice XML antes de publicar la actualización.
+
+Las fuentes están en src/scripts/crinconlab. Este ZIP aún NO es un paquete
+instalable mediante el gestor de actualizaciones. No contiene claves ni firmas.
+El copiador astrométrico queda fuera; se conserva tu copia local anterior.

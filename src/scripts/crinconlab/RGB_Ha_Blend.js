@@ -1,30 +1,31 @@
 // Copyright © Carlos Rincón 2026
-// Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+// Local test build: native regression checks passed; manual validation of this revision is pending.
 #engine v8
 #include "ProtectedPaths.jsh"
 #include <pjsr/StdIcon.jsh>
 #include <pjsr/StdButton.jsh>
+#include <pjsr/StdCursor.jsh>
 #include <pjsr/PropertyType.jsh>
 #include <pjsr/PropertyAttribute.jsh>
-CoreApplication.ensureMinimumVersion(1,9,5);
+CoreApplication.ensureMinimumVersion(1,9,6);
 #define SETTINGS_MODULE "Crinconlab/RGBHaBlend"
 #define USE_SOLVER_LIBRARY
 #include <../src/scripts/ImageSolver/ImageSolver.js>
 #include <pjsr/astrometry/ImageReprojection.js>
 #feature-id CrinconlabRGBHaBlend : Crinconlab > RGB Ha Blend
 #feature-icon icons/rgb_dualband_orange_v2.svg
-#feature-info RGB + Dual Band composition, Image Solver and SPCC. Version 0.15.1. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+#feature-info RGB + Dual Band composition, Image Solver and SPCC. Version 0.15.6. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026. Local test build: native regression checks passed; manual validation of this revision is pending.
 
 
 var RD_HELP_TEXT=[
-   "RGB HA BLEND \u2014 VERSION 0.15.1",
+   "RGB HA BLEND \u2014 VERSION 0.15.6",
    "Copyright \u00a9 Carlos Rinc\u00f3n 2026",
    "",
    "MANUAL VALIDATION",
-   "Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.",
+   "Local test build: native regression checks passed; manual validation of this revision is pending.",
    "",
    "INPUT PREPARATION",
-   "Both images must be linear, gradient-corrected and color-calibrated. ML Denoise is optional. RGB must have three channels. Dual Band may be RGB or monochrome. A display STF is allowed. Original inputs are never edited.",
+   "Both images must be linear, gradient-corrected and color-calibrated. RGB must have three channels. Dual Band may be RGB or monochrome. A display STF is allowed. Original inputs are never edited.",
    "",
    "REGISTRATION AND AUTOMATIC CROP",
    "RGB defines the pixel grid. Align using stars (default) uses native StarAlignment with a geometric registration mask. The largest axis-aligned rectangle fully inside that mask is retained, with a two-pixel interpolation guard if borders were removed. Both copies receive exactly the same crop. The mask is geometric: real dark pixels are not treated as missing coverage. Existing padding already present inside an input is not detected. Inputs need enough stars and overlapping field; different scales/rotations can be handled within StarAlignment's matching limits. If registration fails, review your data rather than accepting an unregistered blend.",
@@ -35,7 +36,7 @@ var RD_HELP_TEXT=[
    "RGB's solution is reused; if absent, Image Solver opens on a temporary RGB copy. An unsolved starless RGB cannot be solved: provide a valid solution first. The script never blindly copies an unregistered Dual Band solution onto RGB. The crop shifts the astrometric reference pixel and all image control points, preserves spline-generation parameters, regenerates the native solution and checks sky coordinates at three points. The final SPCC-calibrated image receives the cropped RGB solution. Registration/crop are cached during intensity changes and recreated after Back.",
    "",
    "WORKFLOW",
-   "Select images and registration mode, name the result, review Configure SPCC, then Open preview. Preparation requirements remain visible without a confirmation checkbox. Click Update preview to register, crop, blend and calibrate. Both panels show the same cropped field. Adjust intensity from 1 to 5, initially 3, and Update preview again. Same STF remains off by default. Accept result retains the reviewed calibrated image without rerunning processing; save it yourself. Back returns to setup; Cancel discards owned temporary images. Failed updates retain the previous valid calibrated result. Unchanged originals remain open.",
+   "Select images and registration mode, name the result, review Configure SPCC, then Open preview. Preparation requirements remain visible without a confirmation checkbox. The first registered, cropped and SPCC-calibrated preview is computed automatically when the preview screen opens. Only the calibrated result is shown, with native AutoSTF. Linked RGB channels starts enabled; disable it to stretch channels independently without rerunning SPCC. Adjust intensity from 1 to 5, initially 3, and click Update preview to recalibrate. Accept result retains the reviewed calibrated image without rerunning processing; save it yourself. Back returns to setup; Cancel discards owned temporary images. Failed updates retain the previous valid calibrated result. Unchanged originals remain open.",
    "",
    "BLEND",
    "R = RGB[0] + k * DualBand[0]",
@@ -44,13 +45,13 @@ var RD_HELP_TEXT=[
    "The red channel is used for color Dual Band, or the single channel for mono. k ranges from 1 to 5, including intermediate values. No continuum subtraction or input brightness normalization is performed. Floating-point PixelMath output is not clipped or rescaled. SPCC may change all channels. Standard RGB SPCC settings do not guarantee rigorously photometric colors after adding narrowband signal.",
    "",
    "SPCC",
-   "PixInsight 1.9.5 or later and its bundled ImageSolver are required, with configured GaiaDR3SP data for SPCC. Configure the RGB filter responses, QE, white reference, limiting magnitude and background neutralization. Save as defaults preserves the exposed settings; background reference views are session-dependent. Preview suppresses graph/star-map/text outputs. Real SPCC depends on your installed catalog and equipment configuration.",
+   "PixInsight 1.9.6 or later and its bundled ImageSolver are required, with configured GaiaDR3SP data for SPCC. Configure the RGB filter responses, QE, white reference, limiting magnitude and background neutralization. Saved user FilterManager curves are read before the configured default or factory database. Refresh filters reloads saved custom combinations without resetting current settings. Save as defaults preserves the exposed settings; background reference views are session-dependent. The background selector includes previews and retains their qualified parent-image identifiers. Preview suppresses graph/star-map/text outputs. Real SPCC depends on your installed catalog and equipment configuration.",
    "",
    "STATUS AND CONSOLE",
    "Blue text describes the task. The bar gives processing-stage percentages, not time estimates, and may remain fixed during native operations. Input controls are disabled during updates. The script does not explicitly open the process console and hides it at stage boundaries; native processes may still bring it forward. Technical messages remain available for troubleshooting.",
    "",
    "INSTALLATION",
-   "Replace the complete Crinconlab folder, keeping icons/. Update Script > Feature Scripts and launch RGB Ha Blend. Help works before selecting images; Save manual .txt exports these instructions.",
+   "When updating an existing collection, replace RGB_Ha_Blend.js only and retain the other scripts and icons. For a standalone installation keep ProtectedPaths.jsh and icons/ beside this script. Update Script > Feature Scripts and launch RGB Ha Blend. Help works before selecting images; Save manual .txt exports these instructions.",
    "",
    "VALIDATION LIMITS",
    "Native tests use synthetic stars, real registration masks and astrometric coordinate comparisons after cropping. Automated calibration tests inject a calibration callback: validate a complete run with your installed SPCC catalog and real astrophotography data.",
@@ -60,7 +61,7 @@ class RD_HelpDialog extends Dialog
 {
 constructor()
 {
-   super();var self=this;this.windowTitle="Help and instructions · RGB Ha Blend · v0.15.1";
+   super();var self=this;this.windowTitle="Help and instructions · RGB Ha Blend · v0.15.6";
    this.manual=new TextBox(this);this.manual.readOnly=true;this.manual.text=RD_HELP_TEXT;
    this.manual.setScaledMinSize(700,460);
    this.exportButton=new PushButton(this);this.exportButton.text="Save manual .txt...";
@@ -187,7 +188,6 @@ function RD_previewUpdate(config,state,value,services)
    {
       var prepared=RD_prepareInputs(config,services,progress);if(!prepared)return false;
       state.reference=prepared.reference;state.dual=prepared.dual;state.crop=prepared.crop;
-      state.referenceSTF=RD_linkedSTF(state.reference.mainView.image);
    }
    var candidate=null;
    try
@@ -343,34 +343,32 @@ function RD_prepareInputs(config,services,progress)
    finally{if(!reference || !reference.hasAstrometricSolution)owned.forEach(RD_closeOwned);}
 }
 
-function RD_linkedSTF(image)
+function RD_linkedSTF(image,linked)
 {
-   var sample=RD_fullImageCopy(image),median=0,mad=0;
+   // Native AutoSTF with full-resolution statistics, before preview resampling.
+   // Range clipping matches PixInsight's view statistics: exclude 0 and 1.
+   var sample=RD_fullImageCopy(image);
    try
    {
-      var scale=Math.min(1,700/Math.max(sample.width,sample.height));if(scale<1)sample.resample(scale);
-      for(var c=0;c<3;++c){sample.selectedChannel=c;median+=sample.median()/3;mad+=sample.MAD()/3;}
+      sample.rangeClipLow=0;sample.rangeClipHigh=1;sample.rangeClippingEnabled=true;
+      var channels=sample.numberOfNominalChannels,center=new Vector(channels),sigma=new Vector(channels);
+      for(var c=0;c<channels;++c){sample.selectedChannel=c;var m=sample.median();center.at(c,m);sigma.at(c,1.4826*sample.MAD(m));}
+      sample.resetSelections();
+      return sample.computeAutoStretch(center,sigma,-2.8,0.25,linked!==false);
    }
    finally{sample.free();}
-   var shadows=Math.max(0,Math.min(0.99,median-2.8*1.4826*mad));
-   var x=Math.max(1e-6,Math.min(0.999999,(median-shadows)/(1-shadows))),target=0.25;
-   var m=(target-1)*x/((2*target-1)*x-target);m=Math.max(1e-6,Math.min(0.999999,m));
-   return {shadows:shadows,midtones:m};
 }
 function RD_displayBitmap(view,stretch)
 {
-   var image=RD_fullImageCopy(view.image),display=null;
+   var image=RD_fullImageCopy(view.image);
    try
    {
       var scale=Math.min(1,900/Math.max(image.width,image.height));if(scale<1)image.resample(scale);
-      display=new ImageWindow(image.width,image.height,3,32,true,true,RD_uniqueId("RD_Display"));
-      display.mainView.beginProcess();try{display.mainView.image.assign(image);}finally{display.mainView.endProcess();}
-      var h=new HistogramTransformation;
-      h.H=[[0,0.5,1,0,1],[0,0.5,1,0,1],[0,0.5,1,0,1],[stretch.shadows,stretch.midtones,1,0,1],[0,0.5,1,0,1]];
-      if(!h.executeOn(display.mainView))throw new Error("Could not prepare the display.");
-      return display.mainView.image.render();
+      // Use the native STF representation directly, not a custom HT conversion.
+      image.applyDisplayFunction(stretch);
+      return image.render();
    }
-   finally{image.free();RD_closeOwned(display);}
+   finally{image.free();}
 }
 function RD_acceptPreview(config,state,name,value)
 {
@@ -410,8 +408,8 @@ class RD_PreviewDialog extends Dialog
 {
 constructor(config,services)
 {
-   super();var self=this;this.busy=false;this.onClose=function(){return !self.busy;};this.config=config;this.services=services;this.state={reference:null,result:null,accepted:false};
-   this.windowTitle="SPCC-calibrated preview · v0.15.1";
+   super();var self=this;this.busy=false;this.cursor=new Cursor(StdCursor_Arrow);this.onClose=function(){return !self.busy;};this.config=config;this.services=services;this.state={reference:null,result:null,accepted:false};
+   this.windowTitle="SPCC-calibrated preview · v0.15.6";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function pane()
    {
@@ -429,25 +427,25 @@ constructor(config,services)
          }finally{g.end();}
       };return c;
    }
-   this.originalPane=pane();this.resultPane=pane();
-   var columns=new HorizontalSizer;columns.spacing=8;
-   var left=new VerticalSizer;left.add(label("9. Compare · RGB common field"));left.add(this.originalPane,100);
-   var right=new VerticalSizer;right.add(label("SPCC-calibrated result"));right.add(this.resultPane,100);columns.add(left,100);columns.add(right,100);
+   this.resultPane=pane();this.resultPane.setScaledMinSize(620,420);
+   var columns=new VerticalSizer;columns.spacing=6;
+   columns.add(label("9. SPCC-calibrated result · Native AutoSTF"));columns.add(this.resultPane,100);
    this.slider=new Slider(this);this.slider.setRange(100,500);this.slider.value=Math.round(config.intensity*100);
    this.factorEdit=new Edit(this);this.factorEdit.text=String(config.intensity);this.factorEdit.setScaledFixedWidth(75);
    this.slider.onValueUpdated=function(value){self.factorEdit.text=(value/100).toFixed(2);self.updateFreshness();};
    this.factorEdit.onEditCompleted=function(){try{var v=RD_intensity(self.factorEdit.text);self.slider.value=Math.round(v*100);self.updateFreshness();}catch(e){self.status.text=String(e);self.acceptButton.enabled=false;}};
    var factorRow=new HorizontalSizer;factorRow.spacing=8;factorRow.add(label("7. Adjust Dual Band intensity (1–5):"));factorRow.add(this.slider,100);factorRow.add(this.factorEdit);
-   this.sharedSTF=new CheckBox(this);this.sharedSTF.text="Same STF for color comparison";this.sharedSTF.checked=false;
-   this.sharedSTF.onCheck=function(){try{self.refreshBitmaps();}catch(e){self.status.text=String(e);}};
-   this.status=label("Click Update preview to register, crop and calibrate the blend.");
+   this.linkedRGB=new CheckBox(this);this.linkedRGB.text="Linked RGB channels";this.linkedRGB.checked=true;
+   this.linkedRGB.toolTip="Linked: preserve the SPCC color balance in the screen stretch. Unlinked: stretch each channel independently. Display only; no SPCC rerun or pixel changes.";
+   this.linkedRGB.onCheck=function(){if(!self.busy && self.state.result){self.setProcessing(true);try{self.refreshBitmaps();}catch(e){self.status.text="Error: "+String(e);}finally{self.setProcessing(false);}}};
+   this.status=label("Preparing the initial calibrated preview…");
    this.status.styleSheet="QLabel { color: #1670d2; font-weight: bold; }";this.progressBar=new RD_Progress(this);
    this.outputName=new Edit(this);this.outputName.text=config.id;
    var nameRow=new HorizontalSizer;nameRow.spacing=8;nameRow.add(label("10. Review the result name:"));nameRow.add(this.outputName,100);
    this.updateButton=new PushButton(this);this.updateButton.text="8. Update preview";
    this.updateButton.onClick=function()
    {
-      if(self.busy)return;self.busy=true;self.outputName.enabled=false;self.updateButton.enabled=false;self.acceptButton.enabled=false;self.cancelButton.enabled=false;self.backButton.enabled=false;self.slider.enabled=false;self.factorEdit.enabled=false;self.sharedSTF.enabled=false;
+      if(self.busy)return;self.setProcessing(true);
       try
       {
          self.progressBar.setValue(0);self.status.text="Preparing registered inputs and calibration…";CoreApplication.processEvents();
@@ -460,19 +458,22 @@ constructor(config,services)
       catch(e){self.status.text="Error: "+String(e);console.warningln(String(e));}
       finally
       {
-         console.hide();self.busy=false;self.outputName.enabled=true;self.updateButton.enabled=true;self.cancelButton.enabled=true;self.backButton.enabled=true;self.slider.enabled=true;self.factorEdit.enabled=true;self.sharedSTF.enabled=true;self.updateFreshness();
+         console.hide();self.setProcessing(false);
       }
    };
    this.acceptButton=new PushButton(this);this.acceptButton.text="11. Accept result";this.acceptButton.enabled=false;
    this.acceptButton.onClick=function()
    {
+      if(self.busy)return;var accepted=false,error=null;self.setProcessing(true);
       try
       {
-         var stf=self.sharedSTF.checked?self.state.referenceSTF:RD_linkedSTF(self.state.result.mainView.image);
+         var stf=RD_linkedSTF(self.state.result.mainView.image,self.linkedRGB.checked);
          var result=RD_acceptPreview(config,self.state,self.outputName.text.trim(),self.factorEdit.text);
-         result.mainView.stf=[[stf.midtones,stf.shadows,1,0,1],[stf.midtones,stf.shadows,1,0,1],[stf.midtones,stf.shadows,1,0,1],[0.5,0,1,0,1]];
-         self.ok();
-      }catch(e){new MessageBox(String(e),"Review result",StdIcon_Warning,StdButton_Ok).execute();}
+         result.mainView.stf=stf;accepted=true;
+      }catch(e){error=e;}
+      finally{self.setProcessing(false);}
+      if(accepted)self.ok();
+      else new MessageBox(String(error),"Review result",StdIcon_Warning,StdButton_Ok).execute();
    };
    this.returnToSetup=false;
    this.backButton=new PushButton(this);this.backButton.text="Back";
@@ -480,8 +481,23 @@ constructor(config,services)
    this.backButton.onClick=function(){self.returnToSetup=true;self.cancel();};
    this.cancelButton=new PushButton(this);this.cancelButton.text="Cancel";this.cancelButton.onClick=function(){self.returnToSetup=false;self.cancel();};
    var buttons=new HorizontalSizer;buttons.spacing=8;buttons.add(this.backButton);buttons.addStretch();buttons.add(this.acceptButton);buttons.add(this.cancelButton);
-   this.sizer=new VerticalSizer;this.sizer.margin=10;this.sizer.spacing=8;this.sizer.add(factorRow);this.sizer.add(this.updateButton);this.sizer.add(columns,100);this.sizer.add(this.sharedSTF);this.sizer.add(this.status);this.sizer.add(this.progressBar);this.sizer.add(nameRow);this.sizer.add(buttons);this.sizer.add(label("STF is for display only. SPCC runs at full resolution. Copyright © Carlos Rincón 2026"));
+   this.sizer=new VerticalSizer;this.sizer.margin=10;this.sizer.spacing=8;this.sizer.add(factorRow);this.sizer.add(this.updateButton);this.sizer.add(columns,100);this.sizer.add(this.linkedRGB);this.sizer.add(this.status);this.sizer.add(this.progressBar);this.sizer.add(nameRow);this.sizer.add(buttons);this.sizer.add(label("STF is for display only. SPCC runs at full resolution. Copyright © Carlos Rincón 2026"));
+   this.setScaledMinSize(740,620);
+   this.initialPreviewStarted=false;
+   this.initialPreviewTimer=new Timer(0.05,false,this);
+   this.initialPreviewTimer.onTimeout=function(){if(!self.busy && !self.state.accepted)self.updateButton.onClick();};
+   this.onShow=function(){if(!self.initialPreviewStarted){self.initialPreviewStarted=true;self.initialPreviewTimer.start();}};
+   this.onHide=function(){self.initialPreviewTimer.stop();self.cursor=new Cursor(StdCursor_Arrow);};
    this.adjustToContents();
+}
+setProcessing(active)
+{
+   this.busy=active;this.cursor=new Cursor(active?StdCursor_Wait:StdCursor_Arrow);
+   var self=this;
+   [this.outputName,this.updateButton,this.cancelButton,this.backButton,this.slider,this.factorEdit,this.linkedRGB].forEach(function(c){c.enabled=!active;});
+   if(active)this.acceptButton.enabled=false;else this.updateFreshness();
+   // Flush paint/cursor changes without dispatching new user input mid-transition.
+   CoreApplication.processEvents(true);
 }
 updateFreshness()
 {
@@ -492,10 +508,9 @@ updateFreshness()
 refreshBitmaps()
 {
    if(!this.state.reference || !this.state.result)return;
-   var shared=this.state.referenceSTF,stretch=this.sharedSTF.checked?shared:RD_linkedSTF(this.state.result.mainView.image);
-   this.originalPane.bitmap=RD_displayBitmap(this.state.reference.mainView,shared);
+   var stretch=RD_linkedSTF(this.state.result.mainView.image,this.linkedRGB.checked);
    this.resultPane.bitmap=RD_displayBitmap(this.state.result.mainView,stretch);
-   this.originalPane.update();this.resultPane.update();
+   this.resultPane.update();
 }
 }
 
@@ -529,29 +544,58 @@ function RD_loadDefaults(key)
    catch(e){console.warningln("Could not load the saved SPCC settings; using the initial settings. "+String(e));return new SpectrophotometricColorCalibration;}
    return process;
 }
-function RD_spectralLibrary()
+// Follow the same precedence as PCL FilterManager::Initialize. Read only:
+// current-instance configuration -> configured default -> factory library.
+function RD_spectralLibrary(options)
 {
-   function read(file,tag)
+   options=options||{};
+   var config=options.configDir===undefined?CoreApplication.configDirPath:options.configDir;
+   var instance=options.instance===undefined?CoreApplication.instance:options.instance;
+   var library=options.libraryDir===undefined?CoreApplication.libraryDirPath:options.libraryDir;
+   function read(file,tag,key,override)
    {
-      var doc=new XMLDocument;doc.parseFromFile(CoreApplication.libraryDirPath+"/"+file);
-      return doc.rootElement.childElementsByName(tag).map(function(e){return {name:e.attributeValue("name"),data:e.attributeValue("data"),channel:e.attributeValue("channel")};});
+      var suffix=String(instance);while(suffix.length<3)suffix="0"+suffix;var path=config+"/"+file+"-"+suffix+"-pxi.xspd";
+      if(!File.exists(path)){
+         var configured=override;
+         if(configured===undefined){configured=Settings.readGlobal(key,DataType.String);if(!Settings.lastReadOK)configured="";}
+         path=configured||library+"/"+file+".xspd";
+      }
+      if(!File.exists(path))throw new Error("Spectral database not found: "+path);
+      var doc=new XMLDocument;doc.parseFromFile(path);
+      return {path:path,entries:doc.rootElement.childElementsByName(tag).map(function(e){return {name:e.attributeValue("name"),data:e.attributeValue("data"),channel:e.attributeValue("channel")||""};})};
    }
-   return {filters:read("filters.xspd","Filter"),whites:read("white-references.xspd","WhiteRef")};
+   var filters=read("filters","Filter","Application/FiltersDatabaseFilePath",options.filtersDefault);
+   var whites=read("white-references","WhiteRef","Application/WhiteReferencesDatabaseFilePath",options.whitesDefault);
+   return {filters:filters.entries,whites:whites.entries,filterPath:filters.path,whitePath:whites.path};
+}
+function RD_spectralChoices(library,key)
+{
+   if(key==="white")return library.whites;
+   if(key==="qe")return library.filters.filter(function(e){return e.channel==="Q";});
+   var code=key[0].toUpperCase();
+   return library.filters.filter(function(e){return !e.channel||e.channel===code||e.channel==="PAN"||e.channel==="L";});
+}
+function RD_populateSpectralSelector(combo,entries,current)
+{
+   entries=entries.slice().sort(function(a,b){return a.name.localeCompare(b.name);});
+   var name=String(current.name||"").toLowerCase();
+   // A configured response is retained if the database no longer contains it.
+   if(!entries.some(function(e){return e.name.toLowerCase()===name;}))entries.unshift(current);
+   combo.clear();
+   for(var i=0;i<entries.length;++i){combo.addItem(entries[i].name);if(entries[i].name.toLowerCase()===name)combo.currentItem=i;}
+   return entries;
 }
 class RD_SPCCDialog extends Dialog
 {
-constructor(process)
+constructor(process,libraryOptions)
 {
    super();var self=this;this.windowTitle="Configure SPCC";this.options={};
-   var library=RD_spectralLibrary();
+   var library=RD_spectralLibrary(libraryOptions);
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function selector(title,entries,current,key)
    {
-      entries=entries.slice().sort(function(a,b){return a.name.localeCompare(b.name);});
-      // Retain a configured curve even if it is absent from the bundled library.
-      if(!entries.some(function(e){return e.name==current.name;}))entries.unshift(current);
       var combo=new ComboBox(self);
-      for(var i=0;i<entries.length;++i){combo.addItem(entries[i].name);if(entries[i].name==current.name)combo.currentItem=i;}
+      entries=RD_populateSpectralSelector(combo,entries,current);
       self.options[key]={combo:combo,entries:entries};
       var row=new HorizontalSizer;row.spacing=8;row.add(label(title));row.add(combo,100);return row;
    }
@@ -559,17 +603,18 @@ constructor(process)
    for(var channel of ["red","green","blue"])
    {
       var code=channel[0].toUpperCase(),title=channel=="red"?"Red filter:":channel=="green"?"Green filter:":"Blue filter:";
-      this.rows.push(selector(title,library.filters.filter(function(e){return e.channel==code || e.channel=="PAN" || e.channel=="L";}),
+      this.rows.push(selector(title,RD_spectralChoices(library,channel),
          {name:process[channel+"FilterName"],data:process[channel+"FilterTrCurve"]},channel));
    }
-   this.rows.push(selector("QE curve:",library.filters.filter(function(e){return e.channel=="Q";}),{name:process.deviceQECurveName,data:process.deviceQECurve},"qe"));
+   this.rows.push(selector("QE curve:",RD_spectralChoices(library,"qe"),{name:process.deviceQECurveName,data:process.deviceQECurve},"qe"));
    this.rows.push(selector("White reference:",library.whites,{name:process.whiteReferenceName,data:process.whiteReferenceSpectrum},"white"));
    this.autoMagnitude=new CheckBox(this);this.autoMagnitude.text="Automatic limiting magnitude";this.autoMagnitude.checked=process.autoLimitMagnitude;
    this.magnitude=new Edit(this);this.magnitude.text=String(process.limitMagnitude);this.magnitude.enabled=!this.autoMagnitude.checked;
    this.autoMagnitude.onCheck=function(checked){self.magnitude.enabled=!checked;};
    var magrow=new HorizontalSizer;magrow.spacing=8;magrow.add(this.autoMagnitude);magrow.add(label("Manual magnitude:"));magrow.add(this.magnitude,100);
    this.neutralize=new CheckBox(this);this.neutralize.text="Neutralize background";this.neutralize.checked=process.neutralizeBackground;
-   this.background=new ViewList(this);this.background.getMainViews();
+   this.background=new ViewList(this);this.background.getAll();
+   this.background.toolTip="Select a main image or a sky-background preview. Preview identifiers retain their parent image, for example RGB->Background.";
    if(process.backgroundReferenceViewId){var view=View.viewById(process.backgroundReferenceViewId);if(view && !view.isNull)this.background.currentView=view;}
    var bgrow=new HorizontalSizer;bgrow.spacing=8;bgrow.add(label("Background reference (empty = target image):"));bgrow.add(this.background,100);
    this.graphs=new CheckBox(this);this.graphs.text="Generate graphs";this.graphs.checked=process.generateGraphs;
@@ -589,10 +634,20 @@ constructor(process)
       }
       catch(e){new MessageBox(String(e),"Could not save settings",StdIcon_Error,StdButton_Ok).execute();}
    };
+   this.refreshSpectra=function()
+   {
+      var updated=RD_spectralLibrary(libraryOptions),selected={};
+      Object.keys(self.options).forEach(function(key){var option=self.options[key];selected[key]=option.entries[option.combo.currentItem];});
+      Object.keys(self.options).forEach(function(key){var option=self.options[key];option.entries=RD_populateSpectralSelector(option.combo,RD_spectralChoices(updated,key),selected[key]);});
+      library=updated;return updated;
+   };
+   this.refreshFilters=new PushButton(this);this.refreshFilters.text="Refresh filters";
+   this.refreshFilters.toolTip="Reload saved FilterManager filters, filter/sensor combinations, QE curves and white references. Current selections and other SPCC settings are preserved. Save the changes in FilterManager first.";
+   this.refreshFilters.onClick=function(){try{self.refreshSpectra();}catch(e){new MessageBox(String(e),"Could not refresh filters",StdIcon_Error,StdButton_Ok).execute();}};
    var help=new PushButton(this);help.text="Help";help.onClick=RD_showHelp;
-   var buttons=new HorizontalSizer;buttons.spacing=8;buttons.add(help);buttons.add(this.saveDefaults);buttons.addStretch();buttons.add(this.okButton);buttons.add(cancel);
+   var buttons=new HorizontalSizer;buttons.spacing=8;buttons.add(help);buttons.add(this.refreshFilters);buttons.add(this.saveDefaults);buttons.addStretch();buttons.add(this.okButton);buttons.add(cancel);
    this.sizer=new VerticalSizer;this.sizer.margin=12;this.sizer.spacing=8;
-   this.sizer.add(label("SPCC settings. Use them now or save them as defaults for future runs."));
+   this.sizer.add(label("SPCC settings. Saved FilterManager filters and sensor combinations are included. Use Refresh filters after saving new responses."));
    this.rows.forEach(function(row){self.sizer.add(row);});
    this.sizer.add(label("For color sensor filters that already include sensor sensitivity, use Ideal QE curve."));
    this.sizer.add(magrow);this.sizer.add(this.neutralize);this.sizer.add(bgrow);this.sizer.add(this.graphs);
@@ -618,7 +673,7 @@ applyTo(process)
    process.autoLimitMagnitude=this.autoMagnitude.checked;
    if(!process.autoLimitMagnitude)process.limitMagnitude=Number(this.magnitude.text.trim());
    process.neutralizeBackground=this.neutralize.checked;
-   var bg=this.background.currentView;process.backgroundReferenceViewId=bg && !bg.isNull?bg.id:"";
+   var bg=this.background.currentView;process.backgroundReferenceViewId=bg && !bg.isNull?bg.fullId:"";
    process.generateGraphs=this.graphs.checked;process.applyCalibration=true;
    // This is the requested broadband/hybrid RGB workflow, not an SHO/HOO calibration.
    process.narrowbandMode=false;
@@ -629,7 +684,7 @@ class RD_Dialog extends Dialog
 constructor()
 {
    super();var self=this;
-   this.windowTitle="RGB Ha Blend · v0.15.1";
+   this.windowTitle="RGB Ha Blend · v0.15.6";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function choose(list)
    {
@@ -663,7 +718,7 @@ constructor()
       try{var dialog=new RD_SPCCDialog(self.spccProcess);if(dialog.execute()){dialog.applyTo(self.spccProcess);self.updateSPCCSummary();}}
       catch(e){new MessageBox(String(e),"SPCC settings",StdIcon_Error,StdButton_Ok).execute();}
    };
-   this.preparation=label("1. Before starting: RGB and Dual Band must be linear, gradient-corrected and color-calibrated. ML Denoise is optional. Registration and common-field cropping are performed on copies.");
+   this.preparation=label("1. Before starting: RGB and Dual Band must be linear, gradient-corrected and color-calibrated. Registration and common-field cropping are performed on copies.");
    this.registration=new ComboBox(this);this.registration.addItem("Align using stars");this.registration.addItem("Align using astrometry");this.registration.addItem("Images are already aligned");
    this.registration.toolTip="RGB defines the reference grid. Star registration creates a geometric coverage mask; the largest valid common rectangle is cropped from both copies. Coordinates mode requires existing Dual Band astrometry. Already registered trusts your confirmation and retains the full field, including any pre-existing padding.";
    this.okButton=new PushButton(this);this.okButton.text="6. Open preview";
@@ -712,7 +767,7 @@ var RD_STARTUP_TEXT=[
    "",
    "Color Dual Band image: the script adds the Ha signal from this image to the RGB image.",
    "",
-   "Both images must be linear, gradient-corrected and color-calibrated. Gentle noise reduction is recommended. A display STF is allowed.",
+   "Both images must be linear, gradient-corrected and color-calibrated. A display STF is allowed.",
    "",
    "Choose the appropriate alignment method. Starless images require valid astrometric solutions.",
    "",
@@ -727,12 +782,13 @@ function RD_startupNotice(showMessage)
    if(showMessage)return showMessage(RD_STARTUP_TEXT)===StdButton_Ok;
    return new MessageBox(RD_STARTUP_TEXT,"RGB + Ha Blend — Before you start",StdIcon_Information,StdButton_Ok,StdButton_Cancel).execute()===StdButton_Ok;
 }
+function RD_resultMessage(name){return "Image created successfully: "+name+"\nSave the result to keep it on disk.";}
 #ifndef RGB_DUAL_LIBRARY
 try
 {
    console.hide();var result=null;
    if(RD_startupNotice())result=RD_workflow(new RD_Dialog);
-   if(result)new MessageBox("Calibrated result: "+result.mainView.id+"\nThe image you just reviewed is retained without rerunning SPCC. Save it when you want to keep it.","RGB Ha Blend",StdIcon_Information,StdButton_Ok).execute();
+   if(result)new MessageBox(RD_resultMessage(result.mainView.id),"RGB Ha Blend",StdIcon_Information,StdButton_Ok).execute();
 }
 catch(e){console.criticalln(String(e));new MessageBox(String(e),"RGB Ha Blend: error",StdIcon_Error,StdButton_Ok).execute();}
 #endif

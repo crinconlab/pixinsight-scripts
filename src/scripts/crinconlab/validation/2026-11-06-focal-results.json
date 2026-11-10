@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Created mask has feather outside and inside the polygon",
+    "passed": true
+  },
+  {
+    "name": "Hard support retained separately for fitting",
+    "passed": true
+  },
+  {
+    "name": "Created mask equals preview calculation on concave polygon",
+    "passed": true
+  },
+  {
+    "name": "Invalid astrometric coverage remains black",
+    "passed": true
+  },
+  {
+    "name": "Final blend uses created feathered mask without a second blur",
+    "passed": true
+  },
+  {
+    "name": "Intensity and gain reuse exact cached MLT layers",
+    "passed": true
+  },
+  {
+    "name": "Changing layers rebuilds the MLT cache",
+    "passed": true
+  },
+  {
+    "name": "Cached and freshly computed MLT blending produce identical pixels",
+    "passed": true
+  },
+  {
+    "name": "Initial calculation deferred until dialog is shown",
+    "passed": true
+  },
+  {
+    "name": "Controls return to ready state after calculation",
+    "passed": true
+  },
+  {
+    "name": "Errors restore controls and retain last valid result",
+    "passed": true
+  },
+  {
+    "name": "Shown modal comparison completes initial timer and unlocks sliders",
+    "passed": true
+  }
+]

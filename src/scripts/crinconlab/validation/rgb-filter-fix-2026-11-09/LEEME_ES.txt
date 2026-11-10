@@ -1,0 +1,20 @@
+RGB HA BLEND 0.15.6 — CORRECCIÓN DE FILTROS PERSONALIZADOS
+
+Si ya tienes la colección instalada, sustituye SOLO RGB_Ha_Blend.js por el de
+esta carpeta. No reemplaces la carpeta completa de tus otros scripts.
+Mantén ProtectedPaths.jsh e icons/ junto al script.
+También puedes ejecutar esta copia desde Script > Execute Script File.
+
+La lista SPCC lee primero la base de usuario de la instancia de PixInsight,
+después la base configurada y, por último, la biblioteca original, siguiendo
+el mismo orden que FilterManager. Las combinaciones manuales guardadas se
+incluyen al abrir Configure SPCC. El botón Refresh filters vuelve a cargar
+filtros, sensores QE y referencias de blanco sin reiniciar tus otros ajustes.
+Guarda primero la nueva combinación en FilterManager.
+
+Se han comprobado tus tres combinaciones Sony Color Sensor / Optolong L-Pro.
+La base de filtros se lee; este script no la modifica.
+La corrección ha pasado 11 comprobaciones nativas en PixInsight 1.9.6,
+incluida la conservación de la vista previa de fondo de cielo.
+
+Paquete local sin firma ni publicación. El método de mezcla y SPCC no cambia.

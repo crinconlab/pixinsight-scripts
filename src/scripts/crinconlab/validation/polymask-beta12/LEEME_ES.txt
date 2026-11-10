@@ -1,0 +1,23 @@
+POLYMASK 0.3.0-beta.12 — INSTALACIÓN LOCAL
+
+Descomprime la carpeta Crinconlab completa y ejecuta PolyMask_EN.js desde
+Script > Execute Script File. Comprueba beta.12 en el título.
+
+CAMBIO DE ESTA VERSIÓN
+Se elimina el botón Update Preview. Mientras arrastras aparece una vista rápida
+reducida. Al soltar o tras una pequeña pausa se refina automáticamente a
+resolución completa, evitando los bloques de la vista rápida ampliada.
+Si comienzas otro ajuste antes de que arranque el refinado, se pospone y se
+utilizan los valores nuevos. La imagen anterior permanece visible mientras se
+calcula la siguiente. Un cálculo completo ya iniciado puede tardar unos segundos
+en imágenes grandes; la línea azul y la barra indican esa fase.
+
+La casilla Live preview while dragging activa/desactiva únicamente la vista
+rápida durante el arrastre. Aunque esté desmarcada, el refinado al terminar el
+ajuste sigue siendo automático. Create Mask conserva el tamaño original y todos
+los parámetros actuales; una previsualización aislada no limita la salida.
+
+Se mantienen la crominancia normalizada, el feather simétrico y el desenfoque
+final de beta 11. El manual y Help explican los grises en zonas próximas excluidas.
+
+Esta beta no está firmada ni publicada. Se conserva la beta anterior por separado.

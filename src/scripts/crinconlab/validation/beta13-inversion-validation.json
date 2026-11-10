@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Region inversion belongs to Shape",
+    "passed": true
+  },
+  {
+    "name": "Final inversion belongs only to Output",
+    "passed": true
+  },
+  {
+    "name": "Region inversion is not hidden in Advanced",
+    "passed": true
+  },
+  {
+    "name": "Color selection stays within inverted polygon area",
+    "passed": true
+  },
+  {
+    "name": "Live preview agrees with native inversion and color restriction",
+    "passed": true
+  },
+  {
+    "name": "Final inversion complements complete color-filtered result",
+    "passed": true
+  },
+  {
+    "name": "Project records current version",
+    "passed": true
+  }
+]

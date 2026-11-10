@@ -1,11 +1,11 @@
-RGB HA BLEND — VERSION 0.15.1
+RGB HA BLEND — VERSION 0.15.6
 Copyright © Carlos Rincón 2026
 
 MANUAL VALIDATION
-Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+Local test build: native regression checks passed; manual validation of this revision is pending.
 
 INPUT PREPARATION
-Both images must be linear, gradient-corrected and color-calibrated. ML Denoise is optional. RGB must have three channels. Dual Band may be RGB or monochrome. A display STF is allowed. Original inputs are never edited.
+Both images must be linear, gradient-corrected and color-calibrated. RGB must have three channels. Dual Band may be RGB or monochrome. A display STF is allowed. Original inputs are never edited.
 
 REGISTRATION AND AUTOMATIC CROP
 RGB defines the pixel grid. Align using stars (default) uses native StarAlignment with a geometric registration mask. The largest axis-aligned rectangle fully inside that mask is retained, with a two-pixel interpolation guard if borders were removed. Both copies receive exactly the same crop. The mask is geometric: real dark pixels are not treated as missing coverage. Existing padding already present inside an input is not detected. Inputs need enough stars and overlapping field; different scales/rotations can be handled within StarAlignment's matching limits. If registration fails, review your data rather than accepting an unregistered blend.
@@ -16,7 +16,7 @@ ASTROMETRY
 RGB's solution is reused; if absent, Image Solver opens on a temporary RGB copy. An unsolved starless RGB cannot be solved: provide a valid solution first. The script never blindly copies an unregistered Dual Band solution onto RGB. The crop shifts the astrometric reference pixel and all image control points, preserves spline-generation parameters, regenerates the native solution and checks sky coordinates at three points. The final SPCC-calibrated image receives the cropped RGB solution. Registration/crop are cached during intensity changes and recreated after Back.
 
 WORKFLOW
-Select images and registration mode, name the result, review Configure SPCC, then Open preview. Preparation requirements remain visible without a confirmation checkbox. Click Update preview to register, crop, blend and calibrate. Both panels show the same cropped field. Adjust intensity from 1 to 5, initially 3, and Update preview again. Same STF remains off by default. Accept result retains the reviewed calibrated image without rerunning processing; save it yourself. Back returns to setup; Cancel discards owned temporary images. Failed updates retain the previous valid calibrated result. Unchanged originals remain open.
+Select images and registration mode, name the result, review Configure SPCC, then Open preview. Preparation requirements remain visible without a confirmation checkbox. The first registered, cropped and SPCC-calibrated preview is computed automatically when the preview screen opens. Only the calibrated result is shown, with native AutoSTF. Linked RGB channels starts enabled; disable it to stretch channels independently without rerunning SPCC. Adjust intensity from 1 to 5, initially 3, and click Update preview to recalibrate. Accept result retains the reviewed calibrated image without rerunning processing; save it yourself. Back returns to setup; Cancel discards owned temporary images. Failed updates retain the previous valid calibrated result. Unchanged originals remain open.
 
 BLEND
 R = RGB[0] + k * DualBand[0]
@@ -25,23 +25,13 @@ B = RGB[2]
 The red channel is used for color Dual Band, or the single channel for mono. k ranges from 1 to 5, including intermediate values. No continuum subtraction or input brightness normalization is performed. Floating-point PixelMath output is not clipped or rescaled. SPCC may change all channels. Standard RGB SPCC settings do not guarantee rigorously photometric colors after adding narrowband signal.
 
 SPCC
-PixInsight 1.9.5 or later and its bundled ImageSolver are required, with configured GaiaDR3SP data for SPCC. Configure the RGB filter responses, QE, white reference, limiting magnitude and background neutralization. Save as defaults preserves the exposed settings; background reference views are session-dependent. Preview suppresses graph/star-map/text outputs. Real SPCC depends on your installed catalog and equipment configuration.
+PixInsight 1.9.6 or later and its bundled ImageSolver are required, with configured GaiaDR3SP data for SPCC. Configure the RGB filter responses, QE, white reference, limiting magnitude and background neutralization. Saved user FilterManager curves are read before the configured default or factory database. Refresh filters reloads saved custom combinations without resetting current settings. Save as defaults preserves the exposed settings; background reference views are session-dependent. The background selector includes previews and retains their qualified parent-image identifiers. Preview suppresses graph/star-map/text outputs. Real SPCC depends on your installed catalog and equipment configuration.
 
 STATUS AND CONSOLE
 Blue text describes the task. The bar gives processing-stage percentages, not time estimates, and may remain fixed during native operations. Input controls are disabled during updates. The script does not explicitly open the process console and hides it at stage boundaries; native processes may still bring it forward. Technical messages remain available for troubleshooting.
 
 INSTALLATION
-Replace the complete Crinconlab folder, keeping icons/. Update Script > Feature Scripts and launch RGB Ha Blend. Help works before selecting images; Save manual .txt exports these instructions.
+When updating an existing collection, replace RGB_Ha_Blend.js only and retain the other scripts and icons. For a standalone installation keep ProtectedPaths.jsh and icons/ beside this script. Update Script > Feature Scripts and launch RGB Ha Blend. Help works before selecting images; Save manual .txt exports these instructions.
 
 VALIDATION LIMITS
 Native tests use synthetic stars, real registration masks and astrometric coordinate comparisons after cropping. Automated calibration tests inject a calibration callback: validate a complete run with your installed SPCC catalog and real astrophotography data.
-
-Startup notice: OK opens setup; Cancel exits without processing images.
-
-
-CPD REVIEW CANDIDATE — 29 OCTOBER 2026
-Current scope: four scripts, PolyMask excluded. See docs/validation-pixinsight-1.9.6.md in the cpd-review repository for newly executed checks and author-accepted continuity assumptions. Earlier validation notes in this manual describe earlier work, not additional 1.9.6 results.
-
-
-WRITE-PATH PROTECTION — 29 OCTOBER 2026
-Keep ProtectedPaths.jsh beside the four scripts. Header Editor 1.0.1, Focal Length Blend 0.11.9 and RGB DualBand 0.15.1 refuse writes inside the running PixInsight installation and its per-user configuration directory. Symbolic links are resolved before comparison; ambiguous Windows paths and reparse points are rejected. Existing files with multiple hard links are rejected where reported by the platform. Choose normal user folders for output. The header editor retains its stricter source-link policy. See docs/path-write-safety.md in the cpd-review repository. This guard does not change image-processing algorithms, signing or security preferences.

@@ -1,0 +1,16 @@
+POLYMASK 0.3.0-beta.12 — VALIDACIÓN LOCAL
+
+9 comprobaciones nativas satisfactorias en PixInsight 1.9.6:
+- Botón Update Preview oculto.
+- Refinado automático a resolución completa tras cambios en reposo.
+- Inicio de un nuevo arrastre cancela el refinado pendiente.
+- Vista reducida mientras se mantiene pulsado el deslizador.
+- Refinado completo automático al soltar.
+- Se conserva el último ajuste tras arrastres sucesivos.
+- El refinado sigue siendo automático con la vista durante arrastre desactivada.
+- La máscara creada coincide con la previsualización refinada.
+- Cerrar el editor detiene ambos temporizadores.
+
+Imagen de prueba RGB 960 x 640; vista rápida de lado mayor 640.
+Los informes de beta 11 se conservan como antecedentes, en validation/beta11-baseline.
+Esta beta continúa local, sin firma y sin publicación.

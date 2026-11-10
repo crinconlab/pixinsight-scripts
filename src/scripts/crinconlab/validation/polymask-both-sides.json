@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Legacy mode zero now produces both-sides feather",
+    "passed": true
+  },
+  {
+    "name": "Every mode call uses identical symmetric Gaussian feather",
+    "passed": true
+  },
+  {
+    "name": "Inversion preserves exact complement",
+    "passed": true
+  },
+  {
+    "name": "Direction selector is removed from visible interface",
+    "passed": true
+  },
+  {
+    "name": "Draft and full preview both calculate symmetric mask",
+    "passed": true
+  },
+  {
+    "name": "New project stores both-sides feather",
+    "passed": true
+  },
+  {
+    "name": "Old inward project warns about changed feathering",
+    "passed": true
+  },
+  {
+    "name": "Old inward project requires confirmation",
+    "passed": true
+  },
+  {
+    "name": "Confirmed project converts old mode to symmetric feather",
+    "passed": true
+  }
+]

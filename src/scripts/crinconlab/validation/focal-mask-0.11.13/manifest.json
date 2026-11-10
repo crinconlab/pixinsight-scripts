@@ -1,0 +1,9 @@
+{
+  "product": "Focal Length Blend",
+  "version": "0.11.13",
+  "entryPoint": "Mezcla_Focales.js",
+  "minimumPixInsight": "1.9.6",
+  "distribution": "unsigned local test build",
+  "validation": "Six targeted native checks passed in PixInsight 1.9.6; real-image confirmation pending",
+  "change": "Smooth coverage safety ramp removes nearest-edge corner creases; polygon feather stays symmetric; no change to detail-injection algorithm"
+}

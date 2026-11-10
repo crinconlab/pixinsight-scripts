@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Factory fallback is used when there is no saved user/configured database",
+    "passed": true
+  },
+  {
+    "name": "A configured external default precedes the factory library",
+    "passed": true
+  },
+  {
+    "name": "Saved instance database takes priority over factory and configured default",
+    "passed": true
+  },
+  {
+    "name": "Unassigned curves appear in all RGB lists, QE curves only in QE",
+    "passed": true
+  },
+  {
+    "name": "Dialog loads manual filter/sensor combinations",
+    "passed": true
+  },
+  {
+    "name": "Refresh discovers new filters/QE/whites and preserves other controls and selected responses",
+    "passed": true
+  },
+  {
+    "name": "Updated selected curve data are passed to SPCC",
+    "passed": true
+  },
+  {
+    "name": "Missing current curves remain selectable rather than silently reset",
+    "passed": true
+  },
+  {
+    "name": "Malformed refresh preserves the existing selectors",
+    "passed": true
+  },
+  {
+    "name": "User database contains all three real Sony sensor / L-Pro combinations",
+    "passed": true
+  },
+  {
+    "name": "Saved background preview selection remains qualified after refresh",
+    "passed": true
+  }
+]

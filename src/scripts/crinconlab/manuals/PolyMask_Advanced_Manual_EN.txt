@@ -1,4 +1,4 @@
-POLYMASK ADVANCED 0.3.0-beta.12
+POLYMASK ADVANCED 0.3.0-beta.14
 Copyright Carlos Rincón 2026
 Requires PixInsight 1.9.6. Local beta.
 
@@ -17,8 +17,10 @@ contours are rejected and the previous polygon is preserved. Drawing away from
 vertices replaces the selected polygon; Undo restores it. Drag a vertex to refine.
 By points: click to place vertices, then click the first point or Close polygon.
 Click a closed edge to insert a vertex; right click for contour actions.
-Numeric vertex coordinates and Invert this region are under Advanced region
-controls in Shape. Invert final mask remains visible below the sidebar tabs.
+Invert region area is visible in Shape and selects the area outside the polygon
+before color and lightness filtering. Numeric vertex coordinates are under
+Advanced region controls. Invert final mask appears only in Output and
+complements the entire filtered and blurred result, including excluded areas.
 Add region creates another polygon. Name the selected region using the field
 below the dropdown. The sidebar and image caption show which region is being
 edited. Purple thick outlines and [EDITING] identify the active region; other
@@ -42,10 +44,11 @@ Create Separate Masks creates one output per polygon in drawing mode only.
 COLOR MASKS
 Select Red, Green, Blue, Cyan, Magenta or Yellow. If the contour is empty,
 selecting a color automatically creates a full-image region. Existing polygons
-are retained, so the selected color remains restricted to their interior. Weight selects the author's
+are retained. Color selection is restricted to their area, or the outside area
+when Invert region area is enabled in Shape. Weight selects the author's
 E1 mode: Chrominance (CIEc, automatically normalized) or Lightness (CIEL, unchanged). Chrominance normalization preserves zero, uses the 99.5th percentile of positive sampled values, caps gain at 250 and does not boost a percentile below 0.001. It cannot distinguish genuine weak signal from noise; review the result. Color settings are kept
 independently for each polygon. Full image region creates the color mask over the
-whole working RGB image; other polygons restrict it to their interior.
+whole working RGB image; other polygons restrict it to their selected area (inside or inverted outside).
 The color mask is multiplied by polygon strength and optional L* selection.
 Formula constants and mtf arguments are preserved as supplied. E2 was declared
 but unused in those equations; Mask strength (%) controls the region's intensity.
@@ -119,3 +122,13 @@ hard edges. Draft preview, full preview and output use this same rule.
 Final mask blur remains a separate optional blur of the complete output.
 An old project using inward feathering prompts for confirmation before its
 regions are converted to both-sides feathering. Review the changed boundaries.
+
+BETA 14 — FULL-RESOLUTION REFINEMENT CACHE
+Unchanged region geometry, color selections and filtered regions are reused
+between refinements. Changing lightness reuses the polygon and color map.
+The first refinement and changed geometry still require native computation.
+Final blur, inversion and output resolution are unchanged.
+The cache retains up to 384 MiB of image samples, or one current mask when
+that mask alone is larger. This is not a limit on total application memory.
+Least-recently-used entries are discarded; project reload and editor close
+release the cache. Display rendering and overlay preparation still take time.

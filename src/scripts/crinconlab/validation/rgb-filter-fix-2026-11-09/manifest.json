@@ -1,0 +1,9 @@
+{
+  "product": "RGB Ha Blend",
+  "version": "0.15.6",
+  "minimumPixInsight": "1.9.6",
+  "entryPoint": "RGB_Ha_Blend.js",
+  "fix": "Read user/configured spectral databases with FilterManager precedence; refresh saved filters and sensor combinations while preserving selections",
+  "validation": "11 native checks passed in PixInsight 1.9.6; user filter database unchanged",
+  "distribution": "Local unsigned update, unpublished"
+}

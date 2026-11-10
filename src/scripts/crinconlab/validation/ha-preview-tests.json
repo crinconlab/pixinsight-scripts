@@ -1,0 +1,65 @@
+{
+  "calibration": "Injected callback; no real SPCC catalog used in this UI regression test",
+  "checks": [
+    {
+      "name": "Only calibrated output panel, no comparison STF control",
+      "passed": true
+    },
+    {
+      "name": "Opening dialog automatically prepares default intensity preview once",
+      "passed": true
+    },
+    {
+      "name": "Automatic preview is displayed and can be accepted",
+      "passed": true
+    },
+    {
+      "name": "Processing state is cleared after successful update",
+      "passed": true
+    },
+    {
+      "name": "Preview keeps astrometric solution",
+      "passed": true
+    },
+    {
+      "name": "Output has computable automatic STF",
+      "passed": true
+    },
+    {
+      "name": "Repeated show does not start another update",
+      "passed": true
+    },
+    {
+      "name": "Changing intensity marks result stale",
+      "passed": true
+    },
+    {
+      "name": "Manual update recalibrates new intensity",
+      "passed": true
+    },
+    {
+      "name": "Failed update keeps previous result and permits retry",
+      "passed": true
+    },
+    {
+      "name": "Processing state is cleared after calibration error",
+      "passed": true
+    },
+    {
+      "name": "Processing state is cleared after STF rendering error",
+      "passed": true
+    },
+    {
+      "name": "Original input pixels are unchanged",
+      "passed": true
+    },
+    {
+      "name": "Accept result closes with idle processing state",
+      "passed": true
+    },
+    {
+      "name": "Initial preview timer is stopped after closing",
+      "passed": true
+    }
+  ]
+}

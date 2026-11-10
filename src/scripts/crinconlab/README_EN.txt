@@ -1,18 +1,14 @@
-CRINCONLAB — DEVELOPMENT SOURCES
+C_Rinconlab — release candidate 2026.11.10 for PixInsight 1.9.6
 
-Active: FITS/XISF Header Editor 1.0.1; RGB Ha Blend 0.15.1;
-Focal Length Blend 0.11.10; PolyMask 0.3.0-beta.12.
+Includes Header Editor 1.0.1, RGB Ha Blend 0.15.6, Focal Length Blend 0.11.13
+and PolyMask 0.3.0-beta.14 (Beta). Astrometric Solution Copy is excluded.
 
-Keep .js files, both .jsh libraries, icons/ and manuals/ together.
-Register through Script > Feature Scripts > Add. Avoid duplicate copies.
+This folder is frozen for signing. No signatures are included yet.
+Keep icons/, manuals/ and both .jsh libraries together.
+Manual installation: Script > Feature Scripts > Add; avoid duplicate copies.
+Full-resolution refinement caching is enabled in PolyMask. The first calculation
+still requires the native pipeline; subsequent unchanged regions are reused.
 
-PolyMask is an unsigned development beta for PixInsight 1.9.6.
-See manuals/PolyMask_Advanced_Manual_EN.txt and the validation/ reports.
-Its project files store parameters and geometry, not source-image pixels.
-
-Astrometric Solution Copy is temporarily archived outside this folder.
-The signed 2026.11.03 distribution and its update index are unchanged;
-they still contain the historical four products, without this PolyMask beta.
-No signing or new automatic distribution has been performed.
-
+Validation reports are retained under validation/. Earlier reports describe
+their own versions. Carlos Rincon confirmed the latest mask/inversion fixes.
 Copyright Carlos Rincón 2026

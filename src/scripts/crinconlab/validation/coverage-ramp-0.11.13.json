@@ -1,0 +1,31 @@
+[
+  {
+    "metric": "corner diagonal curvature",
+    "before": 0.020818934657356954,
+    "after": 0.00048243728550997645
+  },
+  {
+    "name": "Coverage ramp removes nearest-edge diagonal crease",
+    "passed": true
+  },
+  {
+    "name": "Final mask is bounded",
+    "passed": true
+  },
+  {
+    "name": "Invalid coverage is exactly black",
+    "passed": true
+  },
+  {
+    "name": "Symmetric polygon feather extends outside contour",
+    "passed": true
+  },
+  {
+    "name": "Zero transition preserves support",
+    "passed": true
+  },
+  {
+    "name": "Created mask equals preview pipeline",
+    "passed": true
+  }
+]

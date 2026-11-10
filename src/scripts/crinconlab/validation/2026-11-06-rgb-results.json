@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Background selector includes previews",
+    "passed": true
+  },
+  {
+    "name": "SPCC receives qualified parent-image and preview identifier",
+    "passed": true
+  },
+  {
+    "name": "Selected background preview restored when reopening settings",
+    "passed": true
+  }
+]

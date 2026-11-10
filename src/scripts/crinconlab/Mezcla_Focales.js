@@ -1,8 +1,9 @@
 // Copyright © Carlos Rincón 2026
-// Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+// Local test build: native regression checks passed; manual validation of this revision is pending.
 #engine v8
 #include "ProtectedPaths.jsh"
 #include <pjsr/StdIcon.jsh>
+#include <pjsr/StdCursor.jsh>
 #include <pjsr/StdButton.jsh>
 #include <pjsr/ButtonCodes.jsh>
 #include <pjsr/DataType.jsh>
@@ -13,7 +14,7 @@ CoreApplication.ensureMinimumVersion(1,9,5);
 #include <../src/scripts/ImageSolver/ImageSolver.js>
 #feature-id CrinconlabMezclaFocales : Crinconlab > Focal Length Blend
 #feature-icon icons/Mezcla_Focales_orange_v2.svg
-#feature-info Astrometric preparation, StarXTerminator separation and selectable native MLT detail injection on a fixed short-focal canvas. Version 0.11.10. Copyright &copy; Carlos Rinc&oacute;n 2026. Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.
+#feature-info Astrometric preparation, StarXTerminator separation and selectable native MLT detail injection on a fixed short-focal canvas. Version 0.11.13. Copyright &copy; Carlos Rinc&oacute;n 2026. Local test build: native regression checks passed; manual validation of this revision is pending.
 
 
 #include <pjsr/astrometry/ImageReprojection.js>
@@ -25,7 +26,7 @@ CoreApplication.ensureMinimumVersion(1,9,5);
  * Default: inject selected native MLT detail layers. Gaussian-band replacement
  * remains available as an alternative.
  */
-var MF_VERSION = "0.11.10";
+var MF_VERSION = "0.11.13";
 
 function MF_clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
 function MF_number(value, name, low, high)
@@ -65,6 +66,7 @@ function MF_validate(config)
       throw new Error("Base, detail and mask must have matching dimensions and share the same registered pixel grid. Prepare the geometry first.");
    if (config.mask.image.numberOfNominalChannels != 1)
       throw new Error("The mask must be monochrome: white inside valid coverage and black outside.");
+   if(config.maskSupport){MF_assertView(config.maskSupport,"Hard mask support");if(config.maskSupport.image.width!=w || config.maskSupport.image.height!=h || config.maskSupport.image.numberOfNominalChannels!=1)throw new Error("Hard mask support must be monochrome and match the base dimensions.");}
    if(config.coverage){MF_assertView(config.coverage,"Astrometric coverage");if(config.coverage.image.width!=w || config.coverage.image.height!=h || config.coverage.image.numberOfNominalChannels!=1)throw new Error("Astrometric coverage must be monochrome and match the short-focal-length image dimensions.");}
    config.fine = MF_number(config.fine, "Fine sigma", 0, 16);
    config.coarse = MF_number(config.coarse, "Coarse sigma", 0.25, 64);
@@ -456,7 +458,7 @@ function MF_polygonMask(reference,vertices,work)
    return MF_math("iif("+inside+",1,0)",reference,work,"CoberturaPoligonal",false);
 }
 // Shared mask-preview and final-blend calculation. Keep support hard-edged;
-// apply the inward transition exactly once.
+// apply the symmetric transition exactly once.
 // Exact squared Euclidean distance to the nearest black support pixel.
 // Horizontal nearest-site scan, then the lower envelope of column parabolas.
 // Virtual exterior pixels make canvas boundaries behave like other edges.
@@ -495,29 +497,34 @@ function MF_inwardDistances(image)
    }
    return field;
 }
-function MF_effectiveMask(support,sigma,work)
+function MF_coverageTaper(support,sigma,work)
 {
    sigma=MF_number(sigma,"Coverage transition",0,256);
    if(sigma===0)return support;
-   var image=support.mainView.image,w=image.width,h=image.height;
-   var distances=MF_inwardDistances(image),row=new Float32Array(w);
-   var effective=MF_clone(support.mainView,work,"MascaraFinal");
-   effective.mainView.beginProcess(UndoFlag_NoSwapFile);
-   try
-   {
-      for(var y=0;y<h;++y)
-      {
-         for(var x=0;x<w;++x)
-         {
-            // Pixel centers are half a pixel inside the support boundary.
-            var d=Math.max(0,Math.sqrt(distances[y*w+x])-0.5);
-            row[x]=1-Math.exp(-d*d/(2*sigma*sigma));
-         }
-         effective.mainView.image.setSamples(row,new Rect(0,y,w,y+1),0);
-         if((y&127)===0)CoreApplication.processEvents();
-      }
-   }
-   finally{effective.mainView.endProcess();}
+   // Smooth the coverage before deriving its inward safety ramp. A nearest-edge
+   // distance ramp has derivative creases where two footprint edges compete.
+   // Smoothstep removes that rectangular/diagonal ridge while retaining a zero
+   // value outside valid data. Polygon feathering remains symmetric and separate.
+   var blurred=MF_blur(support,sigma,work,"CoberturaSuave");
+   var t="min(1,max(0,("+blurred.mainView.id+"-0.5)*2))";
+   var effective=MF_math("iif("+support.mainView.id+">0.5,("+t+")^2*(3-2*("+t+")),0)",
+      support.mainView,work,"ProteccionCobertura",false);
+   work.close(blurred);
+   return effective;
+}
+// Symmetric Gaussian feather: smooth across both sides of the polygon.
+// Only valid astrometric coverage is a hard domain constraint. Its smoothed internal
+// taper reaches zero continuously so the outward feather cannot use padding.
+function MF_effectiveMask(support,sigma,work,coverage)
+{
+   sigma=MF_number(sigma,"Coverage transition",0,256);
+   if(sigma===0)return support;
+   var blurred=MF_blur(support,sigma,work,"TransicionAmbosLados");
+   if(!coverage)return blurred;
+   var view=coverage.mainView || coverage;
+   var taper=MF_coverageTaper(view.window,sigma,work);
+   var effective=MF_math("min(1,max(0,"+blurred.mainView.id+"*"+taper.mainView.id+"))",support.mainView,work,"MascaraFinal",false);
+   work.close(blurred);if(taper!==view.window)work.close(taper);
    return effective;
 }
 function MF_renderCoverage(reference,vertices,sigma,coverage)
@@ -526,9 +533,23 @@ function MF_renderCoverage(reference,vertices,sigma,coverage)
    try
    {
       var support=MF_limitedPolygon(reference,vertices,coverage,work);
-      return MF_effectiveMask(support,sigma,work).mainView.image.render();
+      return MF_effectiveMask(support,sigma,work,coverage).mainView.image.render();
    }
    finally { work.dispose(); }
+}
+function MF_createCoveragePair(reference,vertices,sigma,coverage)
+{
+   var work=new MF_Work;
+   try
+   {
+      var support=MF_limitedPolygon(reference,vertices,coverage,work);
+      var mask=MF_effectiveMask(support,sigma,work,coverage);
+      MF_copyMetadata(reference.window,support);
+      if(mask!==support)MF_copyMetadata(reference.window,mask);
+      work.release(support);if(mask!==support)work.release(mask);
+      return {support:support,mask:mask};
+   }
+   finally{work.dispose();}
 }
 function MF_createCoverage(reference,vertices,coverage,visible)
 {
@@ -642,11 +663,11 @@ function MF_prepare(config, progress)
       var base=MF_clone(config.base,work,"Base");
       MF_copyMetadata(config.base.window,base);
       var detail=MF_clone(config.detail,work,"Detalle");
-      var mask=MF_clone(config.mask,work,"Mascara");
+      var mask=MF_clone(config.maskSupport || config.mask,work,"Mascara");
       var lbase=MF_lightness(base,work,"BaseL"), ldetail=MF_lightness(detail,work,"DetalleL");
       // User-provided geometry: black image samples do not imply missing coverage.
       var support=MF_math("min(1,max(0,"+mask.mainView.id+"))"+(config.coverage?"*iif("+config.coverage.id+">0.5,1,0)":""),mask.mainView,work,"Cobertura",false);
-      var effective=MF_effectiveMask(support,config.feather,work);
+      var effective=config.maskSupport?MF_clone(config.mask,work,"MascaraFinal"):MF_effectiveMask(support,config.feather,work,config.coverage);
       if(config.method==="MLT")
       {
          var fit={gain:1,reliable:true,count:0,r2:1};
@@ -703,7 +724,18 @@ function MF_update(state, amount, gain, checkCandidate, layers, progress)
       else
       {
          var l=state.lightness.mainView.id, m=state.mask.mainView.id;
-         var band=isMLT?MF_mltBand(state.detailLightness,selected,work):state.detailBand;
+         var band=state.detailBand;
+         if(isMLT)
+         {
+            var key=selected.join(",");
+            if(!state.cachedMLTBand || state.cachedMLTBand.isNull || state.cachedMLTKey!==key)
+            {
+               var computed=MF_mltBand(state.detailLightness,selected,work);
+               if(state.cachedMLTBand)work.close(state.cachedMLTBand);
+               state.cachedMLTBand=computed;state.cachedMLTKey=key;
+            }
+            band=state.cachedMLTBand;
+         }
          if(progress)progress("Injecting detail into base lightness…",55);
          var expression="min(1,max(0,"+l+"+"+amount+"*"+m+"*("+(gain*state.fit.gain)+"*"+
             band.mainView.id+(isMLT?"":"-"+state.baseBand.mainView.id)+")))";
@@ -740,7 +772,7 @@ function MF_update(state, amount, gain, checkCandidate, layers, progress)
    {
       work.windows.slice().forEach(function(window)
       {
-         if (before.indexOf(window)<0 && window!==state.result) work.close(window);
+         if (before.indexOf(window)<0 && window!==state.result && window!==state.cachedMLTBand) work.close(window);
       });
    }
 }
@@ -1114,15 +1146,15 @@ MF_Camera.prototype.pan=function(dx,dy,w,h)
 };
 
 var MF_HELP = [
-   "# Focal Length Blend \u2014 0.11.10, preliminary release",
+   "# Focal Length Blend \u2014 0.11.13, preliminary release",
    "",
    "MANUAL VALIDATION",
-   "Manual validation by Carlos Rincon: all workflow tests have been repeated manually with satisfactory results.",
+   "Local test build: native regression checks passed; manual validation of this revision is pending.",
    "",
    "Copyright \u00a9 Carlos Rinc\u00f3n 2026",
    "",
-   "## Version 0.11.10",
-   "Inward distance-based feathering prevents clipped notches on concave polygon boundaries. Preview and final blending share this calculation. Shift + left drag remains the pan gesture.",
+   "## Version 0.11.13",
+   "Symmetric Gaussian feathering extends inside and outside each polygon. The astrometric coverage ramp is smoothed to avoid nearest-edge diagonal creases. The created mask matches its preview and is reused without a second blur. Comparison controls restore their arrow cursor after success or failure; native MLT layers are cached while intensity and gain change. Valid astrometric coverage is still protected. Shift + left drag remains the pan gesture.",
    "",
    "## Before you start",
    "",
@@ -1207,7 +1239,7 @@ var MF_HELP = [
    "",
    "**Close polygon** connects the last vertex to the first. **Undo** first reopens a closed polygon, then removes its last vertex. **Clear contour** starts over. **Back** returns to the initial setup without accepting the mask being edited. Prepared geometry and any previously selected mask are retained. The Full canvas option has been removed.",
    "",
-   "Set **Transition (px)** and click **Preview transition**. The right panel displays the effective mask: white adds detail, gray blends partially, and black preserves the base. Transition uses inward Euclidean distance with a Gaussian-shaped falloff, expressed as sigma in pixels. It stays inside the polygon and valid astrometric coverage, including concave boundaries. Zero keeps hard edges. The initial 32 pixels can be excessive for small fields.",
+   "Set **Transition (px)** and click **Preview transition**. The right panel displays the effective mask: white adds detail, gray blends partially, and black preserves the base. Transition uses a symmetric Gaussian blur across both sides of the polygon, expressed as sigma in pixels. It extends beyond the polygon but is smoothly limited to valid astrometric coverage. Keep the polygon and its transition well inside the purple footprint. Zero keeps hard edges. The initial 32 pixels can be excessive for small fields.",
    "",
    "**Create and select mask** selects a hidden temporary hard-edged mask in setup. A **Go to Prepare Comparison** notice asks you to click OK and proceeds to comparison preparation. The transition is applied once during blending, not baked into the support mask. Set it **only in the mask editor**; setup displays its value as information.",
    "",
@@ -1268,7 +1300,7 @@ var MF_HELP = [
    "",
    "Large images require substantial memory and processing time, even though the output dimensions do not grow. Several 32-bit images and screen bitmaps are held temporarily. Selecting larger layers requires more work.",
    "",
-   "High-frequency injection can amplify noise, halos and oversharpening. Large layers can pick up the black reprojection boundary; move the mask inward, increase the inward transition or omit overly large layers if edge artifacts appear. The final lightness is limited to 0\u20131; inspect highlights and shadows.",
+   "High-frequency injection can amplify noise, halos and oversharpening. Large layers can pick up the black reprojection boundary; move the mask inward, increase the symmetric transition or omit overly large layers if edge artifacts appear. The final lightness is limited to 0\u20131; inspect highlights and shadows.",
    "",
    "Astrometric reprojection depends on accurate input solutions. There is no subsequent StarAlignment refinement or automatic compensation for differences in PSF, filters, noise or processing artifacts. Inspect structures and alignment yourself. This script is not a replacement for those checks.",
    "",
@@ -1453,7 +1485,7 @@ constructor(reference,feather,background,coverage,footprint)
    }
    this.vertexX.onValueUpdated=coordinateChanged; this.vertexY.onValueUpdated=coordinateChanged;
    this.feather=new SpinBox(this); this.feather.minValue=0; this.feather.maxValue=256; this.feather.value=feather;
-   this.feather.toolTip="Width of the inward distance-based transition, expressed as Gaussian falloff sigma in pixels. Increase to soften the seam; 0 preserves hard edges.";
+   this.feather.toolTip="Width of the symmetric transition across both sides of the polygon, expressed as Gaussian sigma in pixels. Increase to soften the seam; 0 preserves hard edges.";
    this.feather.onValueUpdated=function() { self.invalidate(); };
    var coordinates=new HorizontalSizer; coordinates.spacing=6;
    coordinates.add(MF_label(this,"Vertex:")); coordinates.add(this.vertex);
@@ -1492,15 +1524,15 @@ constructor(reference,feather,background,coverage,footprint)
    right.add(MF_label(this,"Effective mask · white adds detail")); right.add(this.maskPane,100);
    var columns=new HorizontalSizer; columns.spacing=8; columns.add(left,100); columns.add(right,100);
    this.status=MF_taskLabel(this,"");this.progressBar=new MF_Progress(this);
-   this.preview=new PushButton(this); this.preview.text="Preview transition";this.preview.toolTip="Compute the effective inward feathering at full resolution. This does not create or accept a mask.";
+   this.preview=new PushButton(this); this.preview.text="Preview transition";this.preview.toolTip="Compute the effective symmetric feathering at full resolution. This does not create or accept a mask.";
    this.preview.onClick=function() { self.calculate(); };
-   this.create=new PushButton(this); this.create.text="Create and select mask";this.create.toolTip="Use this coverage mask in setup. It stays hidden and is closed automatically when the script finishes. Feathering is applied during blending.";
+   this.create=new PushButton(this); this.create.text="Create and select mask";this.create.toolTip="Use this coverage mask in setup. It stays hidden and is closed automatically when the script finishes. The created mask includes the previewed feathering; it is not applied twice.";
    this.create.onClick=function()
    {
       try
       {
          self.status.text="Creating the full-resolution mask…";self.status.repaint();self.progressBar.setValue(0);
-         self.createdMask=MF_createCoverage(self.reference,self.selection.polygon(),self.coverage,false);self.progressBar.setValue(100); self.ok();
+         var pair=MF_createCoveragePair(self.reference,self.selection.polygon(),self.feather.value,self.coverage);self.createdMask=pair.mask;self.createdSupport=pair.support;self.progressBar.setValue(100); self.ok();
       }
       catch (e) { self.status.text="Error: "+String(e); }
    };
@@ -1511,7 +1543,7 @@ constructor(reference,feather,background,coverage,footprint)
    this.sizer.add(MF_label(this,"Draw on the short-focal-length image. Purple marks the long-focal astrometric footprint; cyan defines your mask. Move vertices inward to exclude registration edges."));
    this.sizer.add(navigation);this.sizer.add(columns,100); this.sizer.add(tools); this.sizer.add(coordinates);
    this.sizer.add(MF_label(this,"Wheel: zoom at the pointer. Shift + left drag: pan both panels. Normal left drag: move a vertex. Fit Image: return to the full field."));
-   this.sizer.add(MF_label(this,"Move vertices or edit their pixel coordinates. Undo reopens a closed contour, then removes its last vertex. The temporary mask has hard edges; the inward transition is applied once when blending."));
+   this.sizer.add(MF_label(this,"Move vertices or edit their pixel coordinates. Undo reopens a closed contour, then removes its last vertex. The created mask includes the symmetric transition shown in the preview and is used without a second blur."));
    this.sizer.add(MF_label(this,"A softly feathered, irregular mask boundary can help achieve a more natural blend. Keep it within the valid detail coverage."));
    this.sizer.add(this.status);this.sizer.add(this.progressBar); this.sizer.add(buttons);this.sizer.add(MF_copyright(this));
    if(this.guide.length>=3){this.selection.points=MF_defaultCircle(this.guide,this.imageWidth,this.imageHeight);this.selection.close();this.selected=0;}
@@ -1760,7 +1792,7 @@ constructor()
    this.feather=new SpinBox(this); this.feather.minValue=0; this.feather.maxValue=256; this.feather.value=32;
    this.fine.toolTip="Fine sigma in output pixels. 0 includes the finest detail and its noise. Used only in Gaussian mode.";
    this.coarse.toolTip="Coarse sigma: together with fine sigma, defines the difference-of-Gaussians detail band. Not used in MLT mode.";
-   this.feather.toolTip="Inward mask transition sigma in pixels. The exterior remains black. 0 uses the mask without additional smoothing.";
+   this.feather.toolTip="Symmetric mask transition sigma in pixels. The transition extends on both sides of the polygon and stays within valid detail coverage. 0 uses the mask without additional smoothing.";
    var scales=new HorizontalSizer; scales.spacing=8;
    scales.add(MF_label(this,"Fine sigma:")); scales.add(this.fine);
    scales.add(MF_label(this,"Coarse sigma:")); scales.add(this.coarse);
@@ -1793,7 +1825,8 @@ constructor()
          var editor=new MF_MaskDialog(geometry.detail.mainView,self.feather.value,geometry.base.mainView,geometry.coverage,geometry.footprint);
          if (editor.execute())
          {
-            self.maskWork.dispose();self.maskWork.own(editor.createdMask);editor.createdMask.hide();
+            self.maskWork.dispose();self.maskWork.own(editor.createdMask);if(editor.createdSupport!==editor.createdMask)self.maskWork.own(editor.createdSupport);editor.createdMask.hide();
+            self.generatedMask=editor.createdMask;self.generatedSupport=editor.createdSupport;
             refreshViews(); self.mask.currentView=editor.createdMask.mainView;
             self.feather.value=editor.feather.value;
             self.transitionInfo.text="Mask transition: "+self.feather.value+" px · edit in Create mask";
@@ -1818,6 +1851,7 @@ constructor()
       {
          var geometry=self.ensureGeometry();if(!geometry)return;
          self.config={base:geometry.base.mainView,detail:geometry.detail.mainView,mask:self.mask.currentView,coverage:geometry.coverage?geometry.coverage.mainView:null,
+            maskSupport:self.generatedMask && !self.generatedMask.isNull && self.mask.currentView.id===self.generatedMask.mainView.id?self.generatedSupport.mainView:null,
             method:self.mlt.checked?"MLT":"Gaussian",fine:self.fine.value,coarse:self.coarse.value,feather:self.feather.value,
             autoGain:self.autoGain.checked,id:self.outputName.text.trim(),prepared:true,baseStars:geometry.baseStars || null,baseSourceId:self.base.currentView.id,detailSourceId:self.detail.currentView.id};
          MF_validate(self.config); self.ok();
@@ -1863,6 +1897,7 @@ constructor(state)
 {
    super();
    var self=this; this.state=state; this.returnToSetup=false; this.ready=false; this.busy=false;
+   this.cursor=new Cursor(StdCursor_Arrow);this.onClose=function(){return !self.busy;};
    this.windowTitle="Focal Length Blend · Comparison without STF · "+MF_VERSION;
    this.camera=new MF_Camera(state.base.mainView.image.width,state.base.mainView.image.height);
    this.showL=new CheckBox(this);this.showL.text="Compare lightness only";this.showL.checked=state.config.method==="MLT";this.showL.toolTip="Show CIE L* extracted from the base and actual output, or show their full RGB color. This changes only the display, not the computed result.";
@@ -1952,7 +1987,12 @@ constructor(state)
    this.sizer.add(columns,100); this.sizer.add(this.status);this.sizer.add(this.progressBar); this.sizer.add(nameRow);this.sizer.add(this.recombine); this.sizer.add(buttons);
    this.sizer.add(MF_label(this,"Wheel: zoom both panels. Drag: pan. Each update starts from the same base. Screen display without STF; full-resolution processing."));
    this.sizer.add(MF_copyright(this));
-   this.setScaledMinSize(940,650); this.adjustToContents(); this.fit(); this.calculate();
+   this.setScaledMinSize(940,650); this.adjustToContents(); this.fit();
+   this.initialCalculationStarted=false;
+   this.initialCalculationTimer=new Timer(0.05,false,this);
+   this.initialCalculationTimer.onTimeout=function(){if(!self.busy)self.calculate();};
+   this.onShow=function(){self.cursor=new Cursor(StdCursor_Arrow);if(!self.initialCalculationStarted){self.initialCalculationStarted=true;self.initialCalculationTimer.start();}};
+   this.onHide=function(){self.initialCalculationTimer.stop();self.cursor=new Cursor(StdCursor_Arrow);};
 }
 fullImageVisible()
 {
@@ -1984,21 +2024,23 @@ freshness(quiet)
 }
 setBusy(value)
 {
-   this.busy=value;
-   [this.updateButton,this.backButton,this.closeButton,this.amount,this.amountEdit,this.gain,this.gainEdit].forEach(function(control) { control.enabled=!value; });
+   this.busy=value;this.cursor=new Cursor(value?StdCursor_Wait:StdCursor_Arrow);
+   [this.updateButton,this.backButton,this.closeButton,this.amount,this.amountEdit,this.gain,this.gainEdit,this.outputName].forEach(function(control) { control.enabled=!value; });
    this.recombine.enabled=!value && !!this.state.config.baseStars && !this.state.config.baseStars.isNull;
    this.showL.enabled=!value;
    this.layerChecks.forEach(function(box){box.enabled=!value && this.state.config.method==="MLT";},this);
    this.freshness(true);
+   CoreApplication.processEvents(true);
 }
 calculate()
 {
+   if(this.busy)return;
    var self=this; this.setBusy(true);
    try
    {
       var v=this.values(), bitmap=null;
       this.progressBar.setValue(0);this.status.text="Computing new lightness and preparing the comparison…";
-      CoreApplication.processEvents();
+      CoreApplication.processEvents(true);
       MF_update(this.state,v.amount,v.gain,function(candidate) { bitmap=self.renderCandidate(candidate); },this.selectedLayers(),function(text,percent){self.status.text=text;self.status.repaint();self.progressBar.setValue(percent);});
       this.resultBitmap=bitmap; this.ready=true; this.repaintBoth();
       var f=this.state.fit;

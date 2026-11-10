@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Mask creation UI has only Shape Selection and Output",
+    "ok": true
+  },
+  {
+    "name": "Combination cannot be enabled from hidden mode",
+    "ok": true
+  },
+  {
+    "name": "Multiple polygons still unite correctly",
+    "ok": true
+  },
+  {
+    "name": "Active preview still creates a complete output",
+    "ok": true
+  },
+  {
+    "name": "Create-mode projects from beta7 still restore",
+    "ok": true
+  },
+  {
+    "name": "Old combination project is rejected without changing editor",
+    "ok": true
+  },
+  {
+    "name": "Region operation engine remains available for future work",
+    "ok": true
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Feather extends across both sides of polygon",
+    "passed": true
+  },
+  {
+    "name": "Effective mask equals native Gaussian convolution without polygon clipping",
+    "passed": true
+  },
+  {
+    "name": "Straight-edge transition is centered on the polygon boundary",
+    "passed": true
+  },
+  {
+    "name": "Zero transition keeps hard polygon",
+    "passed": true
+  },
+  {
+    "name": "Invalid astrometric padding stays protected with smooth approach",
+    "passed": true
+  },
+  {
+    "name": "Coverage works for window and view callers",
+    "passed": true
+  },
+  {
+    "name": "Preview uses same symmetric coverage-limited mask",
+    "passed": true
+  },
+  {
+    "name": "Final blending prepares the same mask as preview",
+    "passed": true
+  }
+]
