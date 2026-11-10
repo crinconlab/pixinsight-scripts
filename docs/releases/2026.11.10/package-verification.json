@@ -1,0 +1,10 @@
+{
+  "package": "crinconlab-scripts-2026.11.10-5d066a765ebaa042.zip",
+  "sha256": "5d066a765ebaa0420dce5fdeaebae666fc110fec325d8bec49f3675f9c1b95cb",
+  "sha1": "93017c2daef52c60560b1c4ccc59a6e892d3e0e3",
+  "bytes": 139743,
+  "scripts": 4,
+  "signatures": 6,
+  "nativeSignatureVerification": "all valid, Carlos_Rincon_Astrophoto, PixInsight 1.9.6",
+  "indexStatus": "Signed XML index verified valid in PixInsight 1.9.6; published with exact package bytes"
+}
