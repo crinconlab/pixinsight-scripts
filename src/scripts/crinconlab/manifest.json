@@ -1,8 +1,8 @@
 {
   "collection": "C_Rinconlab",
-  "version": "2026.11.10",
+  "version": "2026.11.11",
   "targetPixInsight": "1.9.6",
-  "status": "frozen sources awaiting signatures",
+  "status": "awaiting two PolyMask signatures",
   "scripts": [
     {
       "script": "FITS_XISF_Header_Editor_EN.js",
@@ -21,8 +21,8 @@
     },
     {
       "script": "PolyMask_EN.js",
-      "version": "0.3.0-beta.14",
-      "sha256": "c17e5018ae9a358b99bca6ab26ffe6fb331b755745017d866d7842bbc086904c"
+      "version": "0.3.0-beta.17",
+      "sha256": "06085ecd56912dc6a78b4e3dd50729f9a65ae5671fa2abc2d8df065030378fa4"
     }
   ]
 }

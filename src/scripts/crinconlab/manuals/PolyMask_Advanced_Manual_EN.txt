@@ -1,4 +1,4 @@
-POLYMASK ADVANCED 0.3.0-beta.14
+POLYMASK ADVANCED 0.3.0-beta.17
 Copyright Carlos Rincón 2026
 Requires PixInsight 1.9.6. Local beta.
 
@@ -34,8 +34,16 @@ coarse value. Moving the coarse slider resets its fine adjustment; saved values
 retain one decimal place when switching regions. Transition softens the interval boundaries. Feather sigma softens
 polygon edges. Strength adjusts mask weight. STF affects display only.
 
-FINAL: Final blur is applied after combination; final inversion follows blur.
-Live preview is a reduced approximation. Slider preview updates during dragging, reusing unchanged regions; only the latest pending value is retained. The first update after a geometry or color change can take longer. Full-resolution refinement starts automatically after release or a short pause. The live checkbox controls only updates during dragging; refinement remains automatic when it is off. After release or a short pause, the preview refines automatically at full resolution. There is no Update Preview button. Unchecking Live preview while dragging only disables the quick updates during dragging; automatic refinement still runs.
+FINAL: Final blur is applied after region/color/lightness combination; final
+inversion follows blur. Geometry edits do not calculate the mask automatically.
+While drawing or moving vertices, only the contour changes. The previous mask
+remains visible with PREVIEW OUT OF DATE. Click Update Preview when ready to
+compute the current full-resolution preview. No full refinement is queued.
+Automatic selection preview updates color, lightness and final blur at reduced
+resolution only when the polygon preview is current. It never confirms edited
+geometry. Disable it to update all changes manually with Update Preview.
+Final inversion reuses a current mask and updates display bitmaps natively;
+if other changes are pending, update the preview first.
 Create Mask always creates a full-resolution grayscale output; save it manually.
 Apply Mask attaches a fresh output to the selected target image; it must share
 the dimensions and registered grid. It replaces that target's mask attachment.
@@ -103,12 +111,6 @@ INSTALLATION NOTE
 Keep ProtectedPaths.jsh and PolyMaskProjects.jsh beside PolyMask_EN.js, together
 with icons/ and manuals/. This is still a local beta and is not published.
 
-BETA 12 — AUTOMATIC REFINEMENT
-A reduced preview is used during dragging. After release or a short pause,
-the preview refines at full resolution automatically. Pending refinement is
-postponed by a new adjustment. Large images can take longer to refine; the blue
-status describes this phase. The Update Preview button has been removed.
-
 BETA 11 — LIVE PREVIEW, CHROMINANCE NORMALIZATION AND FINAL BLUR
 Live calculations use cached reduced geometry, color maps and lightness.
 Unchanged regions are reused. Only the latest requested settings are pending.
@@ -132,3 +134,18 @@ The cache retains up to 384 MiB of image samples, or one current mask when
 that mask alone is larger. This is not a limit on total application memory.
 Least-recently-used entries are discarded; project reload and editor close
 release the cache. Display rendering and overlay preparation still take time.
+
+BETA 15 — EXPLICIT GEOMETRY PREVIEW
+Update Preview is visible again. Editing polygons or region boundary softness
+marks the display as stale and stops automatic preview timers. Selection
+changes cannot accept pending geometry edits. Create Mask and Apply Mask still
+compute complete current settings at full resolution, even if preview is stale.
+The final inversion shortcut reuses the mask; geometry/color/lightness/blur are
+not recalculated. The signed published beta 14 is unchanged.
+
+PENDING PREVIEW NOTICE
+A small red Preview out of date badge appears in the upper-right corner of
+the mask panel when manual updating is required: edited geometry, or automatic selection preview
+turned off. Automatic color/lightness/blur updates do not show this warning.
+It disappears after a successful update. This is display-only and is never
+embedded in the created mask or source image.

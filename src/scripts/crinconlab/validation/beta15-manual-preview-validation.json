@@ -1,0 +1,82 @@
+[
+  {
+    "name": "New geometry schedules no automatic calculation",
+    "passed": true
+  },
+  {
+    "name": "Update Preview restored in visible sidebar",
+    "passed": true
+  },
+  {
+    "name": "Manual update computes current full-resolution preview",
+    "passed": true
+  },
+  {
+    "name": "Thirty vertex changes preserve previous preview and mark it stale",
+    "passed": true
+  },
+  {
+    "name": "Vertex motion leaves no pending timers",
+    "passed": true
+  },
+  {
+    "name": "Vertex release cannot queue full refinement",
+    "passed": true
+  },
+  {
+    "name": "Selection change cannot silently confirm dirty geometry",
+    "passed": true
+  },
+  {
+    "name": "Manual update confirms edited polygon",
+    "passed": true
+  },
+  {
+    "name": "Fast final inversion complements native float mask",
+    "passed": true
+  },
+  {
+    "name": "Fast inversion does not recompute region/geometry/color filters",
+    "passed": true
+  },
+  {
+    "name": "Fast inversion reuses display bitmaps",
+    "passed": true
+  },
+  {
+    "name": "Native overlay operation complements alpha without changing RGB",
+    "passed": true
+  },
+  {
+    "name": "Double inversion restores native mask",
+    "passed": true
+  },
+  {
+    "name": "Selection schedules reduced preview only",
+    "passed": true
+  },
+  {
+    "name": "Automatic selection preview never refines at full resolution",
+    "passed": true
+  },
+  {
+    "name": "Create Mask computes fresh full-resolution output despite stale preview",
+    "passed": true
+  },
+  {
+    "name": "Created output uses complete current settings",
+    "passed": true
+  },
+  {
+    "name": "New inversion during computation rejects stale result",
+    "passed": true
+  },
+  {
+    "name": "Pending inversion remains requested after rejected calculation",
+    "passed": true
+  },
+  {
+    "name": "Rejected stale geometry leaves no automatic task",
+    "passed": true
+  }
+]

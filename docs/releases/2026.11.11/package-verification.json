@@ -1,0 +1,9 @@
+{
+  "package": "crinconlab-scripts-2026.11.11-5a3ad7742762a021.zip",
+  "sha1": "91654855c72ab1c8991f3a83717005b5e85b4bd5",
+  "sha256": "5a3ad7742762a021bfdbac89e12a248be74006d36b1f09223734bc36e787068e",
+  "bytes": 140693,
+  "signatures": 6,
+  "nativeSignatureVerification": "all valid in PixInsight 1.9.6",
+  "indexStatus": "Signed XML index verified valid in PixInsight 1.9.6"
+}

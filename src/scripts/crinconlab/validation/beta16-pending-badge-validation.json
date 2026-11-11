@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Fresh full preview has no stale state",
+    "passed": true
+  },
+  {
+    "name": "Fresh mask panel has no red badge",
+    "passed": true
+  },
+  {
+    "name": "Polygon edit sets pending state",
+    "passed": true
+  },
+  {
+    "name": "Pending mask panel paints visible red text in top corner",
+    "passed": true
+  },
+  {
+    "name": "Painting badge never alters mask pixels",
+    "passed": true
+  },
+  {
+    "name": "Successful update removes red badge",
+    "passed": true
+  },
+  {
+    "name": "Manual selection change also shows pending badge",
+    "passed": true
+  }
+]
