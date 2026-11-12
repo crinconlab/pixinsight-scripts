@@ -1,0 +1,58 @@
+[
+  {
+    "file": "FITS_XISF_Header_Editor_EN.js",
+    "signature": {
+      "scriptId": "CarlosRinconHeaderEditorEN",
+      "developerId": "Carlos_Rincon_Astrophoto",
+      "entitlements": "com.pixinsight.security.pjsr.*,com.pixinsight.security.pcl.*",
+      "timestamp": "2026-11-10T15:59:27.578Z",
+      "valid": true
+    }
+  },
+  {
+    "file": "RGB_Ha_Blend.js",
+    "signature": {
+      "scriptId": "CrinconlabRGBHaBlend",
+      "developerId": "Carlos_Rincon_Astrophoto",
+      "entitlements": "com.pixinsight.security.pjsr.*,com.pixinsight.security.pcl.*",
+      "timestamp": "2026-11-10T15:59:27.639Z",
+      "valid": true
+    }
+  },
+  {
+    "file": "Mezcla_Focales.js",
+    "signature": {
+      "scriptId": "CrinconlabMezclaFocales",
+      "developerId": "Carlos_Rincon_Astrophoto",
+      "entitlements": "com.pixinsight.security.pjsr.*,com.pixinsight.security.pcl.*",
+      "timestamp": "2026-11-10T15:59:27.613Z",
+      "valid": true
+    }
+  },
+  {
+    "file": "PolyMask_EN.js",
+    "signature": {
+      "scriptId": "CrinconlabPolyMaskAdvancedPreview",
+      "developerId": "Carlos_Rincon_Astrophoto",
+      "entitlements": "com.pixinsight.security.pjsr.*,com.pixinsight.security.pcl.*",
+      "timestamp": "2026-11-12T07:59:13.683Z",
+      "valid": true
+    }
+  },
+  {
+    "file": "ProtectedPaths.jsh",
+    "signature": {
+      "developerId": "Carlos_Rincon_Astrophoto",
+      "timestamp": "2026-11-10T15:59:27.622Z",
+      "valid": true
+    }
+  },
+  {
+    "file": "PolyMaskProjects.jsh",
+    "signature": {
+      "developerId": "Carlos_Rincon_Astrophoto",
+      "timestamp": "2026-11-12T07:59:13.676Z",
+      "valid": true
+    }
+  }
+]

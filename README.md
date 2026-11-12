@@ -1,6 +1,6 @@
 # C_Rinconlab PixInsight Scripts
 
-## Source candidate 2026.11.12 — awaiting signatures
+## Source candidate 2026.11.12 — awaiting signed update index
 
 | Script | Version |
 | --- | --- |
@@ -9,7 +9,7 @@
 | [Focal Length Blend](src/scripts/crinconlab/Mezcla_Focales.js) | 0.11.13 |
 | [PolyMask (Beta)](src/scripts/crinconlab/PolyMask_EN.js) | 0.3.0-beta.18 |
 
-The main-branch source is a signing candidate. Sign **PolyMask_EN.js** and **PolyMaskProjects.jsh**; the other scripts are unchanged. Old signatures for the changed files have been removed. The automatic-update repository still serves the signed **2026.11.11 / PolyMask beta 17** package until the new signatures and index are ready.
+All six source/code signatures for the 2026.11.12 candidate have been verified in PixInsight 1.9.6, including the new PolyMask signatures. The ZIP is built and checked. Its **updates.xri XML signature is still pending**. The automatic-update repository continues to serve signed **2026.11.11 / PolyMask beta 17** until the signed index is ready.
 
 [Candidate validation and signing notes](docs/releases/2026.11.12/signing-candidate.md)
 

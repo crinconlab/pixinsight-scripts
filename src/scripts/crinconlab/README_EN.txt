@@ -9,8 +9,9 @@ success notice. No mask computation or selection formula has changed.
 Header Editor 1.0.1; RGB Ha Blend 0.15.6; Focal Length Blend 0.11.13 unchanged.
 Astrometric Solution Copy is excluded.
 
-SIGN ONLY: PolyMask_EN.js and PolyMaskProjects.jsh. Both have changed and
-need new .xsgn files. Other four signatures are retained for unchanged files.
-Do not edit sources after signing. The published update repository still
-serves the signed 2026.11.11 package until this candidate is signed.
+All six source/code signatures are verified in PixInsight 1.9.6.
+PolyMask_EN.js and PolyMaskProjects.jsh have new signatures; four signatures
+are retained for unchanged files. The update index still awaits its XML
+signature. Do not modify the signed sources. The published update repository
+continues to serve 2026.11.11 until the signed index is ready.
 Copyright Carlos Rincón 2026

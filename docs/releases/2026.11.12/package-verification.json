@@ -1,0 +1,10 @@
+{
+  "file": "crinconlab-scripts-2026.11.12-7b9e205fa4a01ab1.zip",
+  "bytes": 141784,
+  "sha256": "7b9e205fa4a01ab1fd55d805427c6273912ad7f58cf31eda31fa9aef9c0ef894",
+  "sha1": "f35bf1592db8ff6431651ccbbb9eac114af0a5b8",
+  "zipIntegrity": true,
+  "signedSourceBytesMatchVerifiedFiles": true,
+  "astrometricCopyExcluded": true,
+  "indexSignature": "pending"
+}

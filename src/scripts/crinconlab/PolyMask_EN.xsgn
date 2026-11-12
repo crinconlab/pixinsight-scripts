@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+PixInsight XML Code Signature Format - XSGN version 1.0
+Created with PixInsight software - https://pixinsight.com/
+-->
+<xsgn version="1.0" xmlns="http://www.pixinsight.com/xsgn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.pixinsight.com/xsgn http://pixinsight.com/xsgn/xsgn-1.0.xsd">
+   <CreationTime>2026-11-12T07:59:13.683Z</CreationTime>
+   <Signature version="1.0" scriptId="CrinconlabPolyMaskAdvancedPreview" developerId="Carlos_Rincon_Astrophoto">
+      <Timestamp>2026-11-12T07:59:13.683Z</Timestamp>
+      <CodeSignature encoding="Base64">JR7TnM0ms8V5e/dTl73ASwVT4Qv37MaZL9FEF+K7fQ7C3D1YZIsn//k9cbJ30XwT/trLbkKpo95lFxpTS/vqCQ==</CodeSignature>
+   </Signature>
+</xsgn>
