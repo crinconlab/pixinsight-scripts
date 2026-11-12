@@ -1,0 +1,92 @@
+{
+  "checks": [
+    {
+      "name": "Full-resolution polygon preview completes",
+      "passed": true
+    },
+    {
+      "name": "Console logs start and region progress",
+      "passed": true
+    },
+    {
+      "name": "Create Mask returns full-resolution output",
+      "passed": true
+    },
+    {
+      "name": "Created output matches full-resolution preview exactly",
+      "passed": true
+    },
+    {
+      "name": "Single success notice contains actual mask name and OK",
+      "passed": true
+    },
+    {
+      "name": "Editor remains usable after acknowledging success",
+      "passed": true
+    },
+    {
+      "name": "Second mask can be created in the same editor",
+      "passed": true
+    },
+    {
+      "name": "Invalid output never shows a success notice",
+      "passed": true
+    },
+    {
+      "name": "Attached-mask notice identifies its target",
+      "passed": true
+    },
+    {
+      "name": "Apply Mask creates one notice after successful assignment",
+      "passed": true
+    },
+    {
+      "name": "Separate masks confirm creation once and release busy state",
+      "passed": true
+    },
+    {
+      "name": "Reduced colour preview still completes",
+      "passed": true
+    },
+    {
+      "name": "Saved projects report current beta version",
+      "passed": true
+    },
+    {
+      "name": "Console records output completion and preview rendering",
+      "passed": true
+    }
+  ],
+  "notices": [
+    {
+      "text": "Mask 'PolyMask_Beta18_Test' has been created successfully.\n\nSave the mask manually. Click OK to return to the editor and create another mask, or close PolyMask when finished.",
+      "title": "Mask created",
+      "icon": 2,
+      "button": 1
+    },
+    {
+      "text": "Mask 'PolyMask_Beta18_Test_2' has been created successfully.\n\nSave the mask manually. Click OK to return to the editor and create another mask, or close PolyMask when finished.",
+      "title": "Mask created",
+      "icon": 2,
+      "button": 1
+    },
+    {
+      "text": "Mask 'PolyMask_Beta18_Attached' has been created successfully.\n\nAssigned to image 'CR_PM_ConsoleTest'.\n\nSave the mask manually. Click OK to return to the editor and create another mask, or close PolyMask when finished.",
+      "title": "Mask created",
+      "icon": 2,
+      "button": 1
+    },
+    {
+      "text": "Mask 'PolyMask_Beta18_Apply' has been created successfully.\n\nAssigned to image 'CR_PM_ConsoleTest'.\n\nSave the mask manually. Click OK to return to the editor and create another mask, or close PolyMask when finished.",
+      "title": "Mask created",
+      "icon": 2,
+      "button": 1
+    },
+    {
+      "text": "Mask 'PolyMask_Beta18_Separate_Region_1' has been created successfully.\n\nSave the mask manually. Click OK to return to the editor and create another mask, or close PolyMask when finished.",
+      "title": "Mask created",
+      "icon": 2,
+      "button": 1
+    }
+  ]
+}

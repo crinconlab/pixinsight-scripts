@@ -1,7 +1,7 @@
 // Copyright © Carlos Rincón 2026
 #feature-id CrinconlabPolyMaskAdvancedPreview : Crinconlab > PolyMask Advanced (beta)
 #feature-icon icons/polymask_orange.svg
-#feature-info Editable polygon masks, normalized chrominance, color and lightness selections, project save/load and live preview while dragging. Six author-supplied color masks. Version 0.3.0-beta.17. Copyright &copy; Carlos Rinc&oacute;n 2026.
+#feature-info Editable polygon masks, normalized chrominance, color and lightness selections, project save/load and live preview while dragging. Six author-supplied color masks. Version 0.3.0-beta.18. Copyright &copy; Carlos Rinc&oacute;n 2026.
 #engine v8
 #include <pjsr/StdIcon.jsh>
 #include <pjsr/StdButton.jsh>
@@ -12,6 +12,33 @@
 CoreApplication.ensureMinimumVersion(1,9,6);
 // Retained for future releases; not exposed or used in this local edition.
 var PM_ENABLE_MASK_COMBINATION=false;
+
+// Keep native processing output visible throughout nested calculations.
+function PM_consoleProgress(action)
+{
+   console.show(false);
+   console.writeln("\nPolyMask: " + action);
+   console.flush();
+   var previous = "";
+   return function(percent, text)
+   {
+      if (text !== previous)
+      {
+         previous = text;
+         console.writeln("PolyMask [" + Math.round(percent) + "%]: " + text);
+         console.flush();
+      }
+   };
+}
+function PM_notifyMasksCreated(outputs, target)
+{
+   var single = outputs.length === 1;
+   var message = single ? "Mask '" + outputs[0].mainView.id + "' has been created successfully."
+      : outputs.length + " masks have been created successfully:\n" + outputs.map(function(w){return w.mainView.id;}).join("\n");
+   if (target) message += "\n\nAssigned to image '" + target.id + "'.";
+   message += "\n\nSave the mask manually. Click OK to return to the editor and create another mask, or close PolyMask when finished.";
+   new MessageBox(message, single ? "Mask created" : "Masks created", StdIcon_Information, StdButton_Ok).execute();
+}
 
 function PM_clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
 function PM_number(value, name, low, high)
@@ -409,7 +436,7 @@ function PM_displayBitmap(view,useSTF)
          h.H=rows;if(!h.executeOn(display.mainView,false))throw new Error("Could not prepare the reference display.");
       }
       return display.mainView.image.render();
-   }finally{if(copy)copy.free();PM_close(display);console.hide();}
+   }finally{if(copy)copy.free();PM_close(display);}
 }
 function PM_makeMask(view,vertices,sigma,mode,invert,progress,allowSubpixel)
 {
@@ -428,7 +455,7 @@ function PM_makeMask(view,vertices,sigma,mode,invert,progress,allowSubpixel)
       }
       if(invert){step(85,"Inverting the mask…");mask=PM_math("1-"+mask.mainView.id,mask.mainView,work,"Inverted",false);}
       PM_identitySTF(mask.mainView);mask.hide();work.release(mask);step(100,"Mask computed");return mask;
-   }finally{work.dispose();console.hide();}
+   }finally{work.dispose();}
 }
 function PM_edgeAt(points,x,y,geo,width,height)
 {
@@ -609,7 +636,7 @@ function PM_makeRegions(reference,regions,progress,options)
       if(options.invert){step(95,"Inverting the final mask…");result=PM_math("1-"+result.mainView.id,reference,work,"FinalInverse",false);}
       result=PM_math("min(1,max(0,"+result.mainView.id+"))",reference,work,"Final",false);
       work.release(result);step(100,"Final mask computed");return result;
-   }finally{work.dispose();console.hide();}
+   }finally{work.dispose();}
 }
 
 class PM_MaskDialog extends Dialog
@@ -627,7 +654,7 @@ constructor(reference,feather,background,coverage,footprint)
    this.camera=new PM_Camera(image.width,image.height);
    this.selection=new PM_PolygonSelection(image.width,image.height); this.selected=-1;
    this.regions=[];this.activeRegion=0;this.revision=0;this.cachedRevision=-1;this.outputRevision=-1;this.draftSource=null;this.previewIsDraft=false;this.disposed=false;this.liveCache=null;this.liveDragging=false;this.pendingLive=false;
-   this.windowTitle="Crinconlab PolyMask · v0.3.0-beta.17 · "+this.background.id;
+   this.windowTitle="Crinconlab PolyMask · v0.3.0-beta.18 · "+this.background.id;
    this.detailBitmap=PM_displayBitmap(this.background,true);
    this.vertex=new SpinBox(this); this.vertex.minValue=1; this.vertex.maxValue=1; this.vertex.value=1;
    this.vertex.toolTip="Select the editable polygon vertex by number.";
@@ -860,15 +887,15 @@ applyToTarget()
 {
    if(this.busy)return null;
    try{
-      var target=this.validateTarget(),output=this.createdMask;
+      var target=this.validateTarget(),output=this.createdMask,created=false;
       if(!output || output.isNull || this.outputRevision!==this.revision){
          var automatic=this.applyMask.checked;this.applyMask.checked=false;
-         try{output=this.createOutput();}finally{this.applyMask.checked=automatic;}
+         try{output=this.createOutput(false);created=!!output;}finally{this.applyMask.checked=automatic;}
       }
       if(!output || output.isNull)return null;
       if(output===target.window)throw new Error("A mask cannot be attached to itself.");
       target.window.setMask(output,false);target.window.maskEnabled=true;target.window.maskVisible=true;
-      this.status.text="Applied "+output.mainView.id+" to "+target.id+". Save the mask manually.";return output;
+      this.status.text="Applied "+output.mainView.id+" to "+target.id+". Save the mask manually.";if(created)PM_notifyMasksCreated([output],target);return output;
    }catch(e){this.status.text="Error: "+String(e);return null;}
 }
 draftInputs()
@@ -934,18 +961,19 @@ allValid(forceComplete)
 createSeparate()
 {
    if(this.busy || this.baseEnabled.checked || !this.allValid(true))return;
-   var work=new PM_Work,outputs=[];this.busy=true;
+   var work=new PM_Work,outputs=[];this.busy=true;var report=PM_consoleProgress("Creating separate region masks…");
    try{
       var base=this.outputName.text.trim();PM_validId(base);
       for(var i=0;i<this.regions.length;++i){
+         report(100*i/this.regions.length,"Creating region mask "+(i+1)+" of "+this.regions.length+"…");
          var r=this.regions[i],mask=work.own(PM_makeRegions(this.reference,[r],null,{blur:this.finalBlur.value,invert:this.finalInvert.checked}));
          mask.mainView.id=PM_availableId(base+"_Region_"+(i+1));
          if(this.reference.window.hasAstrometricSolution)mask.copyAstrometricSolution(this.reference.window);
          outputs.push(mask);
       }
       outputs.forEach(function(w){w.show();work.release(w);});this.createdMasks=this.createdMasks.concat(outputs);
-      this.status.text="Created "+outputs.length+" separate masks. Attach each mask to apply different processes; save manually.";
-   }catch(e){this.status.text="Error: "+String(e);}finally{work.dispose();this.busy=false;console.hide();}
+      this.status.text="Created "+outputs.length+" separate masks. Attach each mask to apply different processes; save manually.";report(100,this.status.text);PM_notifyMasksCreated(outputs,null);
+   }catch(e){this.status.text="Error: "+String(e);}finally{work.dispose();this.busy=false;}
 }
 
 viewport()
@@ -1011,6 +1039,7 @@ toggleFinalInversion()
    if(this.cachedMask&&!this.cachedMask.isNull&&this.cachedRevision===this.revision&&!this.geometryDirty){
       var work=new PM_Work;
       try{
+         PM_consoleProgress("Inverting the current preview…");
          var inverse=PM_math("1-"+this.cachedMask.mainView.id,this.cachedMask.mainView,work,"FastInverse",false);
          PM_close(this.cachedMask);this.cachedMask=inverse;work.release(inverse);
          if(this.maskBitmap)this.maskBitmap.invert();
@@ -1109,28 +1138,28 @@ calculate(draft,forceComplete)
 {
    if(this.busy || this.disposed)return false;this.previewTimer.stop();this.refineTimer.stop();this.refinePending=false;this.busy=true;this.preview.enabled=this.create.enabled=this.applyButton.enabled=false;
    this.status.text=draft?"Updating live preview…":"Computing the full-resolution final mask…";if(!draft){this.status.repaint();this.progressBar.setValue(0);}
-   var candidate=null,inputs=null,startedRevision=this.revision;this.pendingLive=false;
+   var candidate=null,inputs=null,startedRevision=this.revision;this.pendingLive=false;var report=PM_consoleProgress(draft?"Updating selection preview…":"Computing the full-resolution mask…");
    try
    {
       this.saveRegion();var self=this,reference=this.reference,regions=this.regions,options=this.pipelineOptions();
       if(draft){inputs=this.draftInputs();reference=inputs.reference;regions=inputs.regions;options=inputs.options;}
       var isolated=this.showOnlyActive.checked&&!this.baseEnabled.checked&&!forceComplete;
       if(isolated){regions=[regions[this.activeRegion]];options.operand=null;}
-      if(draft&&!options.baseMask&&!options.operand){if(!this.liveCache||this.liveCache.reference.id!==reference.id){if(this.liveCache)this.liveCache.dispose();this.liveCache=new PM_LiveCache(reference);}candidate=this.liveCache.calculate(regions,isolated?0:this.activeRegion,options,function(p,text){self.status.text=text;self.status.repaint();self.progressBar.setValue(p);CoreApplication.processEvents(true);});}
-      else {if(!options.baseMask&&!options.operand){if(!this.fullCache)this.fullCache=new PM_RegionCache(this.reference);options.regionCache=this.fullCache;}candidate=PM_makeRegions(reference,regions,function(p,text){self.status.text=text;self.status.repaint();self.progressBar.setValue(p);},options);}
+      if(draft&&!options.baseMask&&!options.operand){if(!this.liveCache||this.liveCache.reference.id!==reference.id){if(this.liveCache)this.liveCache.dispose();this.liveCache=new PM_LiveCache(reference);}candidate=this.liveCache.calculate(regions,isolated?0:this.activeRegion,options,function(p,text){report(p,text);self.status.text=text;self.status.repaint();self.progressBar.setValue(p);CoreApplication.processEvents(true);});}
+      else {if(!options.baseMask&&!options.operand){if(!this.fullCache)this.fullCache=new PM_RegionCache(this.reference);options.regionCache=this.fullCache;}candidate=PM_makeRegions(reference,regions,function(p,text){report(p,text);self.status.text=text;self.status.repaint();self.progressBar.setValue(p);},options);}
       if(startedRevision!==this.revision){this.status.text="Preview out of date · click Update Preview.";return false;}
-      var bitmap=candidate.mainView.image.render();
+      report(100,"Rendering the mask preview…");var bitmap=candidate.mainView.image.render();
       // Keep draft display and overlay bounded; do not expand to full source size.
       PM_close(this.cachedMask);this.cachedMask=candidate;candidate=null;this.cachedRevision=startedRevision;this.cachedScope=isolated?"active":"complete";this.maskCaption.text=isolated?"ACTIVE REGION ONLY · preview, not final output":"Complete output mask · white allows processing";this.previewIsDraft=!!draft;this.previewGeometryKey=this.geometryKey();this.geometryDirty=false;this.cachedInvert=options.invert;this.maskBitmap=bitmap;this.rebuildOverlay();
       this.progressBar.setValue(100);this.status.text=isolated?"ACTIVE REGION ONLY — preview. Output will include all regions.":draft?"Quick selection preview (up to 640 px). Update Preview or Create Mask computes full resolution.":"Refined full-resolution preview ready. Create Mask uses these exact pixels.";return true;
    }
    catch(e){this.status.text="Error: "+String(e);return false;}
-   finally{if(inputs)inputs.work.dispose();PM_close(candidate);this.busy=false;this.preview.enabled=this.allValid();this.create.enabled=this.applyButton.enabled=this.allValid(true);this.separate.enabled=this.allValid(true) && !this.baseEnabled.checked;this.repaintBoth();console.hide();if(this.pendingLive&&!this.disposed){this.pendingLive=false;this.invalidate();}else if(!this.disposed&&(this.refinePending||(draft&&!this.isAdjusting())))this.queueRefinement();}
+   finally{if(inputs)inputs.work.dispose();PM_close(candidate);this.busy=false;this.preview.enabled=this.allValid();this.create.enabled=this.applyButton.enabled=this.allValid(true);this.separate.enabled=this.allValid(true) && !this.baseEnabled.checked;this.repaintBoth();if(this.pendingLive&&!this.disposed){this.pendingLive=false;this.invalidate();}else if(!this.disposed&&(this.refinePending||(draft&&!this.isAdjusting())))this.queueRefinement();}
 }
-createOutput()
+createOutput(notify)
 {
    if(this.busy)return null;
-   var output=null;
+   var output=null,report=PM_consoleProgress("Creating the output mask…");
    try
    {
       if(!this.allValid(true))throw new Error(this.validationError||"Complete every region before creating the final mask.");
@@ -1141,7 +1170,7 @@ createOutput()
       try{output=PM_clone(this.cachedMask.mainView,work,"Output");output.mainView.id=id;if(this.reference.window.hasAstrometricSolution)output.copyAstrometricSolution(this.reference.window);work.release(output);}finally{work.dispose();}
       if(this.applyMask.checked){var target=this.validateTarget();if(output===target.window)throw new Error("A mask cannot be attached to itself.");target.window.setMask(output,false);target.window.maskEnabled=true;target.window.maskVisible=true;}
       output.show();this.createdMasks.push(output);this.createdMask=output;this.outputRevision=this.revision;this.status.text="Created "+id+". Save the mask manually. You can create another mask or go Back.";
-      this.outputName.text=PM_availableId(id);return output;
+      this.outputName.text=PM_availableId(id);report(100,"Mask created: "+id);if(notify!==false)PM_notifyMasksCreated([output],this.applyMask.checked?target:null);return output;
    }catch(e){PM_close(output);this.status.text="Error: "+String(e);return null;}
 }
 dispose()
@@ -1295,7 +1324,7 @@ makePane(isMask)
 }
 
 
-var PM_HELP = "POLYMASK ADVANCED 0.3.0-beta.17\nCopyright Carlos Rincón 2026\nRequires PixInsight 1.9.6. Local beta.\n\nSelect an already-open working image in the dropdown and choose Open editor.\nThis edition focuses on creating masks. The left sidebar has Shape, Selection\nand Output tabs. Both previews remain on the right. Combining existing masks is\ntemporarily hidden; its processing code is retained for future development.\nThe polygons you draw are still united into one mask.\nFit/100%/zoom and output actions remain in the sidebar.\nNormally use a stretched RGB or monochrome image. No astrometry is needed.\n\nDRAWING\nFreehand (default): hold the left mouse button and trace an area, then release\nto close it. The trace is simplified to at most 64 editable vertices. Crossing\ncontours are rejected and the previous polygon is preserved. Drawing away from\nvertices replaces the selected polygon; Undo restores it. Drag a vertex to refine.\nBy points: click to place vertices, then click the first point or Close polygon.\nClick a closed edge to insert a vertex; right click for contour actions.\nInvert region area is visible in Shape and selects the area outside the polygon\nbefore color and lightness filtering. Numeric vertex coordinates are under\nAdvanced region controls. Invert final mask appears only in Output and\ncomplements the entire filtered and blurred result, including excluded areas.\nAdd region creates another polygon. Name the selected region using the field\nbelow the dropdown. The sidebar and image caption show which region is being\nedited. Purple thick outlines and [EDITING] identify the active region; other\nregions are cyan. Click another region border or select it in the dropdown,\nincluding while Freehand mode is active. Region filters are kept independently.\nWheel zooms; Shift-drag pans.\n\nLIGHTNESS: Long Min and Max sliders choose a CIE L* interval (0–100); endpoints\ncannot cross. Each has a second Fine slider with 0.1 L* steps, ±1 L* around the\ncoarse value. Moving the coarse slider resets its fine adjustment; saved values\nretain one decimal place when switching regions. Transition softens the interval boundaries. Feather sigma softens\npolygon edges. Strength adjusts mask weight. STF affects display only.\n\nFINAL: Final blur is applied after region/color/lightness combination; final\ninversion follows blur. Geometry edits do not calculate the mask automatically.\nWhile drawing or moving vertices, only the contour changes. The previous mask\nremains visible with PREVIEW OUT OF DATE. Click Update Preview when ready to\ncompute the current full-resolution preview. No full refinement is queued.\nAutomatic selection preview updates color, lightness and final blur at reduced\nresolution only when the polygon preview is current. It never confirms edited\ngeometry. Disable it to update all changes manually with Update Preview.\nFinal inversion reuses a current mask and updates display bitmaps natively;\nif other changes are pending, update the preview first.\nCreate Mask always creates a full-resolution grayscale output; save it manually.\nApply Mask attaches a fresh output to the selected target image; it must share\nthe dimensions and registered grid. It replaces that target's mask attachment.\nCreate Separate Masks creates one output per polygon in drawing mode only.\n\nCOLOR MASKS\nSelect Red, Green, Blue, Cyan, Magenta or Yellow. If the contour is empty,\nselecting a color automatically creates a full-image region. Existing polygons\nare retained. Color selection is restricted to their area, or the outside area\nwhen Invert region area is enabled in Shape. Weight selects the author's\nE1 mode: Chrominance (CIEc, automatically normalized) or Lightness (CIEL, unchanged). Chrominance normalization preserves zero, uses the 99.5th percentile of positive sampled values, caps gain at 250 and does not boost a percentile below 0.001. It cannot distinguish genuine weak signal from noise; review the result. Color settings are kept\nindependently for each polygon. Full image region creates the color mask over the\nwhole working RGB image; other polygons restrict it to their selected area (inside or inverted outside).\nThe color mask is multiplied by polygon strength and optional L* selection.\nFormula constants and mtf arguments are preserved as supplied. E2 was declared\nbut unused in those equations; Mask strength (%) controls the region's intensity.\nColor masks require RGB input and produce grayscale outputs. Save created color masks manually in PixInsight.\nInvert final mask complements the completed combined result after final blur,\nincluding color and lightness restrictions: M becomes 1-M. Preview includes it.\n\nINSTALL: Keep icons/ and manuals/ beside PolyMask_EN.js. Use Script > Feature\nScripts > Add, select this folder, then Crinconlab > PolyMask Advanced (beta).\nAlternatively use Script > Execute Script File and choose PolyMask_EN.js.\nBack returns to image selection; created outputs remain open.\n\nPREVIEW SCOPE\nPreview active region only isolates the selected region for display. Other\nregion contours remain visible so you can identify and switch them. The right\ncaption explicitly marks ACTIVE REGION ONLY. Both draft and full-size preview\ncan be isolated. A complete final output requires all regions to be closed.\nCreate Mask and Apply Mask always calculate the complete result, even if the\nlast preview was isolated. After creation the right caption says Complete output\nmask; a subsequent edit resumes the selected preview scope.\n\nBOUNDARY SOFTNESS AND FINAL MASK BLUR\nBoundary softness smooths each polygon edge before regions are combined.\nFinal mask blur is in Output and is applied LAST to the combined polygon, color\nand lightness selections. It can spread gray into nearby excluded areas. Gray\nmeans partial processing, not an untouched or strictly excluded area. The lightness\ntransition also extends outside Min/Max, as before; it is not a hard exclusion.\nUse zero final blur to inspect the selection before spatial smoothing. Final inversion is applied last.\n\nEXISTING-MASK COMBINATION — TEMPORARILY HIDDEN\nThis local edition does not expose operations between existing masks. Projects\nsaved in Create mode remain compatible. A beta-7 project saved in Combine mode\nis rejected with an explanatory message, rather than loaded with altered meaning.\nUse beta 7 to continue that combination project.\n\nSAVE AND LOAD PROJECTS\nSave project writes a local .pmp.json file containing region names, contours,\nper-region selections and strengths, global blur/inversion and open-view\nidentifiers. Unfinished contours can be saved. It does not include image files,\noutput masks or undo history. Open the reference image in PixInsight before Load\nproject. Missing mask/target images are reported; the script does not open files\nautomatically or substitute another image.\n\nDimensions or channel-count differences prevent restoration: select the original\nreference. Different image names/paths or changed reference pixel samples require\nyour confirmation. Sparse pixel samples help detect changes; they are not proof\nthat images are registered or identical. No automatic scaling is performed.\nInvalid project data is rejected before replacing the current editor state.\nProject writes cannot target PixInsight installation/configuration directories.\n\nINSTALLATION NOTE\nKeep ProtectedPaths.jsh and PolyMaskProjects.jsh beside PolyMask_EN.js, together\nwith icons/ and manuals/. This is still a local beta and is not published.\n\nBETA 11 — LIVE PREVIEW, CHROMINANCE NORMALIZATION AND FINAL BLUR\nLive calculations use cached reduced geometry, color maps and lightness.\nUnchanged regions are reused. Only the latest requested settings are pending.\nFull-size preview and output are still calculated at original resolution.\nBoth-sides feather remains unchanged.\n\nBETA 10 — BOTH-SIDES FEATHER ONLY\nBoundary softness is always a symmetric Gaussian blur extending inside and\noutside each polygon. There is no direction selector. Zero softness keeps\nhard edges. Draft preview, full preview and output use this same rule.\nFinal mask blur remains a separate optional blur of the complete output.\nAn old project using inward feathering prompts for confirmation before its\nregions are converted to both-sides feathering. Review the changed boundaries.\n\nBETA 14 — FULL-RESOLUTION REFINEMENT CACHE\nUnchanged region geometry, color selections and filtered regions are reused\nbetween refinements. Changing lightness reuses the polygon and color map.\nThe first refinement and changed geometry still require native computation.\nFinal blur, inversion and output resolution are unchanged.\nThe cache retains up to 384 MiB of image samples, or one current mask when\nthat mask alone is larger. This is not a limit on total application memory.\nLeast-recently-used entries are discarded; project reload and editor close\nrelease the cache. Display rendering and overlay preparation still take time.\n\nBETA 15 — EXPLICIT GEOMETRY PREVIEW\nUpdate Preview is visible again. Editing polygons or region boundary softness\nmarks the display as stale and stops automatic preview timers. Selection\nchanges cannot accept pending geometry edits. Create Mask and Apply Mask still\ncompute complete current settings at full resolution, even if preview is stale.\nThe final inversion shortcut reuses the mask; geometry/color/lightness/blur are\nnot recalculated. The signed published beta 14 is unchanged.\n\nPENDING PREVIEW NOTICE\nA small red Preview out of date badge appears in the upper-right corner of\nthe mask panel when manual updating is required: edited geometry, or automatic selection preview\nturned off. Automatic color/lightness/blur updates do not show this warning.\nIt disappears after a successful update. This is display-only and is never\nembedded in the created mask or source image.\n";
+var PM_HELP = "POLYMASK ADVANCED 0.3.0-beta.18\nCopyright Carlos Rincón 2026\nRequires PixInsight 1.9.6. Local beta.\n\nSelect an already-open working image in the dropdown and choose Open editor.\nThis edition focuses on creating masks. The left sidebar has Shape, Selection\nand Output tabs. Both previews remain on the right. Combining existing masks is\ntemporarily hidden; its processing code is retained for future development.\nThe polygons you draw are still united into one mask.\nFit/100%/zoom and output actions remain in the sidebar.\nNormally use a stretched RGB or monochrome image. No astrometry is needed.\n\nDRAWING\nFreehand (default): hold the left mouse button and trace an area, then release\nto close it. The trace is simplified to at most 64 editable vertices. Crossing\ncontours are rejected and the previous polygon is preserved. Drawing away from\nvertices replaces the selected polygon; Undo restores it. Drag a vertex to refine.\nBy points: click to place vertices, then click the first point or Close polygon.\nClick a closed edge to insert a vertex; right click for contour actions.\nInvert region area is visible in Shape and selects the area outside the polygon\nbefore color and lightness filtering. Numeric vertex coordinates are under\nAdvanced region controls. Invert final mask appears only in Output and\ncomplements the entire filtered and blurred result, including excluded areas.\nAdd region creates another polygon. Name the selected region using the field\nbelow the dropdown. The sidebar and image caption show which region is being\nedited. Purple thick outlines and [EDITING] identify the active region; other\nregions are cyan. Click another region border or select it in the dropdown,\nincluding while Freehand mode is active. Region filters are kept independently.\nWheel zooms; Shift-drag pans.\n\nLIGHTNESS: Long Min and Max sliders choose a CIE L* interval (0–100); endpoints\ncannot cross. Each has a second Fine slider with 0.1 L* steps, ±1 L* around the\ncoarse value. Moving the coarse slider resets its fine adjustment; saved values\nretain one decimal place when switching regions. Transition softens the interval boundaries. Feather sigma softens\npolygon edges. Strength adjusts mask weight. STF affects display only.\n\nFINAL: Final blur is applied after region/color/lightness combination; final\ninversion follows blur. Geometry edits do not calculate the mask automatically.\nWhile drawing or moving vertices, only the contour changes. The previous mask\nremains visible with PREVIEW OUT OF DATE. Click Update Preview when ready to\ncompute the current full-resolution preview. No full refinement is queued.\nAutomatic selection preview updates color, lightness and final blur at reduced\nresolution only when the polygon preview is current. It never confirms edited\ngeometry. Disable it to update all changes manually with Update Preview.\nFinal inversion reuses a current mask and updates display bitmaps natively;\nif other changes are pending, update the preview first.\nCreate Mask always creates a full-resolution grayscale output; save it manually.\nThe Process Console stays visible during calculations and remains open afterwards.\nA Mask created notice confirms successful output; OK closes only the notice.\nThe editor stays open so you can create another mask or close PolyMask.\nApply Mask attaches a fresh output to the selected target image; it must share\nthe dimensions and registered grid. It replaces that target's mask attachment.\nCreate Separate Masks creates one output per polygon in drawing mode only.\n\nCOLOR MASKS\nSelect Red, Green, Blue, Cyan, Magenta or Yellow. If the contour is empty,\nselecting a color automatically creates a full-image region. Existing polygons\nare retained. Color selection is restricted to their area, or the outside area\nwhen Invert region area is enabled in Shape. Weight selects the author's\nE1 mode: Chrominance (CIEc, automatically normalized) or Lightness (CIEL, unchanged). Chrominance normalization preserves zero, uses the 99.5th percentile of positive sampled values, caps gain at 250 and does not boost a percentile below 0.001. It cannot distinguish genuine weak signal from noise; review the result. Color settings are kept\nindependently for each polygon. Full image region creates the color mask over the\nwhole working RGB image; other polygons restrict it to their selected area (inside or inverted outside).\nThe color mask is multiplied by polygon strength and optional L* selection.\nFormula constants and mtf arguments are preserved as supplied. E2 was declared\nbut unused in those equations; Mask strength (%) controls the region's intensity.\nColor masks require RGB input and produce grayscale outputs. Save created color masks manually in PixInsight.\nInvert final mask complements the completed combined result after final blur,\nincluding color and lightness restrictions: M becomes 1-M. Preview includes it.\n\nINSTALL: Keep icons/ and manuals/ beside PolyMask_EN.js. Use Script > Feature\nScripts > Add, select this folder, then Crinconlab > PolyMask Advanced (beta).\nAlternatively use Script > Execute Script File and choose PolyMask_EN.js.\nBack returns to image selection; created outputs remain open.\n\nPREVIEW SCOPE\nPreview active region only isolates the selected region for display. Other\nregion contours remain visible so you can identify and switch them. The right\ncaption explicitly marks ACTIVE REGION ONLY. Both draft and full-size preview\ncan be isolated. A complete final output requires all regions to be closed.\nCreate Mask and Apply Mask always calculate the complete result, even if the\nlast preview was isolated. After creation the right caption says Complete output\nmask; a subsequent edit resumes the selected preview scope.\n\nBOUNDARY SOFTNESS AND FINAL MASK BLUR\nBoundary softness smooths each polygon edge before regions are combined.\nFinal mask blur is in Output and is applied LAST to the combined polygon, color\nand lightness selections. It can spread gray into nearby excluded areas. Gray\nmeans partial processing, not an untouched or strictly excluded area. The lightness\ntransition also extends outside Min/Max, as before; it is not a hard exclusion.\nUse zero final blur to inspect the selection before spatial smoothing. Final inversion is applied last.\n\nEXISTING-MASK COMBINATION — TEMPORARILY HIDDEN\nThis local edition does not expose operations between existing masks. Projects\nsaved in Create mode remain compatible. A beta-7 project saved in Combine mode\nis rejected with an explanatory message, rather than loaded with altered meaning.\nUse beta 7 to continue that combination project.\n\nSAVE AND LOAD PROJECTS\nSave project writes a local .pmp.json file containing region names, contours,\nper-region selections and strengths, global blur/inversion and open-view\nidentifiers. Unfinished contours can be saved. It does not include image files,\noutput masks or undo history. Open the reference image in PixInsight before Load\nproject. Missing mask/target images are reported; the script does not open files\nautomatically or substitute another image.\n\nDimensions or channel-count differences prevent restoration: select the original\nreference. Different image names/paths or changed reference pixel samples require\nyour confirmation. Sparse pixel samples help detect changes; they are not proof\nthat images are registered or identical. No automatic scaling is performed.\nInvalid project data is rejected before replacing the current editor state.\nProject writes cannot target PixInsight installation/configuration directories.\n\nINSTALLATION NOTE\nKeep ProtectedPaths.jsh and PolyMaskProjects.jsh beside PolyMask_EN.js, together\nwith icons/ and manuals/. This is still a local beta and is not published.\n\nBETA 11 — LIVE PREVIEW, CHROMINANCE NORMALIZATION AND FINAL BLUR\nLive calculations use cached reduced geometry, color maps and lightness.\nUnchanged regions are reused. Only the latest requested settings are pending.\nFull-size preview and output are still calculated at original resolution.\nBoth-sides feather remains unchanged.\n\nBETA 10 — BOTH-SIDES FEATHER ONLY\nBoundary softness is always a symmetric Gaussian blur extending inside and\noutside each polygon. There is no direction selector. Zero softness keeps\nhard edges. Draft preview, full preview and output use this same rule.\nFinal mask blur remains a separate optional blur of the complete output.\nAn old project using inward feathering prompts for confirmation before its\nregions are converted to both-sides feathering. Review the changed boundaries.\n\nBETA 14 — FULL-RESOLUTION REFINEMENT CACHE\nUnchanged region geometry, color selections and filtered regions are reused\nbetween refinements. Changing lightness reuses the polygon and color map.\nThe first refinement and changed geometry still require native computation.\nFinal blur, inversion and output resolution are unchanged.\nThe cache retains up to 384 MiB of image samples, or one current mask when\nthat mask alone is larger. This is not a limit on total application memory.\nLeast-recently-used entries are discarded; project reload and editor close\nrelease the cache. Display rendering and overlay preparation still take time.\n\nBETA 15 — EXPLICIT GEOMETRY PREVIEW\nUpdate Preview is visible again. Editing polygons or region boundary softness\nmarks the display as stale and stops automatic preview timers. Selection\nchanges cannot accept pending geometry edits. Create Mask and Apply Mask still\ncompute complete current settings at full resolution, even if preview is stale.\nThe final inversion shortcut reuses the mask; geometry/color/lightness/blur are\nnot recalculated. The signed published beta 14 is unchanged.\n\nPENDING PREVIEW NOTICE\nA small red Preview out of date badge appears in the upper-right corner of\nthe mask panel when manual updating is required: edited geometry, or automatic selection preview\nturned off. Automatic color/lightness/blur updates do not show this warning.\nIt disappears after a successful update. This is display-only and is never\nembedded in the created mask or source image.\n";
 
 function PM_help()
 {
@@ -1310,7 +1339,7 @@ class PM_SetupDialog extends Dialog
 {
 constructor()
 {
-   super();var self=this;this.windowTitle="Crinconlab PolyMask · v0.3.0-beta.17";
+   super();var self=this;this.windowTitle="Crinconlab PolyMask · v0.3.0-beta.18";
    this.views=new ViewList(this);this.views.getMainViews();this.views.setScaledMinWidth(430);
    var active=ImageWindow.activeWindow;if(active && !active.isNull)this.views.currentView=active.mainView;
    var refresh=new PushButton(this);refresh.text="Refresh";refresh.onClick=function(){var previous=self.views.currentView;self.views.getMainViews();if(previous && !previous.isNull)self.views.currentView=previous;};
@@ -1327,7 +1356,7 @@ constructor()
 }
 function PM_main()
 {
-   console.hide();var setup=new PM_SetupDialog;
+   var setup=new PM_SetupDialog;
    while(setup.execute())
    {
       var editor=null;

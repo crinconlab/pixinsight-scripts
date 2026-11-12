@@ -1,8 +1,8 @@
 {
   "package_id": "crinconlab-scripts",
-  "version": "2026.11.11",
+  "version": "2026.11.12",
   "title": "C_Rinconlab Scripts",
-  "description": "Header Editor 1.0.1; RGB Ha Blend 0.15.6; Focal Length Blend 0.11.13; PolyMask 0.3.0-beta.17 (Beta): manual geometry preview, fast inversion and manual-only pending notice. PixInsight 1.9.6.",
+  "description": "Header Editor 1.0.1; RGB Ha Blend 0.15.6; Focal Length Blend 0.11.13; PolyMask 0.3.0-beta.18 (Beta): visible Process Console and mask-created confirmation. PixInsight 1.9.6.",
   "pixinsight_versions": "1.9.6:1.9.6",
   "files": [
     "scripts/crinconlab/FITS_XISF_Header_Editor_EN.js",

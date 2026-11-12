@@ -1,4 +1,4 @@
-POLYMASK ADVANCED 0.3.0-beta.17
+POLYMASK ADVANCED 0.3.0-beta.18
 Copyright Carlos Rincón 2026
 Requires PixInsight 1.9.6. Local beta.
 
@@ -45,6 +45,9 @@ geometry. Disable it to update all changes manually with Update Preview.
 Final inversion reuses a current mask and updates display bitmaps natively;
 if other changes are pending, update the preview first.
 Create Mask always creates a full-resolution grayscale output; save it manually.
+The Process Console stays visible during calculations and remains open afterwards.
+A Mask created notice confirms successful output; OK closes only the notice.
+The editor stays open so you can create another mask or close PolyMask.
 Apply Mask attaches a fresh output to the selected target image; it must share
 the dimensions and registered grid. It replaces that target's mask attachment.
 Create Separate Masks creates one output per polygon in drawing mode only.

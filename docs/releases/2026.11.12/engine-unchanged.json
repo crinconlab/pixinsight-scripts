@@ -1,0 +1,7 @@
+{
+  "maskEngineUnchangedExceptConsoleVisibility": true,
+  "nativeChecks": 14,
+  "actualPopupConfirmed": true,
+  "OKReturnsToEditor": true,
+  "consoleVisibleAfterCompletion": true
+}

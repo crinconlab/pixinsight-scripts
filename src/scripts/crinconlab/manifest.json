@@ -1,8 +1,8 @@
 {
   "collection": "C_Rinconlab",
-  "version": "2026.11.11",
+  "version": "2026.11.12",
   "targetPixInsight": "1.9.6",
-  "status": "awaiting two PolyMask signatures",
+  "status": "unsigned signing candidate; published repository remains 2026.11.11",
   "scripts": [
     {
       "script": "FITS_XISF_Header_Editor_EN.js",
@@ -21,8 +21,12 @@
     },
     {
       "script": "PolyMask_EN.js",
-      "version": "0.3.0-beta.17",
-      "sha256": "06085ecd56912dc6a78b4e3dd50729f9a65ae5671fa2abc2d8df065030378fa4"
+      "version": "0.3.0-beta.18",
+      "sha256": "34bd7b894dbb5deecba94d1ab8cc3b0cc0d3fb54349428e8bcee5e240670670d"
     }
+  ],
+  "changedFilesToSign": [
+    "PolyMask_EN.js",
+    "PolyMaskProjects.jsh"
   ]
 }

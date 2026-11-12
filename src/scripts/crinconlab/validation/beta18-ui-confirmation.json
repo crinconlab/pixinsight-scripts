@@ -1,0 +1,9 @@
+{
+  "created": true,
+  "sourcePreserved": true,
+  "nativePopupObserved": true,
+  "OKReturnsToEditor": true,
+  "createButtonEnabledAfterOK": true,
+  "consoleVisibleAfterCompletion": true,
+  "editorEnabledAfterClosingDialog": false
+}
