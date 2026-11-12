@@ -6,5 +6,5 @@
   "zipIntegrity": true,
   "signedSourceBytesMatchVerifiedFiles": true,
   "astrometricCopyExcluded": true,
-  "indexSignature": "pending"
+  "indexSignature": "verified in PixInsight 1.9.6"
 }
