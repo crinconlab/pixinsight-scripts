@@ -1,4 +1,4 @@
-RGB HA BLEND — VERSION 0.15.6
+RGB HA BLEND — VERSION 0.15.7
 Copyright © Carlos Rincón 2026
 
 MANUAL VALIDATION
@@ -35,3 +35,7 @@ When updating an existing collection, replace RGB_Ha_Blend.js only and retain th
 
 VALIDATION LIMITS
 Native tests use synthetic stars, real registration masks and astrometric coordinate comparisons after cropping. Automated calibration tests inject a calibration callback: validate a complete run with your installed SPCC catalog and real astrophotography data.
+
+OPTIONAL NOISE REDUCTION
+Before running RGB Ha Blend, we recommend applying noise reduction with MLDenoise to both the RGB and Dual Band images.
+This is a recommendation, not a requirement. The script does not run MLDenoise automatically.

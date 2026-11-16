@@ -1,17 +1,18 @@
-C_Rinconlab signing candidate 2026.11.12 — PixInsight 1.9.6
+C_Rinconlab 2026.11.16 — signed scripts for PixInsight 1.9.6
 
-PolyMask 0.3.0-beta.18: Process Console is shown during calculations and stays
-open afterwards. A Mask created / Masks created notice confirms successful
-output; OK closes the notice only and leaves the editor available.
-When attached, the notice names the target image. Failed creation has no
-success notice. No mask computation or selection formula has changed.
+PolyMask 1.0.0: column-based polygon filling, 1 px fine boundary softness
+adjustment and a startup release notice with Don't show this again.
+RGB Ha Blend 0.15.7: optional MLDenoise preparation recommendation.
+Focal Length Blend 0.11.13: unchanged source, renewed signature.
+FITS-XISF Header Editor 1.0.1: unchanged source and retained signature.
+Astrometric Solution Copy is excluded from this suite.
 
-Header Editor 1.0.1; RGB Ha Blend 0.15.6; Focal Length Blend 0.11.13 unchanged.
-Astrometric Solution Copy is excluded.
+All six script/code signatures were verified in PixInsight 1.9.6.
+This ZIP is intended for distribution as a versioned GitHub Release asset.
+Keep the existing update repository URL and use Check for Updates after
+the signed update index has been published. Keep the scripts, auxiliary
+files, icons and manuals together for a manual installation.
 
-All six source/code signatures are verified in PixInsight 1.9.6.
-PolyMask_EN.js and PolyMaskProjects.jsh have new signatures; four signatures
-are retained for unchanged files. The update index still awaits its XML
-signature. Do not modify the signed sources. The published update repository
-continues to serve 2026.11.11 until the signed index is ready.
+No RGB blend algorithm was changed. An unspecified Ha/RGB refinement
+remains pending author clarification and is not implemented.
 Copyright Carlos Rincón 2026

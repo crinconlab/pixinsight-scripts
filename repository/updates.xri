@@ -4,12 +4,12 @@
       <p>PixInsight scripts — crinconlab</p>
    </description>
    <platform os="all" arch="noarch" version="1.9.6:1.9.6">
-      <package fileName="crinconlab-scripts-2026.11.12-7b9e205fa4a01ab1.zip" sha1="f35bf1592db8ff6431651ccbbb9eac114af0a5b8" type="script" releaseDate="20261112">
-         <title>C_Rinconlab Scripts 2026.11.12</title>
+      <package fileName="crinconlab-scripts-2026.11.16-264147971bf38db4.zip" sha1="e08a027a7420e7c25339f32d3094afacb00f0cf9" type="script" releaseDate="20261116">
+         <title>C_Rinconlab Scripts 2026.11.16</title>
          <description>
-            <p>Header Editor 1.0.1; RGB Ha Blend 0.15.6; Focal Length Blend 0.11.13; PolyMask 0.3.0-beta.18 (Beta): visible Process Console and mask-created confirmation. PixInsight 1.9.6.</p>
+            <p>Header Editor 1.0.1; RGB Ha Blend 0.15.7: optional MLDenoise preparation note; Focal Length Blend 0.11.13; PolyMask 1.0.0: column filling, fine boundary softness and release notice. PixInsight 1.9.6.</p>
          </description>
       </package>
    </platform>
 </xri>
-<Signature developerId="Carlos_Rincon_Astrophoto" timestamp="2026-11-12T08:04:13.625Z" encoding="Base64">T1af+OD5A5c+tpEXqVsi8JY6QCFPvOX4yVr5mGZQ+cZMsvD0ySwJfJckf0O5rUjKoRj8xA6OESRnRg73Dg1kDA==</Signature>
+<Signature developerId="Carlos_Rincon_Astrophoto" timestamp="2026-11-16T12:51:20.218Z" encoding="Base64">FW47R8cD3GN1xLF3+0BgUfhUx+8EBCxEInsX0BFZLwH798PdjuOEusy5jdOvrOIgZuL0sXP3C57OuzXaKFtOCQ==</Signature>

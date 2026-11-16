@@ -1,0 +1,30 @@
+{
+  "tag": "polymask-v0.1.0",
+  "release": "https://github.com/crinconlab/pixinsight-scripts/releases/tag/polymask-v0.1.0",
+  "assets": [
+    {
+      "id": 678976145,
+      "name": "PolyMask_0.1.0.zip",
+      "download_count": 2,
+      "bytes": 17781
+    },
+    {
+      "id": 678976173,
+      "name": "PolyMask_Manual_EN.txt",
+      "download_count": 1,
+      "bytes": 4311
+    },
+    {
+      "id": 678976189,
+      "name": "PolyMask_Preview.png",
+      "download_count": 7,
+      "bytes": 148304
+    },
+    {
+      "id": 678976206,
+      "name": "SHA256SUMS.txt",
+      "download_count": 1,
+      "bytes": 261
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "checks": [
+    {
+      "name": "Exact optional note is visible in image-selection dialog",
+      "passed": true
+    },
+    {
+      "name": "Recommendation is explicitly optional",
+      "passed": true
+    },
+    {
+      "name": "Inline help identifies optional recommendation",
+      "passed": true
+    },
+    {
+      "name": "No new per-run popup recommendation",
+      "passed": true
+    },
+    {
+      "name": "RGB version updated",
+      "passed": true
+    },
+    {
+      "name": "News suppression is opt-in",
+      "passed": true
+    },
+    {
+      "name": "News visible on first launch",
+      "passed": true
+    },
+    {
+      "name": "Closing news without OK leaves preference untouched",
+      "passed": true
+    },
+    {
+      "name": "Suppression preference persists",
+      "passed": true
+    },
+    {
+      "name": "Suppressed news does not reappear",
+      "passed": true
+    },
+    {
+      "name": "Release notes remain in Help",
+      "passed": true
+    }
+  ]
+}

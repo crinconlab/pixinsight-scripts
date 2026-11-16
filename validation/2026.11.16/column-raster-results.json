@@ -1,0 +1,183 @@
+[
+  {
+    "name": "rectangle",
+    "width": 128,
+    "height": 96,
+    "vertices": 4,
+    "oldMs": 109,
+    "columnMs": 12,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "diagonal boundary centres",
+    "width": 128,
+    "height": 96,
+    "vertices": 3,
+    "oldMs": 86,
+    "columnMs": 11,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "concave",
+    "width": 128,
+    "height": 96,
+    "vertices": 6,
+    "oldMs": 101,
+    "columnMs": 12,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "half pixel vertices",
+    "width": 128,
+    "height": 96,
+    "vertices": 4,
+    "oldMs": 67,
+    "columnMs": 11,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "freehand 0",
+    "width": 128,
+    "height": 96,
+    "vertices": 31,
+    "oldMs": 264,
+    "columnMs": 9,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "freehand 1",
+    "width": 128,
+    "height": 96,
+    "vertices": 31,
+    "oldMs": 243,
+    "columnMs": 11,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "freehand 2",
+    "width": 128,
+    "height": 96,
+    "vertices": 31,
+    "oldMs": 250,
+    "columnMs": 9,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "freehand 3",
+    "width": 128,
+    "height": 96,
+    "vertices": 31,
+    "oldMs": 246,
+    "columnMs": 10,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "freehand 4",
+    "width": 128,
+    "height": 96,
+    "vertices": 31,
+    "oldMs": 256,
+    "columnMs": 9,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "freehand 5",
+    "width": 128,
+    "height": 96,
+    "vertices": 31,
+    "oldMs": 247,
+    "columnMs": 8,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "freehand 6",
+    "width": 128,
+    "height": 96,
+    "vertices": 31,
+    "oldMs": 246,
+    "columnMs": 10,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "freehand 7",
+    "width": 128,
+    "height": 96,
+    "vertices": 31,
+    "oldMs": 261,
+    "columnMs": 10,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "freehand 8",
+    "width": 128,
+    "height": 96,
+    "vertices": 31,
+    "oldMs": 240,
+    "columnMs": 11,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "freehand 9",
+    "width": 128,
+    "height": 96,
+    "vertices": 31,
+    "oldMs": 267,
+    "columnMs": 11,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "freehand 10",
+    "width": 128,
+    "height": 96,
+    "vertices": 31,
+    "oldMs": 276,
+    "columnMs": 10,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "freehand 11",
+    "width": 128,
+    "height": 96,
+    "vertices": 31,
+    "oldMs": 254,
+    "columnMs": 9,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "large 32",
+    "width": 3200,
+    "height": 2400,
+    "vertices": 32,
+    "oldMs": 5233,
+    "columnMs": 58,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "large 48",
+    "width": 3200,
+    "height": 2400,
+    "vertices": 48,
+    "oldMs": 8093,
+    "columnMs": 48,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "large 64",
+    "width": 3200,
+    "height": 2400,
+    "vertices": 64,
+    "oldMs": 11485,
+    "columnMs": 51,
+    "mismatchedPixels": 0
+  },
+  {
+    "name": "symmetric feather sigma16 invert false",
+    "mismatchedPixels": 0,
+    "maxError": 0
+  },
+  {
+    "name": "symmetric feather sigma16 invert true",
+    "mismatchedPixels": 0,
+    "maxError": 0
+  }
+]

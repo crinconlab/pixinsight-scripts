@@ -1,0 +1,22 @@
+✔ SHA-256 matches published empty, abc and million-a vectors (108.465845ms)
+✔ binary padding/block boundaries and incremental updates match Node crypto (10.396421ms)
+✔ file hashing streams across one-MiB boundaries using native-style ByteArray access (91.65773ms)
+﹣ the actual sample ZIP matches the production pin through the production file-hash helper (0.28765ms) # SKIP
+✔ a same-size altered download is rejected without replacing an existing destination (7.203847ms)
+✔ truncated downloads and transfer failures clean partials and preserve the destination (5.881748ms)
+✔ verified data is published successfully, replacing the old destination only after verification (6.245304ms)
+✔ failed publication restores the previous destination and removes the partial (7.787888ms)
+✔ failed restoration retains the old archive at the reported recovery path (6.676022ms)
+✔ read errors and cancellation close files and leave the old destination unchanged (7.692877ms)
+✔ curl uses HTTPS-only requests and redirects for both Windows identifiers and macOS (12.591102ms)
+✔ protected installation and configuration reject downloads before transfer (4.030472ms)
+✔ download reentrancy is blocked and guard resets after cancellation/error (2.295327ms)
+✔ canceling verification preserves the old destination and removes partial data (5.649014ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 451.761798

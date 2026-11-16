@@ -14,11 +14,11 @@ CoreApplication.ensureMinimumVersion(1,9,6);
 #include <pjsr/astrometry/ImageReprojection.js>
 #feature-id CrinconlabRGBHaBlend : Crinconlab > RGB Ha Blend
 #feature-icon icons/rgb_dualband_orange_v2.svg
-#feature-info RGB + Dual Band composition, Image Solver and SPCC. Version 0.15.6. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026. Local test build: native regression checks passed; manual validation of this revision is pending.
+#feature-info RGB + Dual Band composition, Image Solver and SPCC. Version 0.15.7. English edition. Copyright &copy; Carlos Rinc&oacute;n 2026. Local test build: native regression checks passed; manual validation of this revision is pending.
 
 
 var RD_HELP_TEXT=[
-   "RGB HA BLEND \u2014 VERSION 0.15.6",
+   "RGB HA BLEND \u2014 VERSION 0.15.7",
    "Copyright \u00a9 Carlos Rinc\u00f3n 2026",
    "",
    "MANUAL VALIDATION",
@@ -26,6 +26,8 @@ var RD_HELP_TEXT=[
    "",
    "INPUT PREPARATION",
    "Both images must be linear, gradient-corrected and color-calibrated. RGB must have three channels. Dual Band may be RGB or monochrome. A display STF is allowed. Original inputs are never edited.",
+   "",
+   "Before running RGB Ha Blend, we recommend applying noise reduction with MLDenoise to both the RGB and Dual Band images. This is optional; the script does not run MLDenoise automatically.",
    "",
    "REGISTRATION AND AUTOMATIC CROP",
    "RGB defines the pixel grid. Align using stars (default) uses native StarAlignment with a geometric registration mask. The largest axis-aligned rectangle fully inside that mask is retained, with a two-pixel interpolation guard if borders were removed. Both copies receive exactly the same crop. The mask is geometric: real dark pixels are not treated as missing coverage. Existing padding already present inside an input is not detected. Inputs need enough stars and overlapping field; different scales/rotations can be handled within StarAlignment's matching limits. If registration fails, review your data rather than accepting an unregistered blend.",
@@ -61,7 +63,7 @@ class RD_HelpDialog extends Dialog
 {
 constructor()
 {
-   super();var self=this;this.windowTitle="Help and instructions · RGB Ha Blend · v0.15.6";
+   super();var self=this;this.windowTitle="Help and instructions · RGB Ha Blend · v0.15.7";
    this.manual=new TextBox(this);this.manual.readOnly=true;this.manual.text=RD_HELP_TEXT;
    this.manual.setScaledMinSize(700,460);
    this.exportButton=new PushButton(this);this.exportButton.text="Save manual .txt...";
@@ -409,7 +411,7 @@ class RD_PreviewDialog extends Dialog
 constructor(config,services)
 {
    super();var self=this;this.busy=false;this.cursor=new Cursor(StdCursor_Arrow);this.onClose=function(){return !self.busy;};this.config=config;this.services=services;this.state={reference:null,result:null,accepted:false};
-   this.windowTitle="SPCC-calibrated preview · v0.15.6";
+   this.windowTitle="SPCC-calibrated preview · v0.15.7";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function pane()
    {
@@ -684,7 +686,7 @@ class RD_Dialog extends Dialog
 constructor()
 {
    super();var self=this;
-   this.windowTitle="RGB Ha Blend · v0.15.6";
+   this.windowTitle="RGB Ha Blend · v0.15.7";
    function label(text){var l=new Label(self);l.text=text;l.wordWrapping=true;return l;}
    function choose(list)
    {
@@ -707,6 +709,8 @@ constructor()
    }
    this.rgb=new ViewList(this);this.rgb.getMainViews();this.dual=new ViewList(this);this.dual.getMainViews();
    this.rgbRow=imageRow("2. RGB image:",this.rgb);this.dualRow=imageRow("3. Dual Band image:",this.dual);
+   this.noiseRecommendation=label("Before running RGB Ha Blend, we recommend applying noise reduction with MLDenoise to both the RGB and Dual Band images.");
+   this.noiseRecommendation.toolTip="Optional preparation recommendation. RGB Ha Blend does not run MLDenoise automatically.";
    this.idEdit=new Edit(this);this.idEdit.text="RGB_DualBand";
    this.spccProcess=RD_loadDefaults();
    this.spccSummary=label("");
@@ -734,7 +738,7 @@ constructor()
    this.helpButton=new PushButton(this);this.helpButton.text="Help and instructions";this.helpButton.onClick=RD_showHelp;
    var buttons=new HorizontalSizer;buttons.spacing=8;buttons.add(this.helpButton);buttons.addStretch();buttons.add(this.okButton);buttons.add(this.cancelButton);
    this.sizer=new VerticalSizer;this.sizer.margin=12;this.sizer.spacing=8;
-   var items=[this.preparation,this.rgbRow,this.dualRow,label("Registration and automatic common-field crop:"),this.registration,
+   var items=[this.preparation,this.rgbRow,this.dualRow,this.noiseRecommendation,label("Registration and automatic common-field crop:"),this.registration,
       label("4. New image name:"),this.idEdit,this.spccSummary,this.configureSPCC,
       label("RGB is the reference. Its astrometry is reused or solved first. The cropped result retains an updated solution. Each preview update runs SPCC."),
       buttons,label("Copyright © Carlos Rincón 2026")];

@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/crinconlab/pixinsight-scripts/releases/download/polymask-v0.1.0/PolyMask_0.1.0.zip",
+  "bytes": 17781,
+  "sha256": "8c10b251066b13da5187163bc84fed98897a1a5bf58c45c9a67d8f61e7b85d45",
+  "sha1": "a2b4ff3628cc7dc3e0b0737f436e33410dc77bc6",
+  "verified": true,
+  "scope": "HTTP bytes only; native signature and Check for Updates validation still required",
+  "testAssetOnly": true,
+  "finalHost": "release-assets.githubusercontent.com",
+  "notInstalledOrExecuted": true
+}
