@@ -1,0 +1,16 @@
+{
+  "status": "LOCAL ONLY \u2014 index unsigned; do not publish",
+  "repository_url": "https://raw.githubusercontent.com/crinconlab/pixinsight-scripts/main/repository/",
+  "release_tag": "suite-2026.11.16",
+  "asset": "crinconlab-scripts-2026.11.16-264147971bf38db4.zip",
+  "bytes": 144270,
+  "sha1": "e08a027a7420e7c25339f32d3094afacb00f0cf9",
+  "sha256": "264147971bf38db48e034745fb81d5d35a431da3624a6220c7814df6d178a64c",
+  "serverURL": "https://github.com/crinconlab/pixinsight-scripts/releases/download/suite-2026.11.16/",
+  "download_url": "https://github.com/crinconlab/pixinsight-scripts/releases/download/suite-2026.11.16/crinconlab-scripts-2026.11.16-264147971bf38db4.zip",
+  "zipIntegrity": true,
+  "sixVerifiedSignaturesIncluded": true,
+  "sourceBytesUnchanged": true,
+  "indexSigned": false,
+  "productionIndexChanged": false
+}

@@ -2,7 +2,7 @@
   "collection": "C_Rinconlab",
   "version": "2026.11.16",
   "targetPixInsight": "1.9.6",
-  "status": "unsigned candidate; production index unchanged",
+  "status": "source signatures verified; final index pending",
   "scripts": [
     {
       "script": "FITS_XISF_Header_Editor_EN.js",
@@ -25,12 +25,7 @@
       "sha256": "dadcfa0a9294a8ab080777416750d4e97326d8343f30ed210ea8a849fcb40bf6"
     }
   ],
-  "filesToSign": [
-    "PolyMaskProjects.jsh",
-    "PolyMask_EN.js",
-    "RGB_Ha_Blend.js",
-    "Mezcla_Focales.js"
-  ],
-  "sourceSigningStatus": "pending local signing",
+  "filesToSign": [],
+  "sourceSigningStatus": "verified in the local PixInsight environment",
   "distribution": "planned GitHub Release asset using package serverURL; active index unchanged"
 }

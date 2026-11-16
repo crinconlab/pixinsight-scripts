@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+PixInsight XML Code Signature Format - XSGN version 1.0
+Created with PixInsight software - https://pixinsight.com/
+-->
+<xsgn version="1.0" xmlns="http://www.pixinsight.com/xsgn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.pixinsight.com/xsgn http://pixinsight.com/xsgn/xsgn-1.0.xsd">
+   <CreationTime>2026-11-16T12:15:32.969Z</CreationTime>
+   <Signature version="1.0" scriptId="CrinconlabMezclaFocales" developerId="Carlos_Rincon_Astrophoto">
+      <Timestamp>2026-11-16T12:15:32.967Z</Timestamp>
+      <CodeSignature encoding="Base64">9SRNn7Y5HepGcvJuCrSpYDDcHhALUSDMoDLYPrBFgRy/ODcngpuYgwgburRLGVK1BT4yI7dUuijfWoGL0g+YDQ==</CodeSignature>
+   </Signature>
+</xsgn>
