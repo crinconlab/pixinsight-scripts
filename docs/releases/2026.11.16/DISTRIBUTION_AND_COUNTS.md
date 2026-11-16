@@ -1,5 +1,14 @@
 # Release assets, XRI and download counters
 
+
+## Native acceptance result — direct Releases route rejected
+
+The signed index was accepted by the real PixInsight 1.9.6 build 1718 updater from a temporary test repository. Selecting only this suite and applying the update failed with **Network error. Response code: 302**. The follow-up message confirmed zero downloaded packages and one failure. The native updater does not follow this GitHub Release download redirect in this test.
+
+The `serverURL` format is documented and the signatures/content are correct, but that does not make the direct GitHub Release URL installable with Check for Updates. **Do not publish the prepared direct-Release index.** The temporary registration was removed; the production index remains unchanged.
+
+Resolution is awaiting Carlos's choice: retain existing direct raw hosting (Release counter then covers manual Release downloads only), or assess a no-redirect intermediary with its operational/cost implications. Either route requires a new XML index signature; source signatures and frozen ZIP bytes remain valid. Do not use an expiring Release asset redirect URL as a workaround.
+
 ## Verified format
 
 The official **PixInsight Update Repository Reference** installed with PixInsight 1.9.6 documents `package/@serverURL` as the alternate package-server base URL. `fileName` remains relative to that base. See the Package section, installed HTML lines 363–414:

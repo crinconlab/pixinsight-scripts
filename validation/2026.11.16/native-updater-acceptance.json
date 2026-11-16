@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-16",
+  "pixinsight": "1.9.6 build 1718 macOS x64",
+  "testRepository": "https://raw.githubusercontent.com/crinconlab/pixinsight-scripts/prepare-2026.11.16/test-repository-2026.11.16/",
+  "indexSignatureVerifiedByNativeUpdater": true,
+  "certifiedDeveloper": "Carlos_Rincon_Astrophoto",
+  "package": "crinconlab-scripts-2026.11.16-264147971bf38db4.zip",
+  "selectedPackages": 1,
+  "otherPackagesDeselected": true,
+  "nativeDownloadAccepted": false,
+  "error": "Network error. Response code: 302",
+  "completionMessage": "No packages have been downloaded: 1 failed.",
+  "temporaryRepositoryRegistrationRemoved": true,
+  "originalRepositoriesRetained": true,
+  "installationScheduled": false,
+  "userImagesModified": false,
+  "productionIndexChanged": false,
+  "decisionRequired": "Direct raw hosting without Release download counter, or a separately assessed no-redirect intermediary."
+}
