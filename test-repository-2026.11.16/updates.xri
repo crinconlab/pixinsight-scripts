@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xri version="1.0">
+   <description>
+      <p>PixInsight scripts — crinconlab</p>
+   </description>
+   <platform os="all" arch="noarch" version="1.9.6:1.9.6">
+      <package fileName="crinconlab-scripts-2026.11.16-264147971bf38db4.zip" sha1="e08a027a7420e7c25339f32d3094afacb00f0cf9" type="script" releaseDate="20261116" serverURL="https://github.com/crinconlab/pixinsight-scripts/releases/download/suite-2026.11.16/">
+         <title>C_Rinconlab Scripts 2026.11.16</title>
+         <description>
+            <p>Header Editor 1.0.1; RGB Ha Blend 0.15.7: optional MLDenoise preparation note; Focal Length Blend 0.11.13; PolyMask 1.0.0: column filling, fine boundary softness and release notice. PixInsight 1.9.6.</p>
+         </description>
+      </package>
+   </platform>
+</xri>
+<Signature developerId="Carlos_Rincon_Astrophoto" timestamp="2026-11-16T12:27:06.427Z" encoding="Base64">E8S8onzUK6VD6WHAvJbpO5hgnnUICLsyYpyvspmxceWfdgdkXNivdIwCgd0p4H8+NIvZWD8yD9CJM8KG2Jd+DQ==</Signature>
