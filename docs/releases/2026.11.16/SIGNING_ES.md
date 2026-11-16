@@ -1,3 +1,7 @@
+# Estado final
+
+Las seis firmas de código y la firma XML definitiva ya están recibidas y verificadas en PixInsight 1.9.6. No es necesario volver a firmar estos archivos. La descarga desde Check for Updates ha pasado; la instalación se ha programado para el cierre de la aplicación. Las instrucciones siguientes se conservan como historial de preparación y no indican tareas pendientes.
+
 # Firma y publicación — candidato 2026.11.16
 
 No está publicado. El índice activo continúa en 2026.11.12.

@@ -41,6 +41,5 @@
     "scripts/crinconlab/Mezcla_Focales.js",
     "scripts/crinconlab/PolyMask_EN.js"
   ],
-  "package_server_url": "https://github.com/crinconlab/pixinsight-scripts/releases/download/suite-2026.11.16/",
   "release_tag": "suite-2026.11.16"
 }

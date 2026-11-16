@@ -1,3 +1,7 @@
+# Final acceptance addendum — 2026-11-16
+
+All six source/code signatures and the final direct-hosting XML index signature validate in PixInsight 1.9.6. The frozen ZIP matches its published raw and Release copies byte-for-byte. The real updater verified the certified-developer signature and reported 1 successful package download, 0 failed. Installation was scheduled for application exit; completed installation was not observed because an unsaved user image remained open. Temporary test repository removed; original repositories retained. No user image was modified. These results supersede the historical pending-signature and distribution statements below. The direct Release route was tested and rejected with HTTP 302, so production uses direct raw hosting.
+
 # Validation record — 2026-11-16
 
 ## Baseline reviewed before modification

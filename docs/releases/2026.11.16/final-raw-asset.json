@@ -1,0 +1,10 @@
+{
+  "url": "https://raw.githubusercontent.com/crinconlab/pixinsight-scripts/main/repository/crinconlab-scripts-2026.11.16-264147971bf38db4.zip",
+  "status": 200,
+  "bytes": 144270,
+  "sha256": "264147971bf38db48e034745fb81d5d35a431da3624a6220c7814df6d178a64c",
+  "sha1": "e08a027a7420e7c25339f32d3094afacb00f0cf9",
+  "zipIntegrity": true,
+  "activeIndexChanged": false,
+  "decision": "Direct raw hosting; Release counter covers manual Release asset downloads only."
+}

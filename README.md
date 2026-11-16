@@ -1,19 +1,22 @@
 # C_Rinconlab PixInsight Scripts
 
-## Signed release 2026.11.12 — PixInsight 1.9.6
+## Signed release 2026.11.16 — PixInsight 1.9.6
 
 | Script | Version |
 | --- | --- |
 | [FITS / XISF Header Editor](src/scripts/crinconlab/FITS_XISF_Header_Editor_EN.js) | 1.0.1 |
-| [RGB Ha Blend](src/scripts/crinconlab/RGB_Ha_Blend.js) | 0.15.6 |
+| [RGB Ha Blend](src/scripts/crinconlab/RGB_Ha_Blend.js) | 0.15.7 |
 | [Focal Length Blend](src/scripts/crinconlab/Mezcla_Focales.js) | 0.11.13 |
-| [PolyMask (Beta)](src/scripts/crinconlab/PolyMask_EN.js) | 0.3.0-beta.18 |
+| [PolyMask](src/scripts/crinconlab/PolyMask_EN.js) | 1.0.0 |
 
-Release **2026.11.12**, including **PolyMask beta 18**, is signed and published. All six source/code signatures and the XML update-index signature have been verified in PixInsight 1.9.6.
+Release **2026.11.16**, including **PolyMask 1.0.0**, is signed and published. All six source/code signatures and the XML update-index signature have been verified in PixInsight 1.9.6.
 
-[Release validation and signing notes](docs/releases/2026.11.12/signing-candidate.md)
+[Release validation and distribution notes](docs/releases/2026.11.16/DISTRIBUTION_AND_COUNTS.md)
 
 ## PolyMask improvements
+
+PolyMask 1.0.0 uses column filling for faster polygon construction and adds a one-pixel fine boundary-softness control. RGB Ha Blend 0.15.7 adds an optional MLDenoise preparation recommendation; its blending algorithm is unchanged.
+
 
 Beta 18 keeps the Process Console visible during calculations and afterwards. Successful output displays **Mask created** (or a summary for separate masks). **OK** closes only the notice and returns to the editor; an attached mask identifies its target. Fourteen native checks and the real message-box/console UI check passed in PixInsight 1.9.6. Mask calculations and selection formulas are unchanged.
 
@@ -32,9 +35,9 @@ https://raw.githubusercontent.com/crinconlab/pixinsight-scripts/main/repository/
 
 Then run **Resources > Updates > Check for Updates** and follow the installation/restart prompts. Avoid separately registering another local copy of the same script.
 
-In the published 2026.11.12 package, the four scripts, both shared libraries and XML index are signed by **Carlos_Rincon_Astrophoto**. The signatures are verified with PixInsight 1.9.6. The developer identity must be present in the installed certified-developer database.
+In the published 2026.11.16 package, the four scripts, both shared libraries and XML index are signed by **Carlos_Rincon_Astrophoto**. The signatures are verified with PixInsight 1.9.6. The developer identity must be present in the installed certified-developer database.
 
-[Website](https://crinconlab.onrender.com/) · [English manuals](src/scripts/crinconlab/manuals) · [Signed package](repository/crinconlab-scripts-2026.11.12-7b9e205fa4a01ab1.zip) · [Source signature verification](docs/releases/2026.11.12/signature-verification.json) · [Index verification](docs/releases/2026.11.12/index-verification.json) · [Package checks](docs/releases/2026.11.12/package-verification.json)
+[Website](https://crinconlab.onrender.com/) · [English manuals](src/scripts/crinconlab/manuals) · [Signed package](repository/crinconlab-scripts-2026.11.16-264147971bf38db4.zip) · [Source signature verification](docs/releases/2026.11.16/source-signature-verification.json) · [Index verification](docs/releases/2026.11.16/raw-index-signature.json) · [Package checks](docs/releases/2026.11.16/final-raw-asset.json)
 
 ## Astrometric Solution Copy
 

@@ -1,12 +1,10 @@
-# Source signatures received and verified
+# Final signatures and package
 
-All six script/code signatures validate in PixInsight 1.9.6. The four new public signatures provided by Carlos were imported without changing frozen source bytes. Header Editor and ProtectedPaths signatures were retained.
+All six source/code signatures validate in PixInsight 1.9.6 under Carlos_Rincon_Astrophoto. Source bytes were frozen before signing.
 
-Final ZIP: crinconlab-scripts-2026.11.16-264147971bf38db4.zip
+ZIP: crinconlab-scripts-2026.11.16-264147971bf38db4.zip
 Bytes: 144270
 SHA-256: 264147971bf38db48e034745fb81d5d35a431da3624a6220c7814df6d178a64c
 SHA-1: e08a027a7420e7c25339f32d3094afacb00f0cf9
 
-The final local unsigned index uses package serverURL with the pinned Release path. The Release asset is now public and its HTTPS download has been verified byte-for-byte by SHA-1/SHA-256 and size. No new update index is published; XML signing and native Check for Updates acceptance remain pending. Earlier candidate signing instructions are retained as history; no further source signing is needed unless bytes or included dependencies change.
-
-The final XML signature was received and verified. Native Check for Updates accepted the signature but rejected the direct Release asset download with HTTP 302; no update is activated. Hosting/index adjustment awaits author choice.
+The final direct-hosting XML index signature, timestamp 2026-11-16T12:51:20.218Z, was verified natively. Check for Updates verified the signature and completed the package download with 1 successful and 0 failed. Installation is scheduled for application exit, not yet observed. No further signing is required for these exact bytes.
