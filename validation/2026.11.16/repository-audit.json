@@ -1,0 +1,17 @@
+{
+  "reviewedAt": "2026-11-16",
+  "repository": "crinconlab/pixinsight-scripts",
+  "branch": "main",
+  "head": "5904bec7c4bf4dedb5dc4fd49c8f67d20feb10bd",
+  "initialWorktreeClean": true,
+  "instructions": "Workspace AGENTS.md read; sources/ read-only. No additional repository AGENTS.md found.",
+  "publishedVersions": {
+    "Header": "1.0.1",
+    "RGBHa": "0.15.6",
+    "Focal": "0.11.13",
+    "PolyMask": "0.3.0-beta.18"
+  },
+  "webHead": "6ebbbfbe9ab413ceab0d4a2b866a283d23f5e1c2",
+  "localValidatedPolyMask": "outputs/PolyMask_1.0.0_Local (column filling and fine softness)",
+  "activeIndexUnchanged": true
+}

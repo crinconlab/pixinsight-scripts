@@ -10,6 +10,7 @@ import re
 import tempfile
 import xml.etree.ElementTree as ET
 import zipfile
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 PRIVATE_SUFFIXES = {".xssk", ".pem", ".key"}
@@ -61,6 +62,24 @@ def collect_files(config, source):
     return result
 
 
+def package_server_url(config):
+    """XRI serverURL is a base URL; fileName must remain a relative basename."""
+    value = config.get("package_server_url")
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        raise ValueError("package_server_url debe ser una URL HTTPS.")
+    parts = urlsplit(value)
+    if (parts.scheme != "https" or parts.netloc != "github.com" or parts.query
+            or parts.fragment or parts.username or parts.password
+            or not re.fullmatch(r"/crinconlab/pixinsight-scripts/releases/download/[A-Za-z0-9._-]+/", parts.path)):
+        raise ValueError("package_server_url debe señalar una Release HTTPS versionada de crinconlab/pixinsight-scripts, con barra final.")
+    tag = parts.path.rstrip("/").split("/")[-1]
+    if tag in (".", "..", "latest") or config.get("release_tag") != tag:
+        raise ValueError("release_tag debe coincidir con la versión fijada en package_server_url.")
+    return value
+
+
 def build(config, source, output, release_date):
     for key in ("package_id", "version", "title", "description", "pixinsight_versions"):
         if not isinstance(config.get(key), str) or not config[key].strip():
@@ -74,6 +93,7 @@ def build(config, source, output, release_date):
     low, high = (tuple(map(int, v.split("."))) for v in config["pixinsight_versions"].split(":"))
     if low > high:
         raise ValueError("El mínimo de PixInsight no puede superar al máximo.")
+    server_url = package_server_url(config)
     files = collect_files(config, source)
     # No se utilizan fechas de modificación para validar firmas: Git las cambia.
     output.mkdir(parents=True, exist_ok=True)
@@ -99,6 +119,8 @@ def build(config, source, output, release_date):
         platform = ET.SubElement(root, "platform", os="all", arch="noarch", version=config["pixinsight_versions"])
         package = ET.SubElement(platform, "package", fileName=filename, sha1=sha1,
                                 type="script", releaseDate=release_date.strftime("%Y%m%d"))
+        if server_url:
+            package.set("serverURL", server_url)
         ET.SubElement(package, "title").text = config["title"] + " " + config["version"]
         ET.SubElement(ET.SubElement(package, "description"), "p").text = config["description"]
         ET.indent(root, space="   ")
@@ -106,6 +128,15 @@ def build(config, source, output, release_date):
         with zipfile.ZipFile(work / filename) as bundle:
             if bundle.testzip() is not None:
                 raise ValueError("El ZIP no supera la comprobación de integridad.")
+        plan = {
+            "status": "LOCAL ONLY — index unsigned; do not publish",
+            "repository_url": "https://raw.githubusercontent.com/crinconlab/pixinsight-scripts/main/repository/",
+            "release_tag": config.get("release_tag"), "asset": filename,
+            "bytes": len(data), "sha1": sha1, "sha256": sha256,
+            "serverURL": server_url,
+            "download_url": server_url + filename if server_url else None,
+        }
+        (work / "release-plan.json").write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8")
         work.rename(destination)
     return destination
 

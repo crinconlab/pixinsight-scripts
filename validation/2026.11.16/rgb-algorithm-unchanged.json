@@ -1,0 +1,7 @@
+{
+  "publishedBase": "5904bec7c4bf4dedb5dc4fd49c8f67d20feb10bd",
+  "region": "RD_validate through processing, alignment, crop, SPCC and preview classes, before setup dialog",
+  "equalExceptVersionLabels": true,
+  "baselineSHA256": "ac910135ef523de7ef43b6081603cbdd43590746061b8692fb8e441c8cd29437",
+  "candidateNormalizedSHA256": "ac910135ef523de7ef43b6081603cbdd43590746061b8692fb8e441c8cd29437"
+}

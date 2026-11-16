@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-16",
+  "pixinsight": "1.9.6 build 1718 macOS x64",
+  "nativeUIAndNotes": {
+    "passed": 11
+  },
+  "nativePolyMask": {
+    "passed": 28
+  },
+  "pythonPackaging": {
+    "passed": 11
+  },
+  "nodeSampleDownload": {
+    "passed": 13,
+    "skipped": 1,
+    "skipReason": "Optional real sample archive not supplied to Node fixture; separate live small Release asset HTTPS test passed."
+  },
+  "nativeUIObserved": true,
+  "rgbAlgorithmUnchanged": true,
+  "signedNewPackage": false,
+  "newIndexPublished": false,
+  "githubReleaseHTTPFixtureVerified": true,
+  "nativeCheckForUpdatesNewRelease": "pending signatures and public final asset",
+  "legacyFocalNodeHarness": "not compatible with current source; original harness lacks ensureMinimumVersion and Cursor and expects obsolete geometry semantics. Attempt captured; no production Focal source changed to satisfy it."
+}

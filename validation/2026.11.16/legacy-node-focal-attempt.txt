@@ -1,0 +1,342 @@
+✖ missing registration, wrong mask and invalid scale ranges are rejected (11.989855ms)
+✖ real preparation and repeated updates preserve inputs and the exterior of the coverage (34.974035ms)
+✔ identical images remain identical under partial coverage and feathering (17.171534ms)
+✔ zero intensity is an exact copy and a failed recalculation retains the last comparison (16.583172ms)
+✔ failure during preparation removes owned temporaries and restores source selections (3.094901ms)
+✖ empty coverage fails without leaving temporary windows (11.484501ms)
+✖ stale acceptance is blocked and the accepted output survives cleanup (21.554519ms)
+✔ gain fit separates multiplicative contrast from an additive background offset (3.783509ms)
+✔ zoom preserves the image coordinate beneath the pointer, and pan remains within the image (2.645541ms)
+✖ polygon validation rejects invalid bounds, insufficient vertices and zero area (3.061716ms)
+✔ mask drawing maps a letterboxed preview to exact image coordinates and clamps margins (2.2269ms)
+✔ a created coverage is monochrome geometry even when the entire detail is black (5.564727ms)
+✖ mask preview matches the effective blend mask without baking a second transition into the support (20.553172ms)
+✔ mask preview and creation failures remove only their own windows (7.105771ms)
+✔ a rotated footprint excludes its bounding-box corners in either winding direction (7.838493ms)
+✖ a concave polygon preserves its notch and shares feathering with the actual blend (31.892752ms)
+✖ self-crossings, repeated vertices, touching edges and retraced edges are rejected (2.743872ms)
+✖ selection requires closure, allows correction and undo, and enforces the vertex limit (2.407992ms)
+✖ UI: opening, clicks and closing via the first vertex enable preview and creation (3.063875ms)
+✖ UI: vertex zero drags correctly and numeric edits invalidate the displayed mask (2.341768ms)
+✖ UI: crossing contours block creation, undo reopens, and clear resets the controls (2.363432ms)
+✖ UI: cancellation and failed renders leave no images and preserve the input selection (2.652341ms)
+✖ UI: creation errors keep the editor open and a retry retains only the accepted mask (2.43394ms)
+✖ UI: setup receives the new mask and transition, and cancelling a second editor keeps them (4.555885ms)
+✖ UI: comparison disables stale acceptance, survives recalculation failure and accepts a retry (17.86473ms)
+✖ UI: both comparison panes share zoom, pan and drawing; back and discard route correctly (18.123533ms)
+✔ SHA-256 matches published empty, abc and million-a vectors (106.782555ms)
+✔ binary padding/block boundaries and incremental updates match Node crypto (10.368869ms)
+✔ file hashing streams across one-MiB boundaries using native-style ByteArray access (93.327019ms)
+﹣ the actual sample ZIP matches the production pin through the production file-hash helper (0.398949ms) # SKIP
+✔ a same-size altered download is rejected without replacing an existing destination (6.966027ms)
+✔ truncated downloads and transfer failures clean partials and preserve the destination (6.012164ms)
+✔ verified data is published successfully, replacing the old destination only after verification (6.576975ms)
+✔ failed publication restores the previous destination and removes the partial (7.56527ms)
+✔ failed restoration retains the old archive at the reported recovery path (6.087941ms)
+✔ read errors and cancellation close files and leave the old destination unchanged (7.593636ms)
+✔ curl uses HTTPS-only requests and redirects for both Windows identifiers and macOS (13.206766ms)
+✔ protected installation and configuration reject downloads before transfer (3.880964ms)
+✔ download reentrancy is blocked and guard resets after cancellation/error (2.263022ms)
+✔ canceling verification preserves the old destination and removes partial data (4.941644ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 22
+ℹ fail 17
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 450.679739
+
+✖ failing tests:
+
+test at tests/mezcla_focales.test.cjs:143:1
+✖ missing registration, wrong mask and invalid scale ranges are rejected (11.989855ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /dimensiones/. Input:
+  
+  'Error: Base, detail and mask must have matching dimensions and share the same registered pixel grid. Prepare the geometry first.'
+  
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:145:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Base, detail and mask must have matching dimensions and share the same registered pixel grid. Prepare the geometry first.
+        at Object.MF_validate (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:66:13)
+        at /Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:145:25
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:145:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3),
+    expected: /dimensiones/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/mezcla_focales.test.cjs:151:1
+✖ real preparation and repeated updates preserve inputs and the exterior of the coverage (34.974035ms)
+  AssertionError [ERR_ASSERTION]: 0.3399997003263293 != 0.33999999999999997
+      at almost (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:134:41)
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:157:79)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/mezcla_focales.test.cjs:184:1
+✖ empty coverage fails without leaving temporary windows (11.484501ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /suficiente zona/. Input:
+  
+  'Error: The mask has insufficient valid interior. Check coverage and reduce the transition for small fields.'
+  
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:186:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: The mask has insufficient valid interior. Check coverage and reduce the transition for small fields.
+        at Object.MF_prepare (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:702:16)
+        at /Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:186:25
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:186:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /suficiente zona/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/mezcla_focales.test.cjs:188:1
+✖ stale acceptance is blocked and the accepted output survives cleanup (21.554519ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Actualiza/. Input:
+  
+  'Error: Update the comparison with the selected values before creating the blended image.'
+  
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:190:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Update the comparison with the selected values before creating the blended image.
+        at Object.MF_accept (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:785:13)
+        at /Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:190:25
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:190:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /Actualiza/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/mezcla_focales.test.cjs:209:1
+✖ polygon validation rejects invalid bounds, insufficient vertices and zero area (3.061716ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /lienzo/. Input:
+  
+  'Error: Coordinates must be finite and within the canvas.'
+  
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:211:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Coordinates must be finite and within the canvas.
+        at /Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:345:16
+        at Array.map (<anonymous>)
+        at Object.MF_polygon (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:341:24)
+        at /Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:211:25
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:211:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /lienzo/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/mezcla_focales.test.cjs:232:1
+✖ mask preview matches the effective blend mask without baking a second transition into the support (20.553172ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 0.4001621862510395
+  - 0
+  
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:240:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0.4001621862510395,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/mezcla_focales.test.cjs:273:1
+✖ a concave polygon preserves its notch and shares feathering with the actual blend (31.892752ms)
+  AssertionError [ERR_ASSERTION]: 0.3575903096784388 != 0.35759059459295134
+      at almost (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:134:41)
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:286:55)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/mezcla_focales.test.cjs:289:1
+✖ self-crossings, repeated vertices, touching edges and retraced edges are rejected (2.743872ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /cruzarse|repitas|retroceder/. Input:
+  
+  'Error: Polygon edges cannot cross or touch.'
+  
+      at /Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:298:12
+      at Array.forEach (<anonymous>)
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:297:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Polygon edges cannot cross or touch.
+        at Object.MF_polygon (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:373:19)
+        at /Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:298:27
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at /Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:298:12
+        at Array.forEach (<anonymous>)
+        at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:297:11)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /cruzarse|repitas|retroceder/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/mezcla_focales.test.cjs:303:1
+✖ selection requires closure, allows correction and undo, and enforces the vertex limit (2.407992ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Cierra/. Input:
+  
+  'Error: Close the polygon before previewing or creating the mask.'
+  
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:307:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Close the polygon before previewing or creating the mask.
+        at MF_PolygonSelection.polygon (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:406:28)
+        at /Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:307:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:307:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /Cierra/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/mezcla_focales.test.cjs:320:1
+✖ UI: opening, clicks and closing via the first vertex enable preview and creation (3.063875ms)
+  TypeError [Error]: this.setScaledFixedHeight is not a function
+      at new MF_Progress (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1409:39)
+      at new MF_MaskDialog (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1526:55)
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:321:63)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/mezcla_focales.test.cjs:331:1
+✖ UI: vertex zero drags correctly and numeric edits invalidate the displayed mask (2.341768ms)
+  TypeError [Error]: this.setScaledFixedHeight is not a function
+      at new MF_Progress (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1409:39)
+      at new MF_MaskDialog (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1526:55)
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:332:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/mezcla_focales.test.cjs:343:1
+✖ UI: crossing contours block creation, undo reopens, and clear resets the controls (2.363432ms)
+  TypeError [Error]: this.setScaledFixedHeight is not a function
+      at new MF_Progress (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1409:39)
+      at new MF_MaskDialog (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1526:55)
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:344:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/mezcla_focales.test.cjs:354:1
+✖ UI: cancellation and failed renders leave no images and preserve the input selection (2.652341ms)
+  TypeError [Error]: this.setScaledFixedHeight is not a function
+      at new MF_Progress (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1409:39)
+      at new MF_MaskDialog (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1526:55)
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:358:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/mezcla_focales.test.cjs:364:1
+✖ UI: creation errors keep the editor open and a retry retains only the accepted mask (2.43394ms)
+  TypeError [Error]: this.setScaledFixedHeight is not a function
+      at new MF_Progress (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1409:39)
+      at new MF_MaskDialog (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1526:55)
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:365:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/mezcla_focales.test.cjs:371:1
+✖ UI: setup receives the new mask and transition, and cancelling a second editor keeps them (4.555885ms)
+  TypeError [Error]: this.setScaledFixedHeight is not a function
+      at new MF_Progress (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1409:39)
+      at new MF_SetupDialog (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1816:26)
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:372:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/mezcla_focales.test.cjs:382:1
+✖ UI: comparison disables stale acceptance, survives recalculation failure and accepts a retry (17.86473ms)
+  ReferenceError [Error]: Cursor is not defined
+      at new MF_PreviewDialog (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1900:20)
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:383:47)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/mezcla_focales.test.cjs:393:1
+✖ UI: both comparison panes share zoom, pan and drawing; back and discard route correctly (18.123533ms)
+  ReferenceError [Error]: Cursor is not defined
+      at new MF_PreviewDialog (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/src/scripts/crinconlab/Mezcla_Focales.js:1900:20)
+      at TestContext.<anonymous> (/Users/carlosrincon/.codex/.chatgpt-projects/g-p-69dea18d364c819187d66dffa14c38cf/release-2026-11-16/tests/mezcla_focales.test.cjs:394:47)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

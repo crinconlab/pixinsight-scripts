@@ -1,6 +1,15 @@
-POLYMASK ADVANCED 0.3.0-beta.18
+FASTER MASK CREATION — POLYMASK 1.0.0
+
+PolyMask now uses a new polygon-filling method. In our tests, this reduced calculation times by approximately 60% when creating or reshaping masks, while preserving identical results.
+
+Boundary Softness also includes a fine-adjustment slider with 1-pixel steps.
+
+The startup notice can be hidden with Don't show this again; this information remains available here.
+Boundary Softness: Fine ±10 px changes the coarse setting in 1-pixel steps. The readout shows the effective value. Changing regions or the coarse slider recentres fine adjustment.
+
+POLYMASK 1.0.0
 Copyright Carlos Rincón 2026
-Requires PixInsight 1.9.6. Local beta.
+Requires PixInsight 1.9.6.
 
 Select an already-open working image in the dropdown and choose Open editor.
 This edition focuses on creating masks. The left sidebar has Shape, Selection
@@ -112,7 +121,7 @@ Project writes cannot target PixInsight installation/configuration directories.
 
 INSTALLATION NOTE
 Keep ProtectedPaths.jsh and PolyMaskProjects.jsh beside PolyMask_EN.js, together
-with icons/ and manuals/. This is still a local beta and is not published.
+with icons/ and manuals/. For a local installation, keep these files together.
 
 BETA 11 — LIVE PREVIEW, CHROMINANCE NORMALIZATION AND FINAL BLUR
 Live calculations use cached reduced geometry, color maps and lightness.

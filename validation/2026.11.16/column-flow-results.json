@@ -1,0 +1,662 @@
+[
+  {
+    "method": "pixelmath",
+    "repetition": 0,
+    "stage": "cold two-region preview",
+    "computeMs": 6389,
+    "renderMs": 3,
+    "outputCopyMs": 24,
+    "totalMs": 6416,
+    "timings": {
+      "raster": 3528,
+      "blur": 290,
+      "otherPixelMath": 1552,
+      "color": 795
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 2,
+      "hits": 0
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 0,
+    "stage": "unchanged cached preview",
+    "computeMs": 473,
+    "renderMs": 1,
+    "outputCopyMs": 25,
+    "totalMs": 499,
+    "timings": {
+      "otherPixelMath": 297,
+      "blur": 70
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 2,
+      "hits": 2
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 0,
+    "stage": "lightness adjustment",
+    "computeMs": 1028,
+    "renderMs": 5,
+    "outputCopyMs": 25,
+    "totalMs": 1058,
+    "timings": {
+      "otherPixelMath": 878,
+      "blur": 92
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 3,
+      "hits": 5
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 0,
+    "stage": "move polygon vertex",
+    "computeMs": 3115,
+    "renderMs": 2,
+    "outputCopyMs": 23,
+    "totalMs": 3140,
+    "timings": {
+      "raster": 1820,
+      "blur": 157,
+      "otherPixelMath": 989
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 3,
+      "color": 2,
+      "filtered": 4,
+      "hits": 7
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 0,
+    "stage": "uncached final output",
+    "computeMs": 7265,
+    "renderMs": 1,
+    "outputCopyMs": 25,
+    "totalMs": 7291,
+    "timings": {
+      "raster": 4046,
+      "blur": 276,
+      "otherPixelMath": 1712,
+      "color": 888
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 3,
+      "color": 2,
+      "filtered": 4,
+      "hits": 7
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 0,
+    "stage": "cold two-region preview",
+    "computeMs": 2962,
+    "renderMs": 2,
+    "outputCopyMs": 27,
+    "totalMs": 2991,
+    "timings": {
+      "raster": 51,
+      "blur": 271,
+      "otherPixelMath": 1637,
+      "color": 810
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 2,
+      "hits": 0
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 0,
+    "stage": "unchanged cached preview",
+    "computeMs": 478,
+    "renderMs": 2,
+    "outputCopyMs": 25,
+    "totalMs": 505,
+    "timings": {
+      "otherPixelMath": 328,
+      "blur": 75
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 2,
+      "hits": 2
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 0,
+    "stage": "lightness adjustment",
+    "computeMs": 1062,
+    "renderMs": 2,
+    "outputCopyMs": 26,
+    "totalMs": 1090,
+    "timings": {
+      "otherPixelMath": 898,
+      "blur": 89
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 3,
+      "hits": 5
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 0,
+    "stage": "move polygon vertex",
+    "computeMs": 1195,
+    "renderMs": 2,
+    "outputCopyMs": 25,
+    "totalMs": 1222,
+    "timings": {
+      "raster": 26,
+      "blur": 148,
+      "otherPixelMath": 887
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 3,
+      "color": 2,
+      "filtered": 4,
+      "hits": 7
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 0,
+    "stage": "uncached final output",
+    "computeMs": 2860,
+    "renderMs": 2,
+    "outputCopyMs": 24,
+    "totalMs": 2886,
+    "timings": {
+      "raster": 47,
+      "blur": 225,
+      "otherPixelMath": 1514,
+      "color": 804
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 3,
+      "color": 2,
+      "filtered": 4,
+      "hits": 7
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 1,
+    "stage": "cold two-region preview",
+    "computeMs": 7227,
+    "renderMs": 2,
+    "outputCopyMs": 24,
+    "totalMs": 7253,
+    "timings": {
+      "raster": 4028,
+      "blur": 266,
+      "otherPixelMath": 1828,
+      "color": 896
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 2,
+      "hits": 0
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 1,
+    "stage": "unchanged cached preview",
+    "computeMs": 422,
+    "renderMs": 2,
+    "outputCopyMs": 26,
+    "totalMs": 450,
+    "timings": {
+      "otherPixelMath": 270,
+      "blur": 70
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 2,
+      "hits": 2
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 1,
+    "stage": "lightness adjustment",
+    "computeMs": 1051,
+    "renderMs": 1,
+    "outputCopyMs": 25,
+    "totalMs": 1077,
+    "timings": {
+      "otherPixelMath": 873,
+      "blur": 93
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 3,
+      "hits": 5
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 1,
+    "stage": "move polygon vertex",
+    "computeMs": 3306,
+    "renderMs": 1,
+    "outputCopyMs": 27,
+    "totalMs": 3334,
+    "timings": {
+      "raster": 2000,
+      "blur": 187,
+      "otherPixelMath": 975
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 3,
+      "color": 2,
+      "filtered": 4,
+      "hits": 7
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 1,
+    "stage": "uncached final output",
+    "computeMs": 6909,
+    "renderMs": 2,
+    "outputCopyMs": 26,
+    "totalMs": 6937,
+    "timings": {
+      "raster": 3941,
+      "blur": 276,
+      "otherPixelMath": 1581,
+      "color": 865
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 3,
+      "color": 2,
+      "filtered": 4,
+      "hits": 7
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 1,
+    "stage": "cold two-region preview",
+    "computeMs": 2960,
+    "renderMs": 2,
+    "outputCopyMs": 27,
+    "totalMs": 2989,
+    "timings": {
+      "raster": 50,
+      "blur": 238,
+      "otherPixelMath": 1721,
+      "color": 788
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 2,
+      "hits": 0
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 1,
+    "stage": "unchanged cached preview",
+    "computeMs": 439,
+    "renderMs": 2,
+    "outputCopyMs": 25,
+    "totalMs": 466,
+    "timings": {
+      "otherPixelMath": 289,
+      "blur": 94
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 2,
+      "hits": 2
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 1,
+    "stage": "lightness adjustment",
+    "computeMs": 1054,
+    "renderMs": 1,
+    "outputCopyMs": 27,
+    "totalMs": 1082,
+    "timings": {
+      "otherPixelMath": 902,
+      "blur": 72
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 3,
+      "hits": 5
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 1,
+    "stage": "move polygon vertex",
+    "computeMs": 1264,
+    "renderMs": 1,
+    "outputCopyMs": 25,
+    "totalMs": 1290,
+    "timings": {
+      "raster": 22,
+      "blur": 147,
+      "otherPixelMath": 993
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 3,
+      "color": 2,
+      "filtered": 4,
+      "hits": 7
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 1,
+    "stage": "uncached final output",
+    "computeMs": 3027,
+    "renderMs": 1,
+    "outputCopyMs": 28,
+    "totalMs": 3056,
+    "timings": {
+      "raster": 43,
+      "blur": 281,
+      "otherPixelMath": 1609,
+      "color": 841
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 3,
+      "color": 2,
+      "filtered": 4,
+      "hits": 7
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 2,
+    "stage": "cold two-region preview",
+    "computeMs": 7227,
+    "renderMs": 3,
+    "outputCopyMs": 26,
+    "totalMs": 7256,
+    "timings": {
+      "raster": 4099,
+      "blur": 288,
+      "otherPixelMath": 1750,
+      "color": 894
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 2,
+      "hits": 0
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 2,
+    "stage": "unchanged cached preview",
+    "computeMs": 439,
+    "renderMs": 2,
+    "outputCopyMs": 26,
+    "totalMs": 467,
+    "timings": {
+      "otherPixelMath": 286,
+      "blur": 94
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 2,
+      "hits": 2
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 2,
+    "stage": "lightness adjustment",
+    "computeMs": 1025,
+    "renderMs": 1,
+    "outputCopyMs": 28,
+    "totalMs": 1054,
+    "timings": {
+      "otherPixelMath": 847,
+      "blur": 100
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 3,
+      "hits": 5
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 2,
+    "stage": "move polygon vertex",
+    "computeMs": 3134,
+    "renderMs": 1,
+    "outputCopyMs": 27,
+    "totalMs": 3162,
+    "timings": {
+      "raster": 1825,
+      "blur": 187,
+      "otherPixelMath": 979
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 3,
+      "color": 2,
+      "filtered": 4,
+      "hits": 7
+    }
+  },
+  {
+    "method": "pixelmath",
+    "repetition": 2,
+    "stage": "uncached final output",
+    "computeMs": 6411,
+    "renderMs": 2,
+    "outputCopyMs": 27,
+    "totalMs": 6440,
+    "timings": {
+      "raster": 3619,
+      "blur": 264,
+      "otherPixelMath": 1469,
+      "color": 818
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 3,
+      "color": 2,
+      "filtered": 4,
+      "hits": 7
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 2,
+    "stage": "cold two-region preview",
+    "computeMs": 4037,
+    "renderMs": 2,
+    "outputCopyMs": 25,
+    "totalMs": 4064,
+    "timings": {
+      "raster": 49,
+      "blur": 509,
+      "otherPixelMath": 2234,
+      "color": 949
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 2,
+      "hits": 0
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 2,
+    "stage": "unchanged cached preview",
+    "computeMs": 425,
+    "renderMs": 1,
+    "outputCopyMs": 26,
+    "totalMs": 452,
+    "timings": {
+      "otherPixelMath": 293,
+      "blur": 77
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 2,
+      "hits": 2
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 2,
+    "stage": "lightness adjustment",
+    "computeMs": 1556,
+    "renderMs": 2,
+    "outputCopyMs": 26,
+    "totalMs": 1584,
+    "timings": {
+      "otherPixelMath": 1375,
+      "blur": 114
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 2,
+      "color": 2,
+      "filtered": 3,
+      "hits": 5
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 2,
+    "stage": "move polygon vertex",
+    "computeMs": 2278,
+    "renderMs": 3,
+    "outputCopyMs": 28,
+    "totalMs": 2309,
+    "timings": {
+      "raster": 22,
+      "blur": 174,
+      "otherPixelMath": 1881
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 3,
+      "color": 2,
+      "filtered": 4,
+      "hits": 7
+    }
+  },
+  {
+    "method": "columns",
+    "repetition": 2,
+    "stage": "uncached final output",
+    "computeMs": 3215,
+    "renderMs": 2,
+    "outputCopyMs": 27,
+    "totalMs": 3244,
+    "timings": {
+      "raster": 41,
+      "blur": 280,
+      "otherPixelMath": 1734,
+      "color": 884
+    },
+    "mismatchedPixels": 0,
+    "maxError": 0,
+    "cache": {
+      "geometry": 3,
+      "color": 2,
+      "filtered": 4,
+      "hits": 7
+    }
+  }
+]

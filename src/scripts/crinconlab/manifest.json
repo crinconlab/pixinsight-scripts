@@ -1,8 +1,8 @@
 {
   "collection": "C_Rinconlab",
-  "version": "2026.11.12",
+  "version": "2026.11.16",
   "targetPixInsight": "1.9.6",
-  "status": "source signatures verified; awaiting signed update index",
+  "status": "unsigned candidate; production index unchanged",
   "scripts": [
     {
       "script": "FITS_XISF_Header_Editor_EN.js",
@@ -11,8 +11,8 @@
     },
     {
       "script": "RGB_Ha_Blend.js",
-      "version": "0.15.6",
-      "sha256": "87ad207e18563ea3f4391ced8c4f4243fcccad94bf453761ce3b5c106549696d"
+      "version": "0.15.7",
+      "sha256": "d03276fdf1ffcb0e97fa3afde57f3bf02f4c8197cf905d114311336685a76e15"
     },
     {
       "script": "Mezcla_Focales.js",
@@ -21,9 +21,16 @@
     },
     {
       "script": "PolyMask_EN.js",
-      "version": "0.3.0-beta.18",
-      "sha256": "34bd7b894dbb5deecba94d1ab8cc3b0cc0d3fb54349428e8bcee5e240670670d"
+      "version": "1.0.0",
+      "sha256": "dadcfa0a9294a8ab080777416750d4e97326d8343f30ed210ea8a849fcb40bf6"
     }
   ],
-  "filesToSign": []
+  "filesToSign": [
+    "PolyMaskProjects.jsh",
+    "PolyMask_EN.js",
+    "RGB_Ha_Blend.js",
+    "Mezcla_Focales.js"
+  ],
+  "sourceSigningStatus": "pending local signing",
+  "distribution": "planned GitHub Release asset using package serverURL; active index unchanged"
 }

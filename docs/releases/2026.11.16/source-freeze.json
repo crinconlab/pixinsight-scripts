@@ -1,0 +1,10 @@
+{
+  "candidate": "2026.11.16",
+  "baseCommit": "5904bec7c4bf4dedb5dc4fd49c8f67d20feb10bd",
+  "files": {
+    "PolyMaskProjects.jsh": "2a1131bf9d5babe7cf6d5be868085e724b355a19487f3e6eec7b4cc45f71ded5",
+    "PolyMask_EN.js": "dadcfa0a9294a8ab080777416750d4e97326d8343f30ed210ea8a849fcb40bf6",
+    "RGB_Ha_Blend.js": "d03276fdf1ffcb0e97fa3afde57f3bf02f4c8197cf905d114311336685a76e15",
+    "Mezcla_Focales.js": "011cc522a45efdc6a0c4015847e17c4e3bf636abf533dee4a0223b9e83047db2"
+  }
+}
