@@ -46,7 +46,7 @@ d11fdebfa7317cd96bad60dbc66373fa3489b1b9b824dbd550a6bbb55b069dde  docs/releases/
 98418297bc804605cfeec676cd49a1da2f2afe7ea0a9360c5e93e12304c83a80  docs/releases/2026.11.12/ui-results.json
 8646f2e62c5b4d938bb4e2d9c927395ca77ff4d524cda8aeee4cdbc6a4b2c410  docs/releases/2026.11.16/DISTRIBUTION_AND_COUNTS.md
 5ec7a7ddcf7559e5af9fbe4c700672fa0fe2531b1ba3023a4449ef3dc4b7a7da  docs/releases/2026.11.16/RELEASE_NOTES.md
-debeaf291b2cb9d857045a9088f9ef23d962e67f6dfd9eebc53e7d7f2d2a7602  docs/releases/2026.11.16/SIGNATURES_RECEIVED.md
+83b8e7431a97d9c045fee4474e129814d22c7d5b6d5d092e190ff72aee061989  docs/releases/2026.11.16/SIGNATURES_RECEIVED.md
 b8fd2b7a739287ddf0690986b687f4e6a163202332a239782c6fd04e150e9624  docs/releases/2026.11.16/SIGNING_ES.md
 e57dc722126f8f9506abe9e2f5577abd7f13c2edbb4341e03c46e9173e2b808c  docs/releases/2026.11.16/VALIDATION.md
 641cd5a4e10888b8a90fa23723caf291adf77cf0b149a9f198cbd3883492b086  docs/releases/2026.11.16/source-freeze.json
@@ -184,6 +184,8 @@ c05f3bc29b198f33beec025d42652c24e025801518b2bdda3e9c1cade8f46d43  tools/build_re
 bc8537cbf4f32ba6a721fe72691dd6184a9cf09a1d1342dfa99229bfb5878d56  validation/2026.11.16/column-raster-results.json
 29daabc832d2ad42d9d2bf9c7785190e7e284aa42a035f61a9d2ad9435e8f004  validation/2026.11.16/download-count-example.json
 73d7461d9337ec396100af11270b5dba3c578600bf7188ba2b1dafd024616cff  validation/2026.11.16/final-package.json
+f6989376a3ebc7fa00088d12a90ed5cdcdf8f4279932fd7b1c65419a188844e8  validation/2026.11.16/final-public-asset.json
+18cb82516251057445dc1ebfdea49ab14486e645450471e4eb672ed61695a055  validation/2026.11.16/final-release-counts.json
 fc35d84958170f0a5c6e941ff78fbd1cb608df3d2f8c396f64ab5ca53859d14c  validation/2026.11.16/final-signatures.json
 035bb627a126b94bba552fadbe897d627aae3725832181a9cc19d96211c7bfaa  validation/2026.11.16/legacy-node-focal-attempt.txt
 714977927514c58f1af9f917d564a51b67fc73d074e4cf2990c9b43d80969ae2  validation/2026.11.16/native-results.json

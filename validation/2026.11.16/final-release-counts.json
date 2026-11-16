@@ -1,0 +1,18 @@
+{
+  "tag": "suite-2026.11.16",
+  "release": "https://github.com/crinconlab/pixinsight-scripts/releases/tag/suite-2026.11.16",
+  "assets": [
+    {
+      "id": 754758597,
+      "name": "crinconlab-scripts-2026.11.16-264147971bf38db4.zip",
+      "download_count": 0,
+      "bytes": 144270
+    },
+    {
+      "id": 754758628,
+      "name": "SHA256SUMS.txt",
+      "download_count": 0,
+      "bytes": 117
+    }
+  ]
+}
