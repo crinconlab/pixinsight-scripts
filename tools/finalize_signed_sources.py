@@ -7,7 +7,7 @@ report=ROOT/'signature-verification.json'
 if not report.is_file():raise SystemExit('Run Verify_All_Signatures_PixInsight.js first; missing native report.')
 rows=json.loads(report.read_text());required={'FITS_XISF_Header_Editor_EN.js','RGB_Ha_Blend.js','Mezcla_Focales.js','PolyMask_EN.js','ProtectedPaths.jsh','PolyMaskProjects.jsh'}
 if len(rows)!=6 or {r.get('file') for r in rows}!=required or not all(r.get('signature',{}).get('valid') is True and r['signature']['developerId']=='Carlos_Rincon_Astrophoto' for r in rows):raise SystemExit('Missing/invalid native signatures. STOP.')
-freeze=json.loads((ROOT/'docs/releases/2026.11.16/source-freeze.json').read_text())
+freeze=json.loads((ROOT/'docs/releases/2026.11.17/source-freeze.json').read_text())
 for n,digest in freeze['files'].items():
  if hashlib.sha256((src/n).read_bytes()).hexdigest()!=digest:raise SystemExit('Frozen source changed; revalidate/re-sign and revise the freeze record: '+n)
 # A report is evidence of the last native run; rerun it immediately before this tool.

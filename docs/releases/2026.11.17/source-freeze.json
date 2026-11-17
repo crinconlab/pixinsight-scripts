@@ -1,0 +1,11 @@
+{
+  "version": "2026.11.17",
+  "files": {
+    "PolyMask_EN.js": "56175bedfbbc20ca4c295e12176dba49fa81d6834478a29151a6385326e452a3",
+    "RGB_Ha_Blend.js": "d03276fdf1ffcb0e97fa3afde57f3bf02f4c8197cf905d114311336685a76e15",
+    "Mezcla_Focales.js": "011cc522a45efdc6a0c4015847e17c4e3bf636abf533dee4a0223b9e83047db2",
+    "FITS_XISF_Header_Editor_EN.js": "7ee0e2555602c2383dd6177b31989ef187569c3d8ecb2856718eed79439a7ae1",
+    "PolyMaskProjects.jsh": "2a1131bf9d5babe7cf6d5be868085e724b355a19487f3e6eec7b4cc45f71ded5",
+    "ProtectedPaths.jsh": "0c508d65cf27be6e2848545681c52f75aa6012c946488bcdc37ecc0e61d1dbdc"
+  }
+}

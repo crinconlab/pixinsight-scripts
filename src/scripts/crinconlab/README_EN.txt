@@ -1,3 +1,5 @@
+2026.11.17 SIGNING CANDIDATE — PolyMask 1.0.1. Sign only PolyMask_EN.js. Production remains 2026.11.16 until the final XML index is signed and verified.
+
 C_Rinconlab 2026.11.16 — signed scripts for PixInsight 1.9.6
 
 PolyMask 1.0.0: column-based polygon filling, 1 px fine boundary softness

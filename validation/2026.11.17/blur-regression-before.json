@@ -1,0 +1,28 @@
+{
+  "checks": [
+    {
+      "name": "Initial full preview",
+      "passed": true
+    },
+    {
+      "name": "Active-region automatic blur preview 0.05",
+      "passed": true
+    },
+    {
+      "name": "Reusable buffer survives blur 0.05",
+      "passed": true
+    },
+    {
+      "name": "Active-region automatic blur preview 1",
+      "passed": true
+    },
+    {
+      "name": "Reusable buffer survives blur 1",
+      "passed": false
+    },
+    {
+      "error": "Error: Reusable buffer survives blur 1",
+      "status": "ACTIVE REGION ONLY — preview. Output will include all regions."
+    }
+  ]
+}
