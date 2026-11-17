@@ -1,0 +1,96 @@
+{
+  "checks": [
+    {
+      "name": "Initial full preview",
+      "passed": true
+    },
+    {
+      "name": "Active-region automatic blur preview 0.05",
+      "passed": true
+    },
+    {
+      "name": "Reusable buffer survives blur 0.05",
+      "passed": true
+    },
+    {
+      "name": "Active-region automatic blur preview 1",
+      "passed": true
+    },
+    {
+      "name": "Reusable buffer survives blur 1",
+      "passed": true
+    },
+    {
+      "name": "Active-region automatic blur preview 31.4",
+      "passed": true
+    },
+    {
+      "name": "Reusable buffer survives blur 31.4",
+      "passed": true
+    },
+    {
+      "name": "Active-region automatic blur preview 0",
+      "passed": true
+    },
+    {
+      "name": "Reusable buffer survives blur 0",
+      "passed": true
+    },
+    {
+      "name": "Active-region automatic blur preview 0.08",
+      "passed": true
+    },
+    {
+      "name": "Reusable buffer survives blur 0.08",
+      "passed": true
+    },
+    {
+      "name": "Active-region automatic blur preview 0.2",
+      "passed": true
+    },
+    {
+      "name": "Reusable buffer survives blur 0.2",
+      "passed": true
+    },
+    {
+      "name": "Active-region automatic blur preview 12",
+      "passed": true
+    },
+    {
+      "name": "Reusable buffer survives blur 12",
+      "passed": true
+    },
+    {
+      "name": "Active-region automatic blur preview 0",
+      "passed": true
+    },
+    {
+      "name": "Reusable buffer survives blur 0",
+      "passed": true
+    },
+    {
+      "name": "Complete automatic blur preview",
+      "passed": true
+    },
+    {
+      "name": "Automatic blur removal",
+      "passed": true
+    },
+    {
+      "name": "Changing blur changes actual preview pixels",
+      "passed": true
+    },
+    {
+      "name": "Full-resolution blurred preview",
+      "passed": true
+    },
+    {
+      "name": "Final output after automatic blur changes",
+      "passed": true
+    },
+    {
+      "name": "Final output equals fresh native full pipeline",
+      "passed": true
+    }
+  ]
+}

@@ -1,3 +1,6 @@
+PolyMask 1.0.1 — Final blur preview fix
+Automatic final blur updates now retain their reusable calculation buffer when crossing very small blur values. Full-resolution mask calculation is unchanged.
+
 FASTER MASK CREATION — POLYMASK 1.0.0
 
 PolyMask now uses a new polygon-filling method. In our tests, this reduced calculation times by approximately 60% when creating or reshaping masks, while preserving identical results.

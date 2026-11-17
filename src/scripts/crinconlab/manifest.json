@@ -1,6 +1,6 @@
 {
   "collection": "C_Rinconlab",
-  "version": "2026.11.16",
+  "version": "2026.11.17",
   "targetPixInsight": "1.9.6",
   "status": "source signatures verified; final index pending",
   "scripts": [
@@ -21,11 +21,11 @@
     },
     {
       "script": "PolyMask_EN.js",
-      "version": "1.0.0",
-      "sha256": "dadcfa0a9294a8ab080777416750d4e97326d8343f30ed210ea8a849fcb40bf6"
+      "version": "1.0.1",
+      "sha256": "56175bedfbbc20ca4c295e12176dba49fa81d6834478a29151a6385326e452a3"
     }
   ],
   "filesToSign": [],
   "sourceSigningStatus": "verified in the local PixInsight environment",
-  "distribution": "planned GitHub Release asset using package serverURL; active index unchanged"
+  "distribution": "Direct raw hosting; signed production index remains 2026.11.16"
 }

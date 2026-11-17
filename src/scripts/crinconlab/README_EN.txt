@@ -1,3 +1,5 @@
+2026.11.17 — PolyMask 1.0.1. All six source/code signatures verified in PixInsight 1.9.6. Final XML index signing and publication are separate steps.
+
 C_Rinconlab 2026.11.16 — signed scripts for PixInsight 1.9.6
 
 PolyMask 1.0.0: column-based polygon filling, 1 px fine boundary softness
