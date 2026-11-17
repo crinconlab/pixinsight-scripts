@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xri version="1.0">
+   <description>
+      <p>PixInsight scripts — crinconlab</p>
+   </description>
+   <platform os="all" arch="noarch" version="1.9.6:1.9.6">
+      <package fileName="crinconlab-scripts-2026.11.17-7ef01fb69817ce97.zip" sha1="599ff394cf0313a0479dba7dc2694314b0e2324d" type="script" releaseDate="20261117">
+         <title>C_Rinconlab Scripts 2026.11.17</title>
+         <description>
+            <p>PolyMask 1.0.1: fixes automatic final-blur preview buffer lifetime. RGB Ha Blend 0.15.7; Focal Length Blend 0.11.13; Header Editor 1.0.1. PixInsight 1.9.6.</p>
+         </description>
+      </package>
+   </platform>
+</xri>
+<Signature developerId="Carlos_Rincon_Astrophoto" timestamp="2026-11-17T14:18:21.974Z" encoding="Base64">441SrJWKE/1UFGaRii6rcsx52k2qNuSY02blQ3hjz+MbM0bwePcu7cynwRYcZ8XzG4Wsfbo7Xz78BMMnyZaJDg==</Signature>
