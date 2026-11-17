@@ -1,4 +1,4 @@
-2026.11.17 SIGNING CANDIDATE — PolyMask 1.0.1. Sign only PolyMask_EN.js. Production remains 2026.11.16 until the final XML index is signed and verified.
+2026.11.17 — PolyMask 1.0.1. All six source/code signatures verified in PixInsight 1.9.6. Final XML index signing and publication are separate steps.
 
 C_Rinconlab 2026.11.16 — signed scripts for PixInsight 1.9.6
 
